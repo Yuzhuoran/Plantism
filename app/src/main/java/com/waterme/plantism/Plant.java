@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Created by zhuoran on 3/10/18.
- * Plant object
+ * Plant object github test
  */
 
 public class Plant {
