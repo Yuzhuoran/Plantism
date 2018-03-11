@@ -25,7 +25,7 @@ public class PlantDbHelper extends SQLiteOpenHelper {
 
     /**
      * create table sql
-     * @param sqLiteDatabase
+     * @param sqLiteDatabase database
      */
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Log.d(TAG, "CREATE database!");

@@ -21,6 +21,8 @@ public class User {
         return name;
     }
 
+    public void setName(String name) { this.name = name}
+
     public void addPlantId(String plantId) {
         plantsIdList.add(plantId);
     }
@@ -28,4 +30,6 @@ public class User {
     public List<String> getPlantsIdList() {
         return plantsIdList;
     }
+
+
 }

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdapterViewHolder>{
 
     private Context mContext;
-    private Cursor mCursor;
+
     private PlantsAdapterOnClickHandler mClickHandler;
     public interface PlantsAdapterOnClickHandler {
          void onClick();
