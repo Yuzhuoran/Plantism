@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "123215511911",
+    "firebase_url": "https://arduinotest-c38b4.firebaseio.com",
+    "project_id": "arduinotest-c38b4",
+    "storage_bucket": "arduinotest-c38b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123215511911:android:c98e462ef5c9b732",
+        "android_client_info": {
+          "package_name": "com.waterme.plantism"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123215511911-vksi96m5g11up2rpo9j6ulv05vp33ano.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterme.plantism",
+            "certificate_hash": "63b8ea46ea901648d0f08ad1d0d19082fcf17efd"
+          }
+        },
+        {
+          "client_id": "123215511911-r3a4u9p5l6mi7m22p828sb5f6hjd9gkr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs6bTa1zSPSvjReUzoMEPAConjLLU_n7E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123215511911-r3a4u9p5l6mi7m22p828sb5f6hjd9gkr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
