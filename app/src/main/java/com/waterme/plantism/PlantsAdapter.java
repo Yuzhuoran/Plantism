@@ -2,9 +2,15 @@ package com.waterme.plantism;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * Created by zhuoran on 3/9/18.
@@ -13,10 +19,11 @@ import android.view.ViewGroup;
 public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdapterViewHolder>{
 
     private Context mContext;
-
+    private List<Plant> mPlants;
     private PlantsAdapterOnClickHandler mClickHandler;
+
     public interface PlantsAdapterOnClickHandler {
-         void onClick();
+         void onClick(Plant plant);
     }
 
 
@@ -29,6 +36,8 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdap
         mContext = context;
         mClickHandler = clickHandler;
     }
+
+
     /**
      * calls each viewholder is created
      * @param viewGroup the viewGroup this holder contains, here we have two figure view?
@@ -37,17 +46,23 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdap
      */
     @Override
     public PlantsAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        return null;
+
+        View view = LayoutInflater
+                .from(mContext)
+                .inflate(R.layout.plant_list_item, viewGroup, false);
+        view.setFocusable(true);
+        return new PlantsAdapterViewHolder(view);
     }
 
     /**
      * display data at specified position, here we update the contetn of viewholder
-     * @param holder
+     * @param plantsAdapterViewHolder
      * @param position
      */
     @Override
-    public void onBindViewHolder(PlantsAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(PlantsAdapterViewHolder plantsAdapterViewHolder, int position) {
 
+        plantsAdapterViewHolder.plantSummary.setText("Hello World");
     }
 
     /**
@@ -56,23 +71,43 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdap
      */
     @Override
     public int getItemCount() {
-        return 0;
+        return mPlants.size();
     }
 
+    /**
+     * update the plants data
+     * @param plants
+     */
+
+    void updateData(List<Plant> plants) {
+        mPlants = plants;
+    }
+
+    /**
+     *
+     * @param plant update one plant information
+     * @param position position of the plant in the list
+     */
+    void updateOneData(Plant plant, int position) {
+        mPlants.set(position, plant);
+    }
     /**
      * viewholder to plants
      * each viewholder has a figure for humudity and temperature
      */
     public class PlantsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView plantSummary;
 
         PlantsAdapterViewHolder(View view) {
             super(view);
 
+            plantSummary = (TextView) view.findViewById(R.id.tv_plant_data);
             view.setOnClickListener(this);
         }
         @Override
         public void onClick(View view) {
-
+            int adapterPosition = getAdapterPosition();
+            mClickHandler.onClick(mPlants.get(adapterPosition));
         }
     }
 }

@@ -1,11 +1,22 @@
 package com.waterme.plantism;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.waterme.plantism.data.PlantDbHelper;
+import com.waterme.plantism.data.PlantContract;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.lang.reflect.Field;
+import java.security.spec.ECField;
 
 import static org.junit.Assert.*;
 
@@ -16,11 +27,172 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
-    @Test
-    public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+    private final Context mContext = InstrumentationRegistry.getTargetContext();
+    private final Class mDbHelperClass = PlantDbHelper.class;
 
-        assertEquals("com.waterme.plantism", appContext.getPackageName());
+    @Before
+    public void setUp() {
+        deleteTheDatabase();
+    }
+
+    @Test
+    public void create_database_test() throws Exception {
+        SQLiteOpenHelper dbHelper =
+                (SQLiteOpenHelper) mDbHelperClass.getConstructor(Context.class).newInstance(mContext);
+
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        /* We think the database is open, let's verify that here */
+        String databaseIsNotOpen = "The database should be open and isn't";
+        assertEquals(databaseIsNotOpen,
+                true,
+                database.isOpen());
+
+        /* This Cursor will contain the names of each table in our database */
+        Cursor tableNameCursor = database.rawQuery(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name='" +
+                        PlantContract.PlantEntry.TABLE_NAME + "'",
+                null);
+
+        /*
+         * If tableNameCursor.moveToFirst returns false from this query, it means the database
+         * wasn't created properly. In actuality, it means that your database contains no tables.
+         */
+        String errorInCreatingDatabase =
+                "Error: This means that the database has not been created correctly";
+        assertTrue(errorInCreatingDatabase,
+                tableNameCursor.moveToFirst());
+
+        /* If this fails, it means that your database doesn't contain the expected table(s) */
+        assertEquals("Error: Your database was created without the expected tables.",
+                PlantContract.PlantEntry.TABLE_NAME, tableNameCursor.getString(0));
+
+        /* Always close a cursor when you are done with it */
+        tableNameCursor.close();
+
+    }
+
+    /**
+     * This method tests inserting a single record into an empty table from a brand new database.
+     * The purpose is to test that the database is working as expected
+     * @throws Exception in case the constructor hasn't been implemented yet
+     */
+    @Test
+    public void insert_single_record_test() throws Exception{
+
+        /* Use reflection to try to run the correct constructor whenever implemented */
+        SQLiteOpenHelper dbHelper =
+                (SQLiteOpenHelper) mDbHelperClass.getConstructor(Context.class).newInstance(mContext);
+
+        /* Use WaitlistDbHelper to get access to a writable database */
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = new ContentValues();
+        testValues.put(PlantContract.PlantEntry.COLUMN_DATE, "today");
+        testValues.put(PlantContract.PlantEntry.COLUMN_HUMIDITY, 10.0);
+        testValues.put(PlantContract.PlantEntry.COLUMN_PLANT, 1);
+        testValues.put(PlantContract.PlantEntry.COLUMN_TEMP, 11.0);
+
+        /* Insert ContentValues into database and get first row ID back */
+        long firstRowId = database.insert(
+                PlantContract.PlantEntry.TABLE_NAME,
+                null,
+                testValues);
+
+        /* If the insert fails, database.insert returns -1 */
+        assertNotEquals("Unable to insert into the database", -1, firstRowId);
+
+        /*
+         * Query the database and receive a Cursor. A Cursor is the primary way to interact with
+         * a database in Android.
+         */
+        Cursor wCursor = database.query(
+                /* Name of table on which to perform the query */
+                PlantContract.PlantEntry.TABLE_NAME,
+                /* Columns; leaving this null returns every column in the table */
+                null,
+                /* Optional specification for columns in the "where" clause above */
+                null,
+                /* Values for "where" clause */
+                null,
+                /* Columns to group by */
+                null,
+                /* Columns to filter by row groups */
+                null,
+                /* Sort order to return in Cursor */
+                null);
+
+        /* Cursor.moveToFirst will return false if there are no records returned from your query */
+        String emptyQueryError = "Error: No Records returned from waitlist query";
+        assertTrue(emptyQueryError,
+                wCursor.moveToFirst());
+
+        /* Close cursor and database */
+        wCursor.close();
+        dbHelper.close();
+    }
+
+    /**
+     * Tests to ensure that inserts into your database results in automatically
+     * incrementing row IDs.
+     * @throws Exception in case the constructor hasn't been implemented yet
+     */
+    @Test
+    public void autoincrement_test() throws Exception{
+
+        /* First, let's ensure we have some values in our table initially */
+        insert_single_record_test();
+
+        /* Use reflection to try to run the correct constructor whenever implemented */
+        SQLiteOpenHelper dbHelper =
+                (SQLiteOpenHelper) mDbHelperClass.getConstructor(Context.class).newInstance(mContext);
+
+        /* Use WaitlistDbHelper to get access to a writable database */
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = new ContentValues();
+        testValues.put(PlantContract.PlantEntry.COLUMN_DATE, "today+1");
+        testValues.put(PlantContract.PlantEntry.COLUMN_HUMIDITY, 10.0);
+        testValues.put(PlantContract.PlantEntry.COLUMN_PLANT, 1);
+        testValues.put(PlantContract.PlantEntry.COLUMN_TEMP, 11.0);
+
+
+        /* Insert ContentValues into database and get first row ID back */
+        long firstRowId = database.insert(
+                PlantContract.PlantEntry.TABLE_NAME,
+                null,
+                testValues);
+
+        ContentValues testValues2 = new ContentValues();
+        testValues2.put(PlantContract.PlantEntry.COLUMN_DATE, "today+2");
+        testValues2.put(PlantContract.PlantEntry.COLUMN_HUMIDITY, 10.0);
+        testValues2.put(PlantContract.PlantEntry.COLUMN_PLANT, 1);
+        testValues2.put(PlantContract.PlantEntry.COLUMN_TEMP, 11.0);
+
+        /* Insert ContentValues into database and get another row ID back */
+        long secondRowId = database.insert(
+                PlantContract.PlantEntry.TABLE_NAME,
+                null,
+                testValues2);
+
+        assertEquals("ID Autoincrement test failed!",
+                firstRowId + 1, secondRowId);
+
+
+    }
+
+
+
+    void deleteTheDatabase() {
+        try {
+            Field f = mDbHelperClass.getDeclaredField("DATABASE_NAME");
+            f.setAccessible(true);
+            mContext.deleteDatabase((String)f.get(null));
+        } catch (NoSuchFieldException ex) {
+            fail("No member");
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+
     }
 }

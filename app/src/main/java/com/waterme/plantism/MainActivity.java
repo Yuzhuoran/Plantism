@@ -7,8 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity implements
-        PlantsAdapter.PlantsAdapterOnClickHandler,
-        LoaderManager.LoaderCallbacks<Cursor> {
+        PlantsAdapter.PlantsAdapterOnClickHandler {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,24 +15,9 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
     }
 
-    @Override
-    public void onClick() {
-
-    }
-
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onClick(Plant plant) {
 
     }
 }

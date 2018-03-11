@@ -31,10 +31,10 @@ public class PlantDbHelper extends SQLiteOpenHelper {
         Log.d(TAG, "CREATE database!");
         final String SQL_CREATE_PLANT_TABLE = "CREATE TABLE "
                 + PlantContract.PlantEntry.TABLE_NAME + " ("
-                + PlantContract.PlantEntry.COLUMN_DATE + " REAL NOT NULL, "
+                + PlantContract.PlantEntry.COLUMN_DATE + " TEXT NOT NULL, "
                 + PlantContract.PlantEntry.COLUMN_TEMP + " REAL NOT NULL, "
                 + PlantContract.PlantEntry.COLUMN_HUMIDITY + " REAL NOT NULL, "
-                + PlantContract.PlantEntry.COLUMN_PLANT + "INTEGER NOT NULL, "
+                + PlantContract.PlantEntry.COLUMN_PLANT + " INTEGER NOT NULL, "
                 + "PRIMARY KEY (" + PlantContract.PlantEntry.COLUMN_PLANT
                 + ", " + PlantContract.PlantEntry.COLUMN_DATE + "));";
 
