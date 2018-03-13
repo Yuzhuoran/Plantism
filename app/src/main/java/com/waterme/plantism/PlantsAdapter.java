@@ -20,6 +20,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdap
 
     private Context mContext;
     private List<Plant> mPlants;
+    private int[] mPlantsId;
     private PlantsAdapterOnClickHandler mClickHandler;
 
     public interface PlantsAdapterOnClickHandler {
