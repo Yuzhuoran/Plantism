@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "123215511911-mh4t4n7b6peetgo4enfqjqvkvbb831co.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterme.plantism",
+            "certificate_hash": "8d59f67019d74f9bf247cf5c920279462c6c3d5c"
+          }
+        },
+        {
           "client_id": "123215511911-vksi96m5g11up2rpo9j6ulv05vp33ano.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
