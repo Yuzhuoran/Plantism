@@ -106,14 +106,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "login with email successful");
-                            //FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                            FirebaseUser user = mFirebaseAuth.getCurrentUser();
                             //
                             SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-
-
-                            editor.putString("userEmail", email);
+                            editor.putString("uid", user.getUid());
                             editor.apply();
                             // start home intent;
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -149,10 +147,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // pass username to share preference data
                             SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("userEmail", user.getEmail());
+                            editor.putString("uid", user.getUid());
                             editor.apply();
 
-                            Log.d(TAG, "email is " + user.getEmail());
+                            Log.d(TAG, "uid is " + user.getUid());
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
 

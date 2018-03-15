@@ -9,20 +9,22 @@ import java.util.List;
 
 public class Plant {
     private List<SensorData> sensorDataList;
-    private int plant_id;
+    private String plant_id;
     private String name;
+    private SensorData currentData;
 
-    public Plant(List<SensorData> sensorDataList, int p_id, String name) {
+    public Plant(List<SensorData> sensorDataList, String p_id, String name, SensorData currentData) {
         this.sensorDataList = sensorDataList;
         this.plant_id = p_id;
         this.name = name;
+        this.currentData = currentData;
     }
 
     public List<SensorData> getSensorDataList() {
         return sensorDataList;
     }
 
-    public int getPlant_id() {
+    public String getPlant_id() {
         return plant_id;
     }
 
@@ -34,7 +36,7 @@ public class Plant {
         this.sensorDataList = sensorDataList;
     }
 
-    public void setPlant_id(int id) {
+    public void setPlant_id(String id) {
         plant_id = id;
     }
 

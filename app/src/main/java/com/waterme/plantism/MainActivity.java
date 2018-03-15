@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     @Override
-    public void onClick(Plant plant) {
+    public void onClick(String plant) {
 
     }
 }

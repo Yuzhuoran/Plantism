@@ -20,11 +20,11 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdap
 
     private Context mContext;
     private List<Plant> mPlants;
-    private int[] mPlantsId;
+    private String[] mPlantsId;
     private PlantsAdapterOnClickHandler mClickHandler;
 
     public interface PlantsAdapterOnClickHandler {
-         void onClick(Plant plant);
+         void onClick(String plantId);
     }
 
 
@@ -51,6 +51,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdap
         View view = LayoutInflater
                 .from(mContext)
                 .inflate(R.layout.plant_list_item, viewGroup, false);
+
         view.setFocusable(true);
         return new PlantsAdapterViewHolder(view);
     }
@@ -105,10 +106,11 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdap
             plantSummary = (TextView) view.findViewById(R.id.tv_plant_data);
             view.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            mClickHandler.onClick(mPlants.get(adapterPosition));
+            mClickHandler.onClick(mPlantsId[adapterPosition]);
         }
     }
 }
