@@ -1,30 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+    android:id="@+id/drawer_home"
     android:layout_height="match_parent"
-    tools:context="com.waterme.plantism.MainActivity">
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/ry_plants"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="8dp"/>
+        tools:context="com.waterme.plantism.MainActivity">
 
-    <ProgressBar
-        android:id="@+id/pb_home"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_gravity="center"
-        android:visibility="invisible" />
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" >
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ry_plants"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_add"
+            android:tint="@color/white"/>
+
+        <ProgressBar
+            android:id="@+id/pb_home"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
 
 
+    </FrameLayout>
 
-</FrameLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_home"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/memu_navigation"
+        app:headerLayout="@layout/navheader">
+
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>
 
 
 

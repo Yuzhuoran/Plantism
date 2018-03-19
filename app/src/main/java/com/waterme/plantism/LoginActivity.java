@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,11 +37,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    private SignInButton mGoogleSignInButton;
+    private ImageView mGoogleSignIn,mFacebookSignIn, mTwitterSignIn, mLinkedinSignIn;
     private Button mSignInButton;
+    private Button mSignUpButton;
     private EditText mEmailField, mPasswordField;
     private ProgressBar mLoadingIndicator;
-    private TextView mSignUpLink;
+
 
     private FirebaseAuth mFirebaseAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -49,16 +51,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mGoogleSignInButton = (SignInButton) findViewById(R.id.btn_google_login);
-        mSignInButton = (Button) findViewById(R.id.btn_login);
+        mGoogleSignIn = (ImageView) findViewById(R.id.im_google);
+        mFacebookSignIn = (ImageView) findViewById(R.id.im_facebook);
+        mTwitterSignIn = (ImageView) findViewById(R.id.im_twitter);
+        mLinkedinSignIn = (ImageView) findViewById(R.id.im_linkedin);
+
+        mSignInButton = (Button) findViewById(R.id.btn_sign_in);
+        mSignUpButton = (Button) findViewById(R.id.btn_sign_up);
+
         mEmailField = (EditText) findViewById(R.id.et_input_email);
         mPasswordField = (EditText) findViewById(R.id.et_input_password);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_login);
-        mSignUpLink = (TextView) findViewById(R.id.tv_link_signup);
+
 
         mSignInButton.setOnClickListener(this);
-        mGoogleSignInButton.setOnClickListener(this);
-        mSignUpLink.setOnClickListener(this);
+        mSignUpButton.setOnClickListener(this);
+
+        mGoogleSignIn.setOnClickListener(this);
+        mFacebookSignIn.setOnClickListener(this);
+        mTwitterSignIn.setOnClickListener(this);
+        mLinkedinSignIn.setOnClickListener(this);
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -181,12 +193,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.btn_login) {
+        if (id == R.id.btn_sign_in) {
             signInWithEmail(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (id == R.id.btn_google_login) {
+        } else if (id == R.id.im_google) {
             signInWithGoogle();
-        } else if (id == R.id.tv_link_signup) {
+        } else if (id == R.id.btn_sign_up) {
             signUp();
+        } else if(id == R.id.im_facebook) {
+
+        } else if(id == R.id.im_twitter) {
+
+        } else if(id == R.id.im_linkedin) {
+
         }
     }
 

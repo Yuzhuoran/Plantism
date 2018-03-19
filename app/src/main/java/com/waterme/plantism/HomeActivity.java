@@ -2,11 +2,18 @@ package com.waterme.plantism;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,22 +31,6 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
  */
 public class HomeActivity extends AppCompatActivity {
 
-    public class PlantsAdapterViewHolder extends RecyclerView.ViewHolder implements
-            View.OnClickListener {
-
-        TextView plantSummary;
-
-        PlantsAdapterViewHolder(View view) {
-            super(view);
-            plantSummary = (TextView) view.findViewById(R.id.tv_plant_data);
-            view.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-
-        }
-    }
 
     private static final String TAG = "Home activity";
 
@@ -49,13 +40,16 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView mRecycleView;
     private ProgressBar mLoadingIndicator;
     private PlantsAdapter mPlantsAdapter;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+    private ActionBar mActionBar;
+
     private String uid;
     private final String USER_CHILD = "USER_CHILD/";
     private final String PLANT_CHILD = "PLANT_CHILD";
     private final String DATABASE_URL = "https://arduinotest-c38b4.firebaseio.com/";
 
     //sensor data + sensor data viewholder?
-    private FirebaseRecyclerAdapter<Plant, PlantsAdapterViewHolder> mFirebaseAdapter;
     private FirebaseDatabase mFirebaseDatabase;
 
     @Override
@@ -66,9 +60,29 @@ public class HomeActivity extends AppCompatActivity {
         // get the current username
         SharedPreferences sharedPre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         uid = sharedPre.getString("uid","");
-
+        // find the views
         mRecycleView = (RecyclerView) findViewById(R.id.ry_plants);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_home);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_home);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_home);
+        mActionBar = getSupportActionBar();
+
+        if (mActionBar != null) {
+            mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        mNavigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        item.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                }
+        );
+
+
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecycleView.setLayoutManager(layoutManager);
@@ -91,5 +105,19 @@ public class HomeActivity extends AppCompatActivity {
 
     private void hideLoadingIndicator() {
         mLoadingIndicator.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.drawer_home) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

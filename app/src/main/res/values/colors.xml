@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#A8BBBF</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="background">#C7C7C7</color>
+    <color name="divider">#4F4F4F</color>
+    <color name="buttonBackground">#A8BBBF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="cardPlantBackground">#DAE1E3</color>
 </resources>
