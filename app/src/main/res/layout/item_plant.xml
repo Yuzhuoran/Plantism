@@ -34,6 +34,26 @@
             app:layout_constraintStart_toStartOf="@+id/v_plant_bg"
             app:layout_constraintTop_toTopOf="@+id/v_plant_bg" />
 
+        <ImageView
+            android:id="@+id/im_hm_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/humidity"
+            app:layout_constraintBottom_toBottomOf="@+id/v_plant_bg"
+            app:layout_constraintEnd_toStartOf="@+id/tv_plant_hm" />
+
+        <ImageView
+            android:id="@+id/im_tp_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/temperature"
+            app:layout_constraintBottom_toBottomOf="@+id/v_plant_bg"
+            app:layout_constraintEnd_toStartOf="@+id/tv_plant_tp" />
+
         <TextView
             android:id="@+id/tv_plant_name"
             android:layout_width="wrap_content"
@@ -79,7 +99,7 @@
             android:id="@+id/tv_hm_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HUMUDITY"
+            android:text="HUMIDITY"
             android:textSize="8sp"
             app:layout_constraintStart_toStartOf="@+id/tv_plant_hm"
             app:layout_constraintTop_toBottomOf="@id/tv_plant_hm" />

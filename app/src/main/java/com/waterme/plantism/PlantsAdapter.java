@@ -3,6 +3,7 @@ package com.waterme.plantism;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.Image;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,10 @@ import java.util.List;
 public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdapterViewHolder>{
 
     private Context mContext;
-    private List<Plant> mPlants;
-    private String[] mPlantsId;
+    private List<String> mPlantsId;
+    private List<String> mImgUrls;
+    private List<RealTimeData> mData;
+
     private PlantsAdapterOnClickHandler mClickHandler;
 
     public interface PlantsAdapterOnClickHandler {
@@ -33,84 +36,68 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsAdap
      * @param context
      * @param clickHandler
      */
-    public PlantsAdapter(Context context, PlantsAdapterOnClickHandler clickHandler) {
+    public PlantsAdapter(Context context, PlantsAdapterOnClickHandler clickHandler, List<String> plantsId,
+                         List<RealTimeData> data, List<String> imgUrls) {
+        mPlantsId = plantsId;
+        mImgUrls = imgUrls;
+        mData = data;
         mContext = context;
         mClickHandler = clickHandler;
     }
 
-
-    /**
-     * calls each viewholder is created
-     * @param viewGroup the viewGroup this holder contains, here we have two figure view?
-     * @param viewType the type of view
-     * @return A new PlantsAdapterViewHolder
-     */
+    @NonNull
     @Override
-    public PlantsAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public PlantsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new PlantsAdapterViewHolder(LayoutInflater.from(parent.getContext()), parent);
+    }
 
-        View view = LayoutInflater
-                .from(mContext)
-                .inflate(R.layout.plant_list_item, viewGroup, false);
-
-        view.setFocusable(true);
-        return new PlantsAdapterViewHolder(view);
+    @Override
+    public void onBindViewHolder(@NonNull PlantsAdapterViewHolder holder, int position) {
+        // bind view holder
     }
 
     /**
-     * display data at specified position, here we update the contetn of viewholder
-     * @param plantsAdapterViewHolder
-     * @param position
+     * update the home page
+     * @param newData
      */
-    @Override
-    public void onBindViewHolder(PlantsAdapterViewHolder plantsAdapterViewHolder, int position) {
-
-        plantsAdapterViewHolder.plantSummary.setText("Hello World");
+    public void updateAll(List<RealTimeData> newData) {
+        mData.clear();
+        mData.addAll(newData);
+        notifyDataSetChanged();
     }
 
-    /**
-     * the number of items to display
-     * @return
-     */
     @Override
     public int getItemCount() {
-        return mPlants.size();
+        return mPlantsId.size();
     }
 
-    /**
-     * update the plants data
-     * @param plants
-     */
-
-    void updateData(List<Plant> plants) {
-        mPlants = plants;
-    }
 
     /**
-     *
-     * @param plant update one plant information
-     * @param position position of the plant in the list
-     */
-    void updateOneData(Plant plant, int position) {
-        mPlants.set(position, plant);
-    }
-    /**
-     * viewholder to plants
-     * each viewholder has a figure for humudity and temperature
+     * Viewholder for plant home page
      */
     public class PlantsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView plantSummary;
+        public TextView plantName;
+        public TextView plantMyName;
+        public TextView hmText;
+        public TextView tpText;
+        public ImageView plantImg;
+        public ImageView hmImg;
+        public ImageView tpImg;
 
-        PlantsAdapterViewHolder(View view) {
-            super(view);
-
-            plantSummary = (TextView) view.findViewById(R.id.tv_plant_data);
-            view.setOnClickListener(this);
+        public PlantsAdapterViewHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.item_plant, parent, false));
+            plantName = (TextView) itemView.findViewById(R.id.tv_plant_name);
+            plantMyName = (TextView) itemView.findViewById(R.id.tv_plant_myName);
+            hmText = (TextView) itemView.findViewById(R.id.tv_plant_hm);
+            tpText = (TextView) itemView.findViewById(R.id.tv_plant_tp);
+            plantImg = (ImageView) itemView.findViewById(R.id.im_plant_home);
+            hmImg = (ImageView) itemView.findViewById(R.id.im_hm_indicator);
+            tpImg = (ImageView) itemView.findViewById(R.id.im_tp_indicator);
         }
-
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            mClickHandler.onClick(mPlantsId[adapterPosition]);
+            mClickHandler.onClick(mPlantsId.get(adapterPosition));
         }
     }
 }

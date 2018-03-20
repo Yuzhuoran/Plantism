@@ -18,12 +18,21 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.SnapshotParser;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The home activity for the app. The activity has a list of the plant for the user.
@@ -45,12 +54,17 @@ public class HomeActivity extends AppCompatActivity {
     private ActionBar mActionBar;
 
     private String uid;
-    private final String USER_CHILD = "USER_CHILD/";
-    private final String PLANT_CHILD = "PLANT_CHILD";
-    private final String DATABASE_URL = "https://arduinotest-c38b4.firebaseio.com/";
+    private static final String USER_CHILD = "userInfo";
+    private static final String SENSOR_CHILD = "sensorList";
+    private static final String USER_SENSORS_CHILD = "sensors";
+    private static final String USER_PLANTS_CHILD = "plants";
+    private static final String REALTIME_CHILD = "now";
 
     //sensor data + sensor data viewholder?
     private FirebaseDatabase mFirebaseDatabase;
+
+    private List<String> sensorList;
+    private List<RealTimeData> realTimeDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +81,14 @@ public class HomeActivity extends AppCompatActivity {
         mNavigationView = (NavigationView) findViewById(R.id.nav_home);
         mActionBar = getSupportActionBar();
 
+
+
         if (mActionBar != null) {
             mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             mActionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // navigation
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -91,10 +109,6 @@ public class HomeActivity extends AppCompatActivity {
         // load the data from firebase
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        Log.d(TAG, "get the database reference");
-        String path = DATABASE_URL + USER_CHILD;
-        Log.d(TAG, "path: " + path);
-        DatabaseReference ref = mFirebaseDatabase.getReference(path);
 
     }
 
@@ -120,4 +134,76 @@ public class HomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    // add sensor
+    private void addSensor(final String sensorId) {
+        final DatabaseReference dbRef = mFirebaseDatabase.getReference();
+
+        // check if sensor is in the
+        dbRef.child(SENSOR_CHILD).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean exist = false;
+                for (DataSnapshot id : dataSnapshot.getChildren()) {
+                    if (sensorId.equals((String)id.getValue())) {
+                        exist = true;
+                        Log.d(TAG, "sensor already exists");
+                    }
+                }
+                if (!exist) {
+                    Log.d(TAG, "add new sensor");
+                    // add a new sensor into the user-sensor list
+                    dbRef.child(USER_CHILD).child(USER_SENSORS_CHILD).push().setValue(sensorId);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void addPlants(final String sensorId, final String plantName) {
+        final DatabaseReference dbRef = mFirebaseDatabase.getReference();
+        // add a plant to the users'child, with
+        dbRef.child(USER_CHILD).child(uid).child(USER_SENSORS_CHILD).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                            // the children is <key - id> form
+                            if (sensorId.equals((String)dsp.getValue())) {
+                                dbRef.child(USER_CHILD).child(uid).child(USER_PLANTS_CHILD)
+                                    .push().setValue(
+                                            new Plant(plantName,
+                                                    sensorId,
+                                                    "now",
+                                                    "history",
+                                                    null));
+                                Log.d(TAG, "update plant information");
+
+                                // update sensor List information
+                                Map<String, Object> sensorUpdate = new HashMap<>();
+                                sensorUpdate.put(sensorId + "/uid", uid);
+                                sensorUpdate.put(sensorId + "/plantName", plantName);
+                                dbRef.child(SENSOR_CHILD).updateChildren(sensorUpdate);
+                                Log.d(TAG, "update sensor information");
+                                return;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+        );
+    }
+
+    private void adminAddSensor(String sId) {
+        final DatabaseReference dbRef = mFirebaseDatabase.getReference();
+        dbRef.child(SENSOR_CHILD).child(sId).setValue(new Sensor("#", "#"));
+    }
+
 }

@@ -8,40 +8,18 @@ import java.util.List;
  */
 
 public class Plant {
-    private List<SensorData> sensorDataList;
-    private String plant_id;
     private String name;
-    private SensorData currentData;
+    private String sensor_id;
+    private String history;
+    private String now;
+    private String imgUrl;
 
-    public Plant(List<SensorData> sensorDataList, String p_id, String name, SensorData currentData) {
-        this.sensorDataList = sensorDataList;
-        this.plant_id = p_id;
+    public Plant(String name, String sensor_id, String histroy, String now, String imgUrl) {
         this.name = name;
-        this.currentData = currentData;
-    }
-
-    public List<SensorData> getSensorDataList() {
-        return sensorDataList;
-    }
-
-    public String getPlant_id() {
-        return plant_id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setSensorDataList(List<SensorData> sensorDataList) {
-        this.sensorDataList = sensorDataList;
-    }
-
-    public void setPlant_id(String id) {
-        plant_id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        this.sensor_id = sensor_id;
+        this.history = histroy;
+        this.now = now;
+        this.imgUrl = imgUrl;
     }
 
 }

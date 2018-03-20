@@ -31,17 +31,31 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
+    private static final String USER_URL= "userInfo";
+    //private static final String DATABASE_URL = "https://arduinotest-c38b4.firebaseio.com/";
+
     private ImageView mGoogleSignIn,mFacebookSignIn, mTwitterSignIn, mLinkedinSignIn;
     private Button mSignInButton;
     private Button mSignUpButton;
     private EditText mEmailField, mPasswordField;
     private ProgressBar mLoadingIndicator;
+
+    private FirebaseDatabase mFirebaseDatabase;
 
 
     private FirebaseAuth mFirebaseAuth;
@@ -81,6 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
     }
 
 
@@ -119,7 +134,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
                             Log.d(TAG, "login with email successful");
                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                            //
+                            checkExist(user);
+
                             SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -155,6 +171,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //Sign in success, start activity
                             Log.d(TAG, "login with google successful");
                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                            checkExist(user);
 
                             // pass username to share preference data
                             SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
@@ -162,8 +179,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.putString("uid", user.getUid());
                             editor.apply();
 
+                            // add userinfo to database
+                            checkExist(user);
                             Log.d(TAG, "uid is " + user.getUid());
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
 
                         } else {
@@ -228,5 +247,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         return valid;
+    }
+
+
+    private void checkExist(final FirebaseUser user) {
+        final String uId = user.getUid();
+        Log.d(TAG, "database url " +  USER_URL);
+        final DatabaseReference userRef = mFirebaseDatabase.getReference(USER_URL)
+                .child(uId);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    userRef.setValue(new User(user.getDisplayName(), user.getEmail()));
+                } else {
+                    Log.d(TAG, "user already exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
