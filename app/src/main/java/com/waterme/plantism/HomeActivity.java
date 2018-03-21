@@ -2,8 +2,11 @@ package com.waterme.plantism;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -11,13 +14,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,12 +36,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.SnapshotParser;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * The home activity for the app. The activity has a list of the plant for the user.
@@ -46,22 +61,53 @@ public class HomeActivity extends AppCompatActivity {
     /** the recycleview to read the condition of plants
      * it includes the real time temperature, humidity and growing condition
      */
+
+    public class RealTimeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView plantName;
+        public TextView plantMyName;
+        public TextView hmText;
+        public TextView tpText;
+        public ImageView plantImg;
+        public ImageView hmImg;
+        public ImageView tpImg;
+
+        public RealTimeViewHolder(View view) {
+            super(view);
+            plantName = (TextView) itemView.findViewById(R.id.tv_plant_name);
+            plantMyName = (TextView) itemView.findViewById(R.id.tv_plant_myName);
+            hmText = (TextView) itemView.findViewById(R.id.tv_plant_hm);
+            tpText = (TextView) itemView.findViewById(R.id.tv_plant_tp);
+            plantImg = (ImageView) itemView.findViewById(R.id.im_plant_home);
+            hmImg = (ImageView) itemView.findViewById(R.id.im_hm_indicator);
+            tpImg = (ImageView) itemView.findViewById(R.id.im_tp_indicator);
+
+        }
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+        }
+    }
+
     private RecyclerView mRecycleView;
     private ProgressBar mLoadingIndicator;
-    private PlantsAdapter mPlantsAdapter;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBar mActionBar;
+    private Toolbar mToolbar;
+    private FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder> mAdapter;
 
     private String uid;
     private static final String USER_CHILD = "userInfo";
     private static final String SENSOR_CHILD = "sensorList";
     private static final String USER_SENSORS_CHILD = "sensors";
     private static final String USER_PLANTS_CHILD = "plants";
-    private static final String REALTIME_CHILD = "now";
+    private static final String USER_REALTIME_CHILD = "now";
+
+    private static final String IMAGE_URL = "image";
 
     //sensor data + sensor data viewholder?
     private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseStorage mFirebaseStorage;
 
     private List<String> sensorList;
     private List<RealTimeData> realTimeDataList;
@@ -79,11 +125,14 @@ public class HomeActivity extends AppCompatActivity {
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_home);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_home);
         mNavigationView = (NavigationView) findViewById(R.id.nav_home);
+
+        mToolbar = (Toolbar) findViewById(R.id.tb_home);
+        setSupportActionBar(mToolbar);
         mActionBar = getSupportActionBar();
-
-
-
         if (mActionBar != null) {
+            VectorDrawableCompat indicator =
+                    VectorDrawableCompat.create(getResources(), R.drawable.ic_menu, getTheme());
+            indicator.setTint(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
             mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             mActionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -101,17 +150,106 @@ public class HomeActivity extends AppCompatActivity {
         );
 
 
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseStorage = FirebaseStorage.getInstance();
+        //addTest();
+        //showLoadingIndicator();
+        // load the data from firebase
+
+
+
+
+        DatabaseReference ref = mFirebaseDatabase.getReference();
+        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                            Log.d(TAG, (String) dsp.getKey());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+        );
+
+        FirebaseRecyclerOptions<RealTimeData> options = new FirebaseRecyclerOptions.Builder<RealTimeData>()
+                .setQuery(mFirebaseDatabase.getReference().child(USER_CHILD)
+                        .child(uid)
+                        .child(USER_REALTIME_CHILD)
+                        , RealTimeData.class)
+                .build();
+
+
+        Log.d(TAG, "before adpater");
+        mAdapter = new FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull RealTimeViewHolder viewHolder, int position, @NonNull RealTimeData model) {
+                // bind viewholder to view, set the view content
+                Log.d(TAG, "bind view holder!");
+                String imgUrl = model.getImgaUrl();
+                String tUrl = model.gettUrl();
+                String hUrl = model.gethUrl();
+
+                // set image for ui
+                StorageReference storageReference = mFirebaseStorage.getReference();
+
+                // set text for ui
+                viewHolder.plantMyName.setText(model.getPlantMyname());
+                viewHolder.plantName.setText(model.getPlantName());
+                viewHolder.hmText.setText(String.valueOf(model.getHumidity()).substring(0, 5));
+                viewHolder.tpText.setText(String.valueOf(model.getTemperature()).substring(0, 5));
+
+            }
+
+            @NonNull
+            @Override
+            public RealTimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                Log.d(TAG, "create view holder !");
+                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+                return new RealTimeViewHolder(inflater.inflate(R.layout.item_plant, parent, false));
+            }
+
+            // E
+            @Override
+            public void onDataChanged() {
+                super.onDataChanged();
+                Log.d(TAG, "firebase data change!");
+            }
+        };
+
+
+        Log.d(TAG, "create adapter finish");
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecycleView.setLayoutManager(layoutManager);
+        Log.d(TAG, "set layout manager!");
+        mAdapter.notifyDataSetChanged();
+        Log.d(TAG, "adapter has :" + mAdapter.getItemCount());
+        mRecycleView.setAdapter(mAdapter);
+        Log.d(TAG, "set adapter!");
+        Log.d(TAG, "test for updating");
+        changeTest();
 
-        showLoadingIndicator();
-        // load the data from firebase
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAdapter.stopListening();
+    }
 
     private void showLoadingIndicator() {
         mLoadingIndicator.setVisibility(View.VISIBLE);
@@ -129,7 +267,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.drawer_home) {
+        if (id == R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);
@@ -206,4 +344,70 @@ public class HomeActivity extends AppCompatActivity {
         dbRef.child(SENSOR_CHILD).child(sId).setValue(new Sensor("#", "#"));
     }
 
+    private void addTest() {
+        Random random = new Random();
+        DatabaseReference ref = mFirebaseDatabase.getReference();
+        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD)
+                .child("1543")
+                .setValue(new RealTimeData(random.nextDouble(),
+                        random.nextDouble(),
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"));
+
+        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD)
+                .child("1546")
+                .setValue(new RealTimeData(random.nextDouble(),
+                        random.nextDouble(),
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"));
+
+        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD)
+                .child("1234")
+                .setValue(new RealTimeData(random.nextDouble(),
+                        random.nextDouble(),
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"));
+
+        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD)
+                .child("4443")
+                .setValue(new RealTimeData(random.nextDouble(),
+                        random.nextDouble(),
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"));
+
+    }
+
+    private void changeTest() {
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Random random = new Random();
+                Map<String, Object> update = new HashMap<>();
+                update.put("1234/humidity", random.nextDouble());
+                update.put("1234/temperature", random.nextDouble());
+                update.put("1543/humidity", random.nextDouble());
+                update.put("1543/temperature", random.nextDouble());
+                update.put("1546/humidity", random.nextDouble());
+                update.put("1546/temperature", random.nextDouble());
+                DatabaseReference ref = mFirebaseDatabase.getReference();
+                ref.child(USER_CHILD).child(uid)
+                        .child(USER_REALTIME_CHILD)
+                        .updateChildren(update);
+            }
+        };
+        timer.schedule(timerTask, 2000, 2000);
+    }
 }

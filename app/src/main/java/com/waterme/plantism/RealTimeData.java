@@ -7,18 +7,24 @@ package com.waterme.plantism;
 public class RealTimeData {
     private double humidity;
     private double temperature;
+    private String plantMyname;
+    private String plantName;
     private String hUrl = null;
     private String tUrl = null;
+    private String imgaUrl = null;
 
-    public RealTimeData(double h, double t, String hUrl, String tUrl) {
+    public RealTimeData() {
+
+    }
+    public RealTimeData(double h, double t, String hUrl, String tUrl,
+                        String imgaUrl, String plantMyname, String plantName) {
         humidity = h;
         temperature = t;
         this.hUrl = hUrl;
         this.tUrl = tUrl;
-    }
-
-    public double getHumIdity() {
-        return humidity;
+        this.imgaUrl = imgaUrl;
+        this.plantMyname = plantMyname;
+        this.plantName = plantName;
     }
 
     public double getTemperature() {
@@ -31,6 +37,22 @@ public class RealTimeData {
 
     public String gettUrl() {
         return tUrl;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public String getImgaUrl() {
+        return imgaUrl;
+    }
+
+    public String getPlantMyname() {
+        return plantMyname;
+    }
+
+    public String getPlantName() {
+        return plantName;
     }
 
     public void setTemperature(double temperature) {
@@ -47,5 +69,9 @@ public class RealTimeData {
 
     public void settUrl(String tUrl) {
         this.tUrl = tUrl;
+    }
+
+    public void setImgaUrl(String imgaUrl) {
+        this.imgaUrl = imgaUrl;
     }
 }

@@ -10,12 +10,16 @@
     android:layout_width="match_parent"
     android:fitsSystemWindows="true">
 
-    <FrameLayout
+
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.waterme.plantism.MainActivity">
 
         <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_home"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -23,12 +27,16 @@
 
         </android.support.v7.widget.Toolbar>
 
+
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ry_plants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="8dp"/>
+            android:paddingBottom="@dimen/md_keylines"
+            android:paddingTop="@dimen/md_keylines"/>
+
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
@@ -47,7 +55,7 @@
             android:visibility="invisible" />
 
 
-    </FrameLayout>
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_home"
