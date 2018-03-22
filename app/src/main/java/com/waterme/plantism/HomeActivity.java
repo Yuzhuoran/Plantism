@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -53,7 +54,7 @@ import java.util.TimerTask;
  * The home activity for the app. The activity has a list of the plant for the user.
  * there is an add method to bind a new sensor to a plant
  */
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
 
     private static final String TAG = "Home activity";
@@ -90,10 +91,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView mRecycleView;
     private ProgressBar mLoadingIndicator;
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
-    private ActionBar mActionBar;
-    private Toolbar mToolbar;
+
     private FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder> mAdapter;
 
     private String uid;
@@ -114,8 +112,12 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        //setContentView(R.layout.activity_home);
+
+        FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.home_content, contentFramLayout);
 
         // get the current username
         SharedPreferences sharedPre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
@@ -123,31 +125,6 @@ public class HomeActivity extends AppCompatActivity {
         // find the views
         mRecycleView = (RecyclerView) findViewById(R.id.ry_plants);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_home);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_home);
-        mNavigationView = (NavigationView) findViewById(R.id.nav_home);
-
-        mToolbar = (Toolbar) findViewById(R.id.tb_home);
-        setSupportActionBar(mToolbar);
-        mActionBar = getSupportActionBar();
-        if (mActionBar != null) {
-            VectorDrawableCompat indicator =
-                    VectorDrawableCompat.create(getResources(), R.drawable.ic_menu, getTheme());
-            indicator.setTint(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
-            mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        // navigation
-        mNavigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        item.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-                        return true;
-                    }
-                }
-        );
 
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -155,8 +132,6 @@ public class HomeActivity extends AppCompatActivity {
         //addTest();
         //showLoadingIndicator();
         // load the data from firebase
-
-
 
 
         DatabaseReference ref = mFirebaseDatabase.getReference();
@@ -182,7 +157,6 @@ public class HomeActivity extends AppCompatActivity {
                         .child(USER_REALTIME_CHILD)
                         , RealTimeData.class)
                 .build();
-
 
         Log.d(TAG, "before adpater");
         mAdapter = new FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder>(options) {
@@ -226,11 +200,7 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecycleView.setLayoutManager(layoutManager);
-        Log.d(TAG, "set layout manager!");
-        mAdapter.notifyDataSetChanged();
-        Log.d(TAG, "adapter has :" + mAdapter.getItemCount());
         mRecycleView.setAdapter(mAdapter);
-        Log.d(TAG, "set adapter!");
         Log.d(TAG, "test for updating");
         changeTest();
 
@@ -408,6 +378,6 @@ public class HomeActivity extends AppCompatActivity {
                         .updateChildren(update);
             }
         };
-        timer.schedule(timerTask, 2000, 2000);
+        timer.schedule(timerTask, 5000, 5000);
     }
 }
