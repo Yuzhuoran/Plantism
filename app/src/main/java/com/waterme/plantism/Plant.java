@@ -9,17 +9,36 @@ import java.util.List;
 
 public class Plant {
     private String name;
-    private String sensor_id;
     private String history;
-    private String now;
     private String imgUrl;
 
-    public Plant(String name, String sensor_id, String histroy, String now, String imgUrl) {
+    public Plant(String name, String history, String imgUrl) {
         this.name = name;
-        this.sensor_id = sensor_id;
-        this.history = histroy;
-        this.now = now;
+        this.history = history;
         this.imgUrl = imgUrl;
     }
 
+    public String getHistory() {
+        return history;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setHistory(String history) {
+        this.history = history;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

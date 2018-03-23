@@ -82,7 +82,7 @@ public class HomeActivity extends BaseActivity {
 
     private static final String IMAGE_URL = "image";
 
-    //sensor data + sensor data viewholder?
+
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseStorage mFirebaseStorage;
 
@@ -90,23 +90,23 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_home);
+
 
         FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
-        getLayoutInflater().inflate(R.layout.home_content, contentFramLayout);
+        getLayoutInflater().inflate(R.layout.activity_home, contentFramLayout);
 
         // get the current username
         SharedPreferences sharedPre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         uid = sharedPre.getString("uid","");
         // find the views
         mRecycleView = (RecyclerView) findViewById(R.id.ry_plants);
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_home);
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb);
 
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
         //addTest();
-        //showLoadingIndicator();
+        showLoadingIndicator();
         // load the data from firebase
 
 
@@ -183,13 +183,17 @@ public class HomeActivity extends BaseActivity {
             }
         };
 
-
+        addTest();
         Log.d(TAG, "create adapter finish");
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecycleView.setLayoutManager(layoutManager);
         mRecycleView.setAdapter(mAdapter);
-        Log.d(TAG, "test for updating");
+        hideLoadingIndicator();
+        Log.d(TAG, "add plants");
+        addPlants("绿萝","kkk","ttt");
+        Log.d(TAG, "add sensors");
+        addSensor("1546", "kkk");
         changeTest();
 
 
@@ -234,24 +238,20 @@ public class HomeActivity extends BaseActivity {
 
 
     // add sensor
-    private void addSensor(final String sensorId) {
-        final DatabaseReference dbRef = mFirebaseDatabase.getReference();
+    private void addSensor(final String sensorId, final String plantMyName) {
+        final DatabaseReference dbRef = mFirebaseDatabase.getReference()
+                .child(SENSOR_CHILD);
 
+        // <sid - <uid, plantMyName>
         // check if sensor is in the
-        dbRef.child(SENSOR_CHILD).addListenerForSingleValueEvent(new ValueEventListener() {
+        final Map<String, Object> update = new HashMap<>();
+        update.put(sensorId, new Sensor(uid, plantMyName));
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean exist = false;
-                for (DataSnapshot id : dataSnapshot.getChildren()) {
-                    if (sensorId.equals((String)id.getValue())) {
-                        exist = true;
-                        Log.d(TAG, "sensor already exists");
-                    }
-                }
-                if (!exist) {
-                    Log.d(TAG, "add new sensor");
-                    // add a new sensor into the user-sensor list
-                    dbRef.child(USER_CHILD).child(USER_SENSORS_CHILD).push().setValue(sensorId);
+                if (!dataSnapshot.exists()) {
+                    dbRef.updateChildren(update);
                 }
             }
             @Override
@@ -260,94 +260,55 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
-    private void addPlants(final String sensorId, final String plantName) {
-        final DatabaseReference dbRef = mFirebaseDatabase.getReference();
-        // add a plant to the users'child, with
-        dbRef.child(USER_CHILD).child(uid).child(USER_SENSORS_CHILD).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                            // the children is <key - id> form
-                            if (sensorId.equals((String)dsp.getValue())) {
-                                dbRef.child(USER_CHILD).child(uid).child(USER_PLANTS_CHILD)
-                                    .push().setValue(
-                                            new Plant(plantName,
-                                                    sensorId,
-                                                    "now",
-                                                    "history",
-                                                    null));
-                                Log.d(TAG, "update plant information");
-
-                                // update sensor List information
-                                Map<String, Object> sensorUpdate = new HashMap<>();
-                                sensorUpdate.put(sensorId + "/uid", uid);
-                                sensorUpdate.put(sensorId + "/plantName", plantName);
-                                dbRef.child(SENSOR_CHILD).updateChildren(sensorUpdate);
-                                Log.d(TAG, "update sensor information");
-                                return;
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                }
-        );
-    }
-
-    private void adminAddSensor(String sId) {
-        final DatabaseReference dbRef = mFirebaseDatabase.getReference();
-        dbRef.child(SENSOR_CHILD).child(sId).setValue(new Sensor("#", "#"));
+    //use update !
+    private void addPlants(String plantName, String plantMyName, String imgUrl){
+        final DatabaseReference dbRef = mFirebaseDatabase.getReference()
+                .child(USER_CHILD)
+                .child(uid)
+                .child(USER_PLANTS_CHILD);
+        Map<String, Object> update = new HashMap<>();
+        update.put(plantMyName, new Plant(plantName, "history", imgUrl));
+        dbRef.updateChildren(update);
     }
 
     private void addTest() {
         Random random = new Random();
-        DatabaseReference ref = mFirebaseDatabase.getReference();
-        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD)
-                .child("1543")
-                .setValue(new RealTimeData(random.nextDouble(),
-                        random.nextDouble(),
-                        "1",
-                        "2",
-                        "3",
-                        "4",
-                        "5"));
+        DatabaseReference ref = mFirebaseDatabase.getReference()
+                .child(USER_CHILD).child(uid);
+        Map<String, Object> update = new HashMap<>();
+        update.put(USER_REALTIME_CHILD + "/1645", new RealTimeData(random.nextDouble(),
+                random.nextDouble(),
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"));
+        update.put(USER_REALTIME_CHILD + "/1541", new RealTimeData(random.nextDouble(),
+                random.nextDouble(),
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"));
+        update.put(USER_REALTIME_CHILD + "/1234", new RealTimeData(random.nextDouble(),
+                random.nextDouble(),
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"));
+        update.put(USER_REALTIME_CHILD + "/2333", new RealTimeData(random.nextDouble(),
+                random.nextDouble(),
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"));
 
-        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD)
-                .child("1546")
-                .setValue(new RealTimeData(random.nextDouble(),
-                        random.nextDouble(),
-                        "1",
-                        "2",
-                        "3",
-                        "4",
-                        "5"));
+        ref.updateChildren(update);
 
-        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD)
-                .child("1234")
-                .setValue(new RealTimeData(random.nextDouble(),
-                        random.nextDouble(),
-                        "1",
-                        "2",
-                        "3",
-                        "4",
-                        "5"));
-
-        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD)
-                .child("4443")
-                .setValue(new RealTimeData(random.nextDouble(),
-                        random.nextDouble(),
-                        "1",
-                        "2",
-                        "3",
-                        "4",
-                        "5"));
 
     }
-
     private void changeTest() {
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -355,12 +316,12 @@ public class HomeActivity extends BaseActivity {
             public void run() {
                 Random random = new Random();
                 Map<String, Object> update = new HashMap<>();
+                update.put("1645/humidity", random.nextDouble());
+                update.put("1645/temperature", random.nextDouble());
                 update.put("1234/humidity", random.nextDouble());
                 update.put("1234/temperature", random.nextDouble());
-                update.put("1543/humidity", random.nextDouble());
-                update.put("1543/temperature", random.nextDouble());
-                update.put("1546/humidity", random.nextDouble());
-                update.put("1546/temperature", random.nextDouble());
+                update.put("2333/humidity", random.nextDouble());
+                update.put("2333/temperature", random.nextDouble());
                 DatabaseReference ref = mFirebaseDatabase.getReference();
                 ref.child(USER_CHILD).child(uid)
                         .child(USER_REALTIME_CHILD)

@@ -11,33 +11,45 @@ public class User {
 
     private String name;
     private String email;
-    private List<String> plantsIdList;
+    private String now;
+    private String plants;
 
-    public User(String name, String email) {
+    public User(String name, String email, String now, String plants) {
         this.name = name;
         this.email = email;
-        plantsIdList = new ArrayList<>();
+        this.now = now;
+        this.plants = plants;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<String> getPlantsIdList() {
-        return plantsIdList;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public void setName(String name) { this.name = name;}
+    public String getNow() {
+        return now;
+    }
+
+    public String getPlants() {
+        return plants;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setPlantsIdList(List<String> plantsIdList) {
-        this.plantsIdList = plantsIdList;
+    public void setNow(String now) {
+        this.now = now;
+    }
+
+    public void setPlants(String plants) {
+        this.plants = plants;
     }
 }

@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int RC_SIGN_IN = 9001;
 
     private static final String USER_URL= "userInfo";
-    //private static final String DATABASE_URL = "https://arduinotest-c38b4.firebaseio.com/";
 
     private ImageView mGoogleSignIn,mFacebookSignIn, mTwitterSignIn, mLinkedinSignIn;
     private Button mSignInButton;
@@ -100,8 +99,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void signInWithGoogle() {
+        Log.d(TAG,"aaa");
+        showLoadingIndicator();
         Intent intent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(intent, RC_SIGN_IN);
+        hideLoadingIndicator();
     }
 
     @Override
@@ -159,7 +161,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void authWithGoogle(GoogleSignInAccount account) {
         Log.d(TAG, "firebase Auth WithGoogle: " + account.getId());
-        showLoadingIndicator();
+
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mFirebaseAuth.signInWithCredential(credential)
@@ -172,6 +174,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d(TAG, "login with google successful");
                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
                             checkExist(user);
+                            Log.d(TAG, "uid is " + user.getUid());
 
                             // pass username to share preference data
                             SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
@@ -179,9 +182,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.putString("uid", user.getUid());
                             editor.apply();
 
-                            // add userinfo to database
-                            checkExist(user);
-                            Log.d(TAG, "uid is " + user.getUid());
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
 
@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Toast.LENGTH_SHORT).show();
                         }
 
-                        hideLoadingIndicator();
+
 
                     }
                 });
@@ -249,22 +249,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return valid;
     }
 
-
     private void checkExist(final FirebaseUser user) {
         final String uId = user.getUid();
-        Log.d(TAG, "database url " +  USER_URL);
         final DatabaseReference userRef = mFirebaseDatabase.getReference(USER_URL)
                 .child(uId);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    userRef.setValue(new User(user.getDisplayName(), user.getEmail()));
-                } else {
-                    Log.d(TAG, "user already exist");
+                if (!dataSnapshot.child("email").exists()){
+                    userRef.child("email").setValue(user.getEmail());
+                }
+                if (!dataSnapshot.child("name").exists()) {
+                    userRef.child("name").setValue(user.getDisplayName());
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
