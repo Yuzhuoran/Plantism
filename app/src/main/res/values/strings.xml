@@ -17,4 +17,8 @@
     <string name="title_activity_sign_up">SignUpActivity</string>
 
     <string name="welcome">Welcome to Plantism</string>
+    <string name="guide">1.DO NOT WATER ME.
+        2.DO NOT WATER ME AGAIN.2.DO NOT WATER ME AGAIN.2.DO NOT WATER ME AGAIN.
+        2.DO NOT WATER ME AGAIN.2.DO NOT WATER ME AGAIN</string>
+    <string name="guide_intro">This is a plant</string>
 </resources>
