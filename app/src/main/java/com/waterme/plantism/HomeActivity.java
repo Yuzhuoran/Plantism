@@ -1,6 +1,7 @@
 package com.waterme.plantism;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -25,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,38 +65,15 @@ public class HomeActivity extends BaseActivity {
      * it includes the real time temperature, humidity and growing condition
      */
 
-    public class RealTimeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView plantName;
-        public TextView plantMyName;
-        public TextView hmText;
-        public TextView tpText;
-        public ImageView plantImg;
-        public ImageView hmImg;
-        public ImageView tpImg;
-
-        public RealTimeViewHolder(View view) {
-            super(view);
-            plantName = (TextView) itemView.findViewById(R.id.tv_plant_name);
-            plantMyName = (TextView) itemView.findViewById(R.id.tv_plant_myName);
-            hmText = (TextView) itemView.findViewById(R.id.tv_plant_hm);
-            tpText = (TextView) itemView.findViewById(R.id.tv_plant_tp);
-            plantImg = (ImageView) itemView.findViewById(R.id.im_plant_home);
-            hmImg = (ImageView) itemView.findViewById(R.id.im_hm_indicator);
-            tpImg = (ImageView) itemView.findViewById(R.id.im_tp_indicator);
-
-        }
-        @Override
-        public void onClick(View view) {
-            int adapterPosition = getAdapterPosition();
-        }
-    }
-
     private RecyclerView mRecycleView;
     private ProgressBar mLoadingIndicator;
+
 
     private FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder> mAdapter;
 
     private String uid;
+    private static final String PLANTID = "PLANTID";
+    private static final String CATEGORY = "CATEGORY";
     private static final String USER_CHILD = "userInfo";
     private static final String SENSOR_CHILD = "sensorList";
     private static final String USER_SENSORS_CHILD = "sensors";
@@ -106,9 +85,6 @@ public class HomeActivity extends BaseActivity {
     //sensor data + sensor data viewholder?
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseStorage mFirebaseStorage;
-
-    private List<String> sensorList;
-    private List<RealTimeData> realTimeDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +137,7 @@ public class HomeActivity extends BaseActivity {
         Log.d(TAG, "before adpater");
         mAdapter = new FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull RealTimeViewHolder viewHolder, int position, @NonNull RealTimeData model) {
+            protected void onBindViewHolder(@NonNull RealTimeViewHolder viewHolder, int position, @NonNull final RealTimeData model) {
                 // bind viewholder to view, set the view content
                 Log.d(TAG, "bind view holder!");
                 String imgUrl = model.getImgaUrl();
@@ -176,7 +152,16 @@ public class HomeActivity extends BaseActivity {
                 viewHolder.plantName.setText(model.getPlantName());
                 viewHolder.hmText.setText(String.valueOf(model.getHumidity()).substring(0, 5));
                 viewHolder.tpText.setText(String.valueOf(model.getTemperature()).substring(0, 5));
-
+                viewHolder.setmClickListener(new RealTimeViewHolder.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Log.d(TAG, "item click " + position);
+                        Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
+                        intent.putExtra(PLANTID, model.getPlantMyname());
+                        intent.putExtra(CATEGORY, model.getPlantName());
+                        startActivity(intent);
+                    }
+                });
             }
 
             @NonNull
@@ -184,7 +169,10 @@ public class HomeActivity extends BaseActivity {
             public RealTimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 Log.d(TAG, "create view holder !");
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new RealTimeViewHolder(inflater.inflate(R.layout.item_plant, parent, false));
+                RealTimeViewHolder view = new RealTimeViewHolder(inflater.inflate(R.layout.item_plant, parent, false));
+
+
+                return view;
             }
 
             // E
@@ -220,6 +208,7 @@ public class HomeActivity extends BaseActivity {
         super.onStop();
         mAdapter.stopListening();
     }
+
 
     private void showLoadingIndicator() {
         mLoadingIndicator.setVisibility(View.VISIBLE);

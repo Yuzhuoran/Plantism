@@ -18,7 +18,10 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private static String TAG = "Detail Activity";
+    private static final String TAG = "Detail Activity";
+    private static final String PLANTID = "PLANTID";
+    private static final String CATEGORY = "CATEGORY";
+    private static final String UID = "UID";
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -36,9 +39,6 @@ public class DetailActivity extends AppCompatActivity {
         uid = sharedPre.getString("uid","");
 
 
-
-
-
         // set up page
         mViewPager = (ViewPager) findViewById(R.id.vp_detail);
         setUpViewPager(mViewPager);
@@ -52,14 +52,15 @@ public class DetailActivity extends AppCompatActivity {
     private void setUpViewPager(ViewPager viewPager) {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            plantId = bundle.getString("PLANTID");
-            plantCategory = bundle.getString("CATEGORY");
+            plantId = bundle.getString(PLANTID);
+            plantCategory = bundle.getString(CATEGORY);
         } else {
             Log.d(TAG, "new plant id pass in!");
         }
-        bundle.putString("UID", uid);
-        bundle.putString("PLANTID", plantId);
-        bundle.putString("CATEGORY", plantCategory);
+        bundle.putString(UID, uid);
+        bundle.putString(PLANTID, plantId);
+        bundle.putString(CATEGORY, plantCategory);
+
         //
         Adapter adapter = new Adapter(getSupportFragmentManager());
 
