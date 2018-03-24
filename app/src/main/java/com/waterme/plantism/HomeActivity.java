@@ -156,8 +156,8 @@ public class HomeActivity extends BaseActivity {
                     // set text for ui
                     viewHolder.plantMyName.setText(model.getPlantMyname());
                     viewHolder.plantCategory.setText(model.getPlantCategory());
-                    viewHolder.hmText.setText(String.valueOf(model.getHumidity()).substring(0, 5));
-                    viewHolder.tpText.setText(String.valueOf(model.getTemperature()).substring(0, 5));
+                    viewHolder.hmText.setText(model.getHumidity());
+                    viewHolder.tpText.setText(model.getTemperature());
                 } else {
                     Log.d(TAG,"Create last view");
                 }
@@ -217,10 +217,10 @@ public class HomeActivity extends BaseActivity {
         ((SimpleItemAnimator) mRecycleView.getItemAnimator()).setSupportsChangeAnimations(false);
         hideLoadingIndicator();
         Log.d(TAG, "add plants");
-        addPlants("绿萝","kkk","ttt");
+        //addPlants("绿萝","kkk","ttt");
         Log.d(TAG, "add sensors");
         addSensor("1546", "kkk");
-        changeTest();
+        //changeTest();
 
 
     }
@@ -298,34 +298,42 @@ public class HomeActivity extends BaseActivity {
         DatabaseReference ref = mFirebaseDatabase.getReference()
                 .child(USER_CHILD).child(uid);
         Map<String, Object> update = new HashMap<>();
-        update.put(USER_REALTIME_CHILD + "/1645", new RealTimeData(random.nextDouble(),
-                random.nextDouble(),
+        update.put(USER_REALTIME_CHILD + "/1645", new RealTimeData(
+                String.valueOf(random.nextDouble()),
+                String.valueOf(random.nextDouble()),
                 "1",
                 "2",
                 "3",
                 "4",
-                "5"));
-        update.put(USER_REALTIME_CHILD + "/1541", new RealTimeData(random.nextDouble(),
-                random.nextDouble(),
+                "5",
+                1645));
+        update.put(USER_REALTIME_CHILD + "/1541", new RealTimeData(
+                String.valueOf(random.nextDouble()),
+                String.valueOf(random.nextDouble()),
                 "1",
                 "2",
                 "3",
                 "4",
-                "5"));
-        update.put(USER_REALTIME_CHILD + "/1234", new RealTimeData(random.nextDouble(),
-                random.nextDouble(),
+                "5",
+                1541));
+        update.put(USER_REALTIME_CHILD + "/1234", new RealTimeData(
+                String.valueOf(random.nextDouble()),
+                String.valueOf(random.nextDouble()),
                 "1",
                 "2",
                 "3",
                 "4",
-                "5"));
-        update.put(USER_REALTIME_CHILD + "/2333", new RealTimeData(random.nextDouble(),
-                random.nextDouble(),
+                "5",
+                1234));
+        update.put(USER_REALTIME_CHILD + "/2333", new RealTimeData(
+                String.valueOf(random.nextDouble()),
+                String.valueOf(random.nextDouble()),
                 "1",
                 "2",
                 "3",
                 "4",
-                "5"));
+                "5",
+                2333));
 
         ref.updateChildren(update);
 

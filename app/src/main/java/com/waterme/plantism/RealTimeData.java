@@ -5,8 +5,9 @@ package com.waterme.plantism;
  */
 
 public class RealTimeData {
-    private double humidity;
-    private double temperature;
+    private String humidity;
+    private String temperature;
+    private int order;
     private String plantMyname;
     private String plantCategory;
     private String hUrl = null;
@@ -16,10 +17,13 @@ public class RealTimeData {
     public RealTimeData() {
 
     }
-    public RealTimeData(double h, double t, String hUrl, String tUrl,
-                        String imgaUrl, String plantMyname, String plantCategory) {
+    public RealTimeData(String h, String t, String hUrl, String tUrl,
+                        String imgaUrl, String plantMyname,
+                        String plantCategory, int order) {
+
         humidity = h;
         temperature = t;
+        this.order = order;
         this.hUrl = hUrl;
         this.tUrl = tUrl;
         this.imgaUrl = imgaUrl;
@@ -27,7 +31,11 @@ public class RealTimeData {
         this.plantCategory = plantCategory;
     }
 
-    public double getTemperature() {
+    public int getOrder() {
+        return order;
+    }
+
+    public String getTemperature() {
         return temperature;
     }
 
@@ -39,7 +47,7 @@ public class RealTimeData {
         return tUrl;
     }
 
-    public double getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
 
@@ -55,8 +63,8 @@ public class RealTimeData {
         return plantCategory;
     }
 
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
     }
 
     public void setPlantCategory(String plantCategory) {
@@ -67,8 +75,12 @@ public class RealTimeData {
         this.plantMyname = plantMyname;
     }
 
-    public void setHumidity(double humidity) {
-        this.humidity = humidity;
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public void sethUrl(String hUrl) {
