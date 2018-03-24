@@ -8,7 +8,7 @@ public class RealTimeData {
     private double humidity;
     private double temperature;
     private String plantMyname;
-    private String plantName;
+    private String plantCategory;
     private String hUrl = null;
     private String tUrl = null;
     private String imgaUrl = null;
@@ -17,14 +17,14 @@ public class RealTimeData {
 
     }
     public RealTimeData(double h, double t, String hUrl, String tUrl,
-                        String imgaUrl, String plantMyname, String plantName) {
+                        String imgaUrl, String plantMyname, String plantCategory) {
         humidity = h;
         temperature = t;
         this.hUrl = hUrl;
         this.tUrl = tUrl;
         this.imgaUrl = imgaUrl;
         this.plantMyname = plantMyname;
-        this.plantName = plantName;
+        this.plantCategory = plantCategory;
     }
 
     public double getTemperature() {
@@ -51,12 +51,20 @@ public class RealTimeData {
         return plantMyname;
     }
 
-    public String getPlantName() {
-        return plantName;
+    public String getPlantCategory() {
+        return plantCategory;
     }
 
     public void setTemperature(double temperature) {
         this.temperature = temperature;
+    }
+
+    public void setPlantCategory(String plantCategory) {
+        this.plantCategory = plantCategory;
+    }
+
+    public void setPlantMyname(String plantMyname) {
+        this.plantMyname = plantMyname;
     }
 
     public void setHumidity(double humidity) {

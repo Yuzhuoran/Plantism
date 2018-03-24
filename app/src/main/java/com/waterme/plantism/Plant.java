@@ -8,12 +8,12 @@ import java.util.List;
  */
 
 public class Plant {
-    private String name;
+    private String category;
     private String history;
     private String imgUrl;
 
-    public Plant(String name, String history, String imgUrl) {
-        this.name = name;
+    public Plant(String category, String history, String imgUrl) {
+        this.category = category;
         this.history = history;
         this.imgUrl = imgUrl;
     }
@@ -26,8 +26,8 @@ public class Plant {
         return imgUrl;
     }
 
-    public String getName() {
-        return name;
+    public String getCategory() {
+        return category;
     }
 
     public void setHistory(String history) {
@@ -38,7 +38,7 @@ public class Plant {
         this.imgUrl = imgUrl;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

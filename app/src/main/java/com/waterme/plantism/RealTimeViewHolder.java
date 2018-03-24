@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class RealTimeViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView plantName;
+    public TextView plantCategory;
     public TextView plantMyName;
     public TextView hmText;
     public TextView tpText;
@@ -23,7 +23,7 @@ public class RealTimeViewHolder extends RecyclerView.ViewHolder {
 
     public RealTimeViewHolder(View view) {
         super(view);
-        plantName = (TextView) itemView.findViewById(R.id.tv_plant_name);
+        plantCategory = (TextView) itemView.findViewById(R.id.tv_plant_category);
         plantMyName = (TextView) itemView.findViewById(R.id.tv_plant_myName);
         hmText = (TextView) itemView.findViewById(R.id.tv_plant_hm);
         tpText = (TextView) itemView.findViewById(R.id.tv_plant_tp);

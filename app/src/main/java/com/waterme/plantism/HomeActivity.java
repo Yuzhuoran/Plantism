@@ -13,8 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,6 +88,9 @@ public class HomeActivity extends BaseActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseStorage mFirebaseStorage;
 
+    private static final int REAL_TIME_DATA_TYPE = 1;
+    private static final int ADD_PLANT_TYPE = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -134,32 +139,41 @@ public class HomeActivity extends BaseActivity {
                         , RealTimeData.class)
                 .build();
 
-        Log.d(TAG, "before adpater");
+        Log.d(TAG, "before adapter");
         mAdapter = new FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull RealTimeViewHolder viewHolder, int position, @NonNull final RealTimeData model) {
                 // bind viewholder to view, set the view content
                 Log.d(TAG, "bind view holder!");
-                String imgUrl = model.getImgaUrl();
-                String tUrl = model.gettUrl();
-                String hUrl = model.gethUrl();
+                if (getItemViewType(position) == REAL_TIME_DATA_TYPE) {
+                    String imgUrl = model.getImgaUrl();
+                    String tUrl = model.gettUrl();
+                    String hUrl = model.gethUrl();
 
-                // set image for ui
-                StorageReference storageReference = mFirebaseStorage.getReference();
+                    // set image for ui
+                    StorageReference storageReference = mFirebaseStorage.getReference();
 
-                // set text for ui
-                viewHolder.plantMyName.setText(model.getPlantMyname());
-                viewHolder.plantName.setText(model.getPlantName());
-                viewHolder.hmText.setText(String.valueOf(model.getHumidity()).substring(0, 5));
-                viewHolder.tpText.setText(String.valueOf(model.getTemperature()).substring(0, 5));
+                    // set text for ui
+                    viewHolder.plantMyName.setText(model.getPlantMyname());
+                    viewHolder.plantCategory.setText(model.getPlantCategory());
+                    viewHolder.hmText.setText(String.valueOf(model.getHumidity()).substring(0, 5));
+                    viewHolder.tpText.setText(String.valueOf(model.getTemperature()).substring(0, 5));
+                } else {
+                    Log.d(TAG,"Create last view");
+                }
+
                 viewHolder.setmClickListener(new RealTimeViewHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         Log.d(TAG, "item click " + position);
-                        Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
-                        intent.putExtra(PLANTID, model.getPlantMyname());
-                        intent.putExtra(CATEGORY, model.getPlantName());
-                        startActivity(intent);
+                        if (position != getItemCount() - 1) {
+                            Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
+                            intent.putExtra(PLANTID, model.getPlantMyname());
+                            intent.putExtra(CATEGORY, model.getPlantCategory());
+                            startActivity(intent);
+                        } else {
+                            Log.d(TAG, "add a plant!");
+                        }
                     }
                 });
             }
@@ -169,10 +183,12 @@ public class HomeActivity extends BaseActivity {
             public RealTimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 Log.d(TAG, "create view holder !");
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                RealTimeViewHolder view = new RealTimeViewHolder(inflater.inflate(R.layout.item_plant, parent, false));
+                if (viewType == REAL_TIME_DATA_TYPE) {
+                    return new RealTimeViewHolder(inflater.inflate(R.layout.item_plant, parent, false));
+                } else {
+                    return new AddPlantViewHolder(inflater.inflate(R.layout.item_add_plant, parent, false));
+                }
 
-
-                return view;
             }
 
             // E
@@ -180,6 +196,15 @@ public class HomeActivity extends BaseActivity {
             public void onDataChanged() {
                 super.onDataChanged();
                 Log.d(TAG, "firebase data change!");
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                if (position == getItemCount() - 1) {
+                    return ADD_PLANT_TYPE;
+                } else {
+                    return REAL_TIME_DATA_TYPE;
+                }
             }
         };
 
@@ -189,14 +214,13 @@ public class HomeActivity extends BaseActivity {
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecycleView.setLayoutManager(layoutManager);
         mRecycleView.setAdapter(mAdapter);
+        ((SimpleItemAnimator) mRecycleView.getItemAnimator()).setSupportsChangeAnimations(false);
         hideLoadingIndicator();
         Log.d(TAG, "add plants");
         addPlants("绿萝","kkk","ttt");
         Log.d(TAG, "add sensors");
         addSensor("1546", "kkk");
         changeTest();
-
-
 
 
     }
@@ -244,12 +268,11 @@ public class HomeActivity extends BaseActivity {
 
         // <sid - <uid, plantMyName>
         // check if sensor is in the
-        final Map<String, Object> update = new HashMap<>();
-        update.put(sensorId, new Sensor(uid, plantMyName));
-
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, Object> update = new HashMap<>();
+                update.put(sensorId, new Sensor(uid, plantMyName));
                 if (!dataSnapshot.exists()) {
                     dbRef.updateChildren(update);
                 }
@@ -270,7 +293,6 @@ public class HomeActivity extends BaseActivity {
         update.put(plantMyName, new Plant(plantName, "history", imgUrl));
         dbRef.updateChildren(update);
     }
-
     private void addTest() {
         Random random = new Random();
         DatabaseReference ref = mFirebaseDatabase.getReference()
@@ -320,14 +342,16 @@ public class HomeActivity extends BaseActivity {
                 update.put("1645/temperature", random.nextDouble());
                 update.put("1234/humidity", random.nextDouble());
                 update.put("1234/temperature", random.nextDouble());
-                update.put("2333/humidity", random.nextDouble());
-                update.put("2333/temperature", random.nextDouble());
+                update.put("1541/humidity", random.nextDouble());
+                update.put("1541/temperature", random.nextDouble());
                 DatabaseReference ref = mFirebaseDatabase.getReference();
                 ref.child(USER_CHILD).child(uid)
                         .child(USER_REALTIME_CHILD)
                         .updateChildren(update);
             }
         };
-        timer.schedule(timerTask, 5000, 5000);
+        timer.schedule(timerTask, 2000, 2000);
     }
+
+
 }

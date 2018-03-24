@@ -23,6 +23,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String CATEGORY = "CATEGORY";
     private static final String UID = "UID";
 
+
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private String uid;
@@ -44,8 +45,6 @@ public class DetailActivity extends AppCompatActivity {
         setUpViewPager(mViewPager);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mTabLayout.setupWithViewPager(mViewPager);
-
-
 
     }
 

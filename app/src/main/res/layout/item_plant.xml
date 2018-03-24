@@ -55,7 +55,7 @@
             app:layout_constraintEnd_toStartOf="@+id/tv_plant_tp" />
 
         <TextView
-            android:id="@+id/tv_plant_name"
+            android:id="@+id/tv_plant_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -71,7 +71,7 @@
             android:layout_marginStart="16dp"
             android:text="Stupid Mika"
             app:layout_constraintStart_toEndOf="@+id/v_plant_bg"
-            app:layout_constraintTop_toBottomOf="@+id/tv_plant_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_plant_category" />
 
         <TextView
             android:id="@+id/tv_plant_hm"
