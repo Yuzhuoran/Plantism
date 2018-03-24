@@ -136,6 +136,7 @@ public class HomeActivity extends BaseActivity {
                 .setQuery(mFirebaseDatabase.getReference().child(USER_CHILD)
                         .child(uid)
                         .child(USER_REALTIME_CHILD)
+                        .orderByChild("order")
                         , RealTimeData.class)
                 .build();
 
@@ -156,9 +157,10 @@ public class HomeActivity extends BaseActivity {
                     // set text for ui
                     viewHolder.plantMyName.setText(model.getPlantMyname());
                     viewHolder.plantCategory.setText(model.getPlantCategory());
-                    viewHolder.hmText.setText(model.getHumidity());
-                    viewHolder.tpText.setText(model.getTemperature());
+                    viewHolder.hmText.setText(model.getHumidity().substring(0, 3));
+                    viewHolder.tpText.setText(model.getTemperature().substring(0, 3));
                 } else {
+                    Log.d(TAG, "the order is " + model.getOrder());
                     Log.d(TAG,"Create last view");
                 }
 
@@ -219,8 +221,8 @@ public class HomeActivity extends BaseActivity {
         Log.d(TAG, "add plants");
         //addPlants("绿萝","kkk","ttt");
         Log.d(TAG, "add sensors");
-        addSensor("1546", "kkk");
-        //changeTest();
+        //addSensor("1546", "kkk");
+        changeTest();
 
 
     }
@@ -324,8 +326,38 @@ public class HomeActivity extends BaseActivity {
                 "3",
                 "4",
                 "5",
-                1234));
+                1234 + 9999));
         update.put(USER_REALTIME_CHILD + "/2333", new RealTimeData(
+                String.valueOf(random.nextDouble()),
+                String.valueOf(random.nextDouble()),
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                2333));
+
+        update.put(USER_REALTIME_CHILD + "/2334", new RealTimeData(
+                String.valueOf(random.nextDouble()),
+                String.valueOf(random.nextDouble()),
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                2333));
+
+        update.put(USER_REALTIME_CHILD + "/2335", new RealTimeData(
+                String.valueOf(random.nextDouble()),
+                String.valueOf(random.nextDouble()),
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                2333));
+
+        update.put(USER_REALTIME_CHILD + "/2336", new RealTimeData(
                 String.valueOf(random.nextDouble()),
                 String.valueOf(random.nextDouble()),
                 "1",
@@ -346,12 +378,12 @@ public class HomeActivity extends BaseActivity {
             public void run() {
                 Random random = new Random();
                 Map<String, Object> update = new HashMap<>();
-                update.put("1645/humidity", random.nextDouble());
-                update.put("1645/temperature", random.nextDouble());
-                update.put("1234/humidity", random.nextDouble());
-                update.put("1234/temperature", random.nextDouble());
-                update.put("1541/humidity", random.nextDouble());
-                update.put("1541/temperature", random.nextDouble());
+                update.put("1645/humidity", String.valueOf(random.nextDouble()));
+                update.put("1645/temperature", String.valueOf(random.nextDouble()));
+                update.put("1234/humidity", String.valueOf(random.nextDouble()));
+                update.put("1234/temperature", String.valueOf(random.nextDouble()));
+                update.put("1541/humidity", String.valueOf(random.nextDouble()));
+                update.put("1541/temperature", String.valueOf(random.nextDouble()));
                 DatabaseReference ref = mFirebaseDatabase.getReference();
                 ref.child(USER_CHILD).child(uid)
                         .child(USER_REALTIME_CHILD)
