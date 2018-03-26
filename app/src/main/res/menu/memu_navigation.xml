@@ -2,11 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:title="One"/>
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="My Garden" />
         <item
-            android:title="Two"/>
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="Sensor List" />
         <item
-            android:title="Smart Mika"/>
+            android:icon="@drawable/ic_bookmark_border_black_24dp"
+            android:title="Archieve" />
+        <item
+            android:title="Setting"/>
     </group>
 
 </menu>

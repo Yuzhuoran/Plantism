@@ -60,6 +60,35 @@
             app:layout_constraintTop_toTopOf="@+id/view" />
 
         <ImageView
+            android:id="@+id/im_dialog"
+            android:layout_width="322dp"
+            android:layout_height="62dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/dialog"
+            app:layout_constraintBottom_toTopOf="@+id/im_status"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/tv_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="I have enough water"
+            app:layout_constraintBottom_toBottomOf="@+id/im_dialog"
+            app:layout_constraintEnd_toEndOf="@+id/im_dialog"
+            app:layout_constraintStart_toStartOf="@+id/im_dialog"
+            app:layout_constraintTop_toTopOf="@+id/im_dialog" />
+
+
+        <ImageView
             android:id="@+id/im_weather"
             android:layout_width="79dp"
             android:layout_height="54dp"
