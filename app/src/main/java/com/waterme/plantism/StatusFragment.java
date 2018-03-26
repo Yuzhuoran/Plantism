@@ -75,7 +75,9 @@ public class StatusFragment extends Fragment {
         TextView tvWeather = (TextView) rootView.findViewById(R.id.tv_weather);
         TextView tvMyPlantName = (TextView) rootView.findViewById(R.id.tv_status_myname);
         TextView tvPlantName = (TextView) rootView.findViewById(R.id.tv_status_name);
+        //fake textvies
 
+        //end fake
         ImageView imPlant = (ImageView) rootView.findViewById(R.id.im_status);
         ImageView imWeather = (ImageView) rootView.findViewById(R.id.im_weather);
         ImageView imStatusSun = (ImageView) rootView.findViewById(R.id.im_status_sun);

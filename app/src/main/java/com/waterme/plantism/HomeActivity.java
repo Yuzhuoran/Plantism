@@ -109,7 +109,7 @@ public class HomeActivity extends BaseActivity {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
-        //addTest();
+        addTest();
         showLoadingIndicator();
         // load the data from firebase
 
@@ -156,8 +156,8 @@ public class HomeActivity extends BaseActivity {
                     // set text for ui
                     viewHolder.plantMyName.setText(model.getPlantMyname());
                     viewHolder.plantCategory.setText(model.getPlantCategory());
-                    viewHolder.hmText.setText(model.getHumidity().substring(0, Math.min(4, model.getHumidity().length())));
-                    viewHolder.tpText.setText(model.getTemperature().substring(0, Math.min(4, model.getTemperature().length())));
+                    viewHolder.hmText.setText(model.getHumidity().substring(0, Math.min(4, model.getHumidity().length()))+"%");
+                    viewHolder.tpText.setText(model.getTemperature().substring(0, Math.min(4, model.getTemperature().length()))+"°F");
                 } else {
                     Log.d(TAG, "the order is " + model.getOrder());
                     Log.d(TAG,"Create last view");
@@ -210,7 +210,7 @@ public class HomeActivity extends BaseActivity {
             }
         };
 
-        addTest();
+        //addTest();
         Log.d(TAG, "create adapter finish");
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -310,7 +310,7 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "plant1",
+                "Panda",
                 "Bamboo",
                 1645));
         update.put(USER_REALTIME_CHILD + "/1541", new RealTimeData(
@@ -319,8 +319,8 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "plant1",
-                "Bamboo",
+                "Little Donkey",
+                "Succulent",
                 1541));
         update.put(USER_REALTIME_CHILD + "/1234", new RealTimeData(
                 String.valueOf(random.nextDouble()),
@@ -328,9 +328,9 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "plant1",
-                "Bamboo",
-                1234 + 9999));
+                "Penny",
+                "Narcissus",
+                1234));
         update.put(USER_REALTIME_CHILD + "/2333", new RealTimeData(
                 String.valueOf(random.nextDouble()),
                 String.valueOf(random.nextDouble()),
@@ -339,8 +339,8 @@ public class HomeActivity extends BaseActivity {
                 "3",
                 "plant1",
                 "Bamboo",
-                2333));
-
+                2333+9999));
+/*
         update.put(USER_REALTIME_CHILD + "/2334", new RealTimeData(
                 String.valueOf(random.nextDouble()),
                 String.valueOf(random.nextDouble()),
@@ -369,7 +369,7 @@ public class HomeActivity extends BaseActivity {
                 "3",
                 "plant1",
                 "Bamboo",
-                2333));
+                2333));*/
 
         ref.updateChildren(update);
 
@@ -382,12 +382,12 @@ public class HomeActivity extends BaseActivity {
             public void run() {
                 Random random = new Random();
                 Map<String, Object> update = new HashMap<>();
-                update.put("1645/humidity", String.valueOf(random.nextDouble()));
-                update.put("1645/temperature", String.valueOf(random.nextDouble()));
-                update.put("1234/humidity", String.valueOf(random.nextDouble()));
-                update.put("1234/temperature", String.valueOf(random.nextDouble()));
-                update.put("1541/humidity", String.valueOf(random.nextDouble()));
-                update.put("1541/temperature", String.valueOf(random.nextDouble()));
+                update.put("1645/humidity", String.valueOf(65.0+random.nextDouble()));
+                update.put("1645/temperature", String.valueOf(72.0+random.nextDouble()));
+                update.put("1234/humidity", String.valueOf(82.0+random.nextDouble()));
+                update.put("1234/temperature", String.valueOf(77.0+random.nextDouble()));
+                //update.put("1541/humidity", String.valueOf(random.nextDouble()));
+                //update.put("1541/temperature", String.valueOf(random.nextDouble()));
                 DatabaseReference ref = mFirebaseDatabase.getReference();
                 ref.child(USER_CHILD).child(uid)
                         .child(USER_REALTIME_CHILD)

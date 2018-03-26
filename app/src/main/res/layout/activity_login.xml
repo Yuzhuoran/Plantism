@@ -63,7 +63,8 @@
             android:textSize="20sp"
             android:textColor="#000000"
             android:gravity="right"
-            android:textAlignment="gravity" />
+            android:textAlignment="gravity"
+            android:layout_marginLeft="32dp" />
         
         <EditText
             android:id="@+id/et_input_password"
@@ -73,7 +74,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="153dp"
             android:layout_marginTop="233dp"
-            android:background="@drawable/border"/>
+            android:background="@drawable/border"
+            android:layout_marginLeft="153dp" />
 
         <Button
             android:id="@+id/btn_sign_up"
@@ -87,7 +89,8 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="48dp" />
 
 
 
@@ -103,7 +106,8 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="244dp">
         </Button>
 
 
@@ -114,7 +118,8 @@
             android:layout_marginTop="372dp"
             android:background="@color/divider"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="52dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -124,7 +129,8 @@
             android:text="Login with social media account"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="52dp" />
 
         <ImageView
             android:id="@+id/im_google"
@@ -135,7 +141,8 @@
             android:layout_marginTop="424dp"
             android:src="@drawable/google"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="56dp" />
 
         <ImageView
             android:id="@+id/im_facebook"
@@ -146,7 +153,8 @@
             android:layout_marginTop="424dp"
             android:src="@drawable/facebook"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="136dp" />
 
         <ImageView
             android:id="@+id/im_twitter"
@@ -157,7 +165,8 @@
             android:layout_marginTop="420dp"
             android:src="@drawable/twitter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="204dp" />
 
         <ImageView
             android:id="@+id/im_linkedin"
@@ -168,7 +177,8 @@
             android:layout_marginTop="424dp"
             android:src="@drawable/linkedin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="288dp" />
 
         <ProgressBar
             android:id="@+id/pb_login"

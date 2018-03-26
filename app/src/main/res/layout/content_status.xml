@@ -17,11 +17,11 @@
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="497dp"
-            android:layout_marginTop="80dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="450dp"
+            android:background="@color/cardPlantBackground"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_outdoor"
@@ -31,18 +31,19 @@
             android:layout_marginTop="24dp"
             android:text="Outdoor"
             app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintTop_toTopOf="@+id/view" />
+            app:layout_constraintTop_toTopOf="@+id/view"
+            tools:ignore="RtlCompat" />
 
         <TextView
             android:id="@+id/tv_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="8dp"
-            android:text="66F"
-            android:textSize="41sp"
+            android:layout_marginEnd="20dp"
+            android:text="66°F"
+            android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintTop_toBottomOf="@+id/tv_outdoor" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_outdoor"
+            android:layout_marginRight="20dp" />
 
         <ImageView
             android:id="@+id/im_status"
@@ -60,13 +61,14 @@
 
         <ImageView
             android:id="@+id/im_weather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="60dp"
+            android:layout_width="79dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:srcCompat="@drawable/humidity" />
+            app:srcCompat="@drawable/cloudy"
+            android:layout_marginLeft="24dp" />
 
         <TextView
             android:id="@+id/tv_status_myname"
@@ -75,7 +77,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Stupid Mika"
+            android:text="Little Donkey"
+            android:editable="true"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/view"
@@ -88,7 +91,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="I am a plant"
+            android:text="Donkey Burros Tail, Succulent"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_status_myname" />
@@ -99,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view"
@@ -111,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
 
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="18dp"
             app:layout_constraintEnd_toStartOf="@+id/im_status_sun"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view"
@@ -122,14 +125,41 @@
             android:id="@+id/im_status_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="18dp"
             android:layout_marginLeft="36dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/im_status_sun"
             app:layout_constraintTop_toBottomOf="@+id/view"
             android:src="@drawable/smile" />
 
+        <TextView
+            android:id="@+id/textView_water"
+            android:layout_width="83dp"
+            android:layout_height="43dp"
+
+            android:text="Enough Water"
+            app:layout_constraintStart_toStartOf="@+id/im_status_water"
+            app:layout_constraintTop_toBottomOf="@+id/im_status_water" />
+
+        <TextView
+            android:id="@+id/textView_sun"
+            android:layout_width="122dp"
+            android:layout_height="48dp"
+
+            android:text="Not Enough Sunshine"
+            app:layout_constraintStart_toStartOf="@+id/im_status_sun"
+            app:layout_constraintTop_toBottomOf="@+id/im_status_sun" />
+
+        <TextView
+            android:id="@+id/textView_temp"
+            android:layout_width="94dp"
+            android:layout_height="72dp"
+
+            android:text="Comfortable Temperature"
+            app:layout_constraintStart_toStartOf="@+id/im_status_temp"
+            app:layout_constraintTop_toBottomOf="@+id/im_status_temp"
+            android:layout_marginLeft="4dp" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/ct_humidity"
@@ -139,8 +169,8 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/im_status_sun">
+            android:layout_marginTop="70dp"
+            app:layout_constraintTop_toBottomOf="@id/im_status_water">
 
         </com.github.mikephil.charting.charts.BarChart>
 
@@ -157,6 +187,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ct_humidity">
 
         </com.github.mikephil.charting.charts.LineChart>
+
 
     </android.support.constraint.ConstraintLayout>
 
