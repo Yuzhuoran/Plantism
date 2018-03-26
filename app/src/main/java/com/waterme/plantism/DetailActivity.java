@@ -11,12 +11,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TableLayout;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends BaseActivity {
 
     private static final String TAG = "Detail Activity";
     private static final String PLANTID = "PLANTID";
@@ -30,10 +34,12 @@ public class DetailActivity extends AppCompatActivity {
     private String plantId;
     private String plantCategory;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.activity_detail, contentFramLayout);
 
         // get the current username
         SharedPreferences sharedPre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
@@ -45,6 +51,15 @@ public class DetailActivity extends AppCompatActivity {
         setUpViewPager(mViewPager);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
 
     }
 

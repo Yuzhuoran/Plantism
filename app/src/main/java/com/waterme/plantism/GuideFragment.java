@@ -31,14 +31,14 @@ public class GuideFragment extends Fragment {
         if (getArguments() != null) {
             plantid = getArguments().getString(PLANTID);
             uid = getArguments().getString(UID);
-            Log.d(TAG, "plantid is : "+ plantid);
-            Log.d(TAG, "uid is :" + uid);
+            Log.d(TAG, "GuideFragment plantid is : "+ plantid);
+            Log.d(TAG, "GuideFragment uid is :" + uid);
         }
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_guide, container, false);
-        return view;
+        View rootView = inflater.inflate(R.layout.content_guide, container, false);
+        return rootView;
     }
 }

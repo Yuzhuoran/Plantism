@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cw_search_plant"
+    android:layout_width="@dimen/card_width"
+    android:layout_height="@dimen/card_height"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/white"
+    android:layout_marginBottom="@dimen/md_keylines"
+    android:layout_marginLeft="@dimen/md_keylines"
+    android:layout_marginRight="@dimen/md_keylines">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/v_search_plant_bg"
+            android:layout_width="124dp"
+            android:layout_height="match_parent"
+            android:background="@color/cardPlantBackground"/>
+        <ImageView
+            android:id="@+id/im_plant_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/plant_home"
+            app:layout_constraintBottom_toBottomOf="@+id/v_search_plant_bg"
+            app:layout_constraintEnd_toEndOf="@id/v_search_plant_bg"
+            app:layout_constraintStart_toStartOf="@+id/v_search_plant_bg"
+            app:layout_constraintTop_toTopOf="@+id/v_search_plant_bg" />
+
+        <TextView
+            android:id="@+id/tv_genus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="44dp"
+            android:layout_marginTop="8dp"
+            android:text="仙人掌"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/v_search_plant_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.071" />
+
+        <TextView
+            android:id="@+id/tv_species"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
+            android:text="仙人掌1号"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/v_search_plant_bg"
+            app:layout_constraintTop_toTopOf="@+id/tv_genus"
+            app:layout_constraintVertical_bias="0.505" />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
+</android.support.v7.widget.CardView>

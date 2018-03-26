@@ -107,7 +107,6 @@ public class HomeActivity extends BaseActivity {
         mRecycleView = (RecyclerView) findViewById(R.id.ry_plants);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb);
 
-
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
         //addTest();
@@ -157,8 +156,8 @@ public class HomeActivity extends BaseActivity {
                     // set text for ui
                     viewHolder.plantMyName.setText(model.getPlantMyname());
                     viewHolder.plantCategory.setText(model.getPlantCategory());
-                    viewHolder.hmText.setText(model.getHumidity().substring(0, 3));
-                    viewHolder.tpText.setText(model.getTemperature().substring(0, 3));
+                    viewHolder.hmText.setText(model.getHumidity().substring(0, Math.min(4, model.getHumidity().length())));
+                    viewHolder.tpText.setText(model.getTemperature().substring(0, Math.min(4, model.getTemperature().length())));
                 } else {
                     Log.d(TAG, "the order is " + model.getOrder());
                     Log.d(TAG,"Create last view");
@@ -192,6 +191,7 @@ public class HomeActivity extends BaseActivity {
                 }
 
             }
+            
 
             // E
             @Override
@@ -220,6 +220,10 @@ public class HomeActivity extends BaseActivity {
         hideLoadingIndicator();
         Log.d(TAG, "add plants");
         //addPlants("绿萝","kkk","ttt");
+        addPlants("Bamboo", "plant1", "1");
+        addPlants("Banana", "plant2", "2");
+        addPlants("Cabbage", "plant3", "3");
+        addPlants("Beach Spider Lily ", "plant4", "4");
         Log.d(TAG, "add sensors");
         //addSensor("1546", "kkk");
         changeTest();
@@ -306,8 +310,8 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "4",
-                "5",
+                "plant1",
+                "Bamboo",
                 1645));
         update.put(USER_REALTIME_CHILD + "/1541", new RealTimeData(
                 String.valueOf(random.nextDouble()),
@@ -315,8 +319,8 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "4",
-                "5",
+                "plant1",
+                "Bamboo",
                 1541));
         update.put(USER_REALTIME_CHILD + "/1234", new RealTimeData(
                 String.valueOf(random.nextDouble()),
@@ -324,8 +328,8 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "4",
-                "5",
+                "plant1",
+                "Bamboo",
                 1234 + 9999));
         update.put(USER_REALTIME_CHILD + "/2333", new RealTimeData(
                 String.valueOf(random.nextDouble()),
@@ -333,8 +337,8 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "4",
-                "5",
+                "plant1",
+                "Bamboo",
                 2333));
 
         update.put(USER_REALTIME_CHILD + "/2334", new RealTimeData(
@@ -343,8 +347,8 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "4",
-                "5",
+                "plant1",
+                "Bamboo",
                 2333));
 
         update.put(USER_REALTIME_CHILD + "/2335", new RealTimeData(
@@ -353,8 +357,8 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "4",
-                "5",
+                "plant1",
+                "Bamboo",
                 2333));
 
         update.put(USER_REALTIME_CHILD + "/2336", new RealTimeData(
@@ -363,8 +367,8 @@ public class HomeActivity extends BaseActivity {
                 "1",
                 "2",
                 "3",
-                "4",
-                "5",
+                "plant1",
+                "Bamboo",
                 2333));
 
         ref.updateChildren(update);

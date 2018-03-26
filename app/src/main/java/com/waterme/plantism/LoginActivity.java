@@ -182,8 +182,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.putString("uid", user.getUid());
                             editor.apply();
 
+
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
+
+                            /**
+                            Intent intetn2 = new Intent(LoginActivity.this, SearchActivity.class);
+                            startActivity(intetn2);
+                             **/
 
                         } else {
                             Log.w(TAG, "sign In With Google fail:", task.getException());
