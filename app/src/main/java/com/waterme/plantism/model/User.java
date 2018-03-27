@@ -1,4 +1,4 @@
-package com.waterme.plantism;
+package com.waterme.plantism.model;
 
 import java.util.ArrayList;
 import java.util.List;

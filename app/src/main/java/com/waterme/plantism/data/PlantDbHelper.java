@@ -15,6 +15,32 @@ public class PlantDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "plant.db";
     private static final int DATABASE_VERSION = 1;
 
+    // two tables
+    // 1 species name / genus / full intro / short intro / tips
+    // 2 species name / image name
+
+    // column names
+
+    private static final String CREATE_TABLE_PLANT = "CREATE TABLE "
+            + PlantContract.PlantEntry.TABLE_NAME + " ("
+            + PlantContract.PlantEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + PlantContract.PlantEntry.COLUMN_SPECIES + " TEXT NOT NULL UNIQUE, "
+            + PlantContract.PlantEntry.COLUMN_GENUES + " TEXT NOT NULL, "
+            + PlantContract.PlantEntry.COLUMN_FULL_INTRO + " TEXT NOT NULL, "
+            + PlantContract.PlantEntry.COLUMN_SHORT_INTRO + " TEXT NOT NULL, "
+            + PlantContract.PlantEntry.COLUMN_TIP + " TEXT NOT NULL"
+            + " FOREIGN KEY (" + PlantContract.PlantEntry.COLUMN_SPECIES +") REFERENCES "
+            + PlantImageContract.ImageEntry.TABLE_NAME
+            + "(" + PlantImageContract.ImageEntry.COLUMN_SPECIES +"));";
+
+
+    private static final String CREATE_TABLE_IMAGE = "CREATE TABLE "
+            + PlantImageContract.ImageEntry.TABLE_NAME + " ("
+            + PlantImageContract.ImageEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + PlantImageContract.ImageEntry.COLUMN_SPECIES + " TEXT NOT NULL, "
+            + PlantImageContract.ImageEntry.COLUMN_IMAGE + " TEXT NOT NULL "
+            + " )";
+
     /**
      * Constructor for db helper
      * @param context
@@ -29,16 +55,10 @@ public class PlantDbHelper extends SQLiteOpenHelper {
      */
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Log.d(TAG, "CREATE database!");
-        final String SQL_CREATE_PLANT_TABLE = "CREATE TABLE "
-                + PlantContract.PlantEntry.TABLE_NAME + " ("
-                + PlantContract.PlantEntry.COLUMN_DATE + " TEXT NOT NULL, "
-                + PlantContract.PlantEntry.COLUMN_TEMP + " REAL NOT NULL, "
-                + PlantContract.PlantEntry.COLUMN_HUMIDITY + " REAL NOT NULL, "
-                + PlantContract.PlantEntry.COLUMN_PLANT + " INTEGER NOT NULL, "
-                + "PRIMARY KEY (" + PlantContract.PlantEntry.COLUMN_PLANT
-                + ", " + PlantContract.PlantEntry.COLUMN_DATE + "));";
-
-        sqLiteDatabase.execSQL(SQL_CREATE_PLANT_TABLE);
+        Log.d(TAG, CREATE_TABLE_IMAGE);
+        Log.d(TAG, CREATE_TABLE_PLANT);
+        sqLiteDatabase.execSQL(CREATE_TABLE_IMAGE);
+        sqLiteDatabase.execSQL(CREATE_TABLE_PLANT);
     }
 
     /**
@@ -50,5 +70,6 @@ public class PlantDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlantContract.PlantEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlantImageContract.ImageEntry.TABLE_NAME);
     }
 }

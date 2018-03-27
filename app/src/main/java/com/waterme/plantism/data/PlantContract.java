@@ -15,10 +15,12 @@ public class PlantContract {
 
     public static final class PlantEntry implements BaseColumns {
         public static final String TABLE_NAME = "plant";
-        public static final String COLUMN_DATE = "date_id";
-        public static final String COLUMN_PLANT = "plant_id";
-        public static final String COLUMN_TEMP = "temperature";
-        public static final String COLUMN_HUMIDITY = "humidity";
+        public static final String _ID = "id";
+        public static final String COLUMN_SPECIES = "species";
+        public static final String COLUMN_GENUES = "genus";
+        public static final String COLUMN_SHORT_INTRO = "shortIntro";
+        public static final String COLUMN_FULL_INTRO = "fullIntro";
+        public static final String COLUMN_TIP = "tips";
     }
 }
 

@@ -1,4 +1,4 @@
-package com.waterme.plantism;
+package com.waterme.plantism.Fragment;
 
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
@@ -10,9 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.waterme.plantism.R;
+
 /**
  * Created by zhuoran on 3/22/18.
  */
+
+//needs a db helper
 
 public class GuideFragment extends Fragment {
     private static final String TAG = "Guide Fragment";

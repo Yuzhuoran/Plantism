@@ -1,4 +1,4 @@
-package com.waterme.plantism;
+package com.waterme.plantism.Fragment;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -36,6 +36,8 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.waterme.plantism.R;
+import com.waterme.plantism.data.PlantDbHelper;
 
 /**
  * Created by zhuoran on 3/22/18.
@@ -55,6 +57,10 @@ public class StatusFragment extends Fragment {
 
     private String plantid;
     private String uid;
+
+    // get database reference
+    private PlantDbHelper dbHelper = new PlantDbHelper(getContext());
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

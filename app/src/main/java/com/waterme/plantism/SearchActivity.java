@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.widget.FrameLayout;
 
+import com.waterme.plantism.data.PlantDbHelper;
+
+
+// needs a dbhelper to search
 public class SearchActivity extends BaseActivity implements SearchView.OnQueryTextListener{
+
+    PlantDbHelper dbHelper = new PlantDbHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
