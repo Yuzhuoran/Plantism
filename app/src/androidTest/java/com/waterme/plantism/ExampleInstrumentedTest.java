@@ -7,9 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.waterme.plantism.data.PlantDbHelper;
 import com.waterme.plantism.data.PlantContract;
+import com.waterme.plantism.model.Plant;
+import com.waterme.plantism.model.PlantIntro;
+import com.waterme.plantism.utils.DatabaseUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +31,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    private static final String TAG = "TEST";
     private final Context mContext = InstrumentationRegistry.getTargetContext();
     private final Class mDbHelperClass = PlantDbHelper.class;
 
@@ -87,19 +92,26 @@ public class ExampleInstrumentedTest {
         /* Use WaitlistDbHelper to get access to a writable database */
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = new ContentValues();
-        testValues.put(PlantContract.PlantEntry.COLUMN_DATE, "today");
-        testValues.put(PlantContract.PlantEntry.COLUMN_HUMIDITY, 10.0);
-        testValues.put(PlantContract.PlantEntry.COLUMN_PLANT, 1);
-        testValues.put(PlantContract.PlantEntry.COLUMN_TEMP, 11.0);
+        /* get the utils */
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        PlantIntro intro = new PlantIntro(
+                "Donkey Burros Tails",
+                "Succulents",
+                "Burro’s tail is a heat and drought tolerant plant well suited for warm to temperate regions. The thick stems appear woven or plaited with leaves. The succulent is green to gray green or even blue green and may have a slight chalky look. ",
+                "Sedum morganianum, or Burro’s tail, is a succulent perennial plant native to Mexico. ",
+                "prefers bright, indirect sunlight. It will burn in strong, hot sun.\n" +
+                        "\n" +
+                        "watering once a month should be plenty, as the leaves hold quite a bit of moisture\n" +
+                        "\n" +
+                        "this plant should ideally be a lovely blue-green.\n"
+
+
+        );
+
 
         /* Insert ContentValues into database and get first row ID back */
-        long firstRowId = database.insert(
-                PlantContract.PlantEntry.TABLE_NAME,
-                null,
-                testValues);
-
-        /* If the insert fails, database.insert returns -1 */
+        long firstRowId = dbUtils.insertOneRecord(database, intro);
+         /* If the insert fails, database.insert returns -1 */
         assertNotEquals("Unable to insert into the database", -1, firstRowId);
 
         /*
@@ -126,7 +138,14 @@ public class ExampleInstrumentedTest {
         String emptyQueryError = "Error: No Records returned from waitlist query";
         assertTrue(emptyQueryError,
                 wCursor.moveToFirst());
+        PlantIntro readIntro = dbUtils.getIntroBySpecies(database, "Donkey Burros Tails");
 
+        /* test if read the correct data */
+        assertTrue(readIntro.equals(intro));
+
+
+        System.out.println(readIntro.toString());
+        Log.d(TAG, readIntro.toString());
         /* Close cursor and database */
         wCursor.close();
         dbHelper.close();
@@ -150,34 +169,31 @@ public class ExampleInstrumentedTest {
         /* Use WaitlistDbHelper to get access to a writable database */
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = new ContentValues();
-        testValues.put(PlantContract.PlantEntry.COLUMN_DATE, "today+1");
-        testValues.put(PlantContract.PlantEntry.COLUMN_HUMIDITY, 10.0);
-        testValues.put(PlantContract.PlantEntry.COLUMN_PLANT, 1);
-        testValues.put(PlantContract.PlantEntry.COLUMN_TEMP, 11.0);
+        PlantIntro intro = new PlantIntro(
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+        );
+        DatabaseUtils dbUtils = new DatabaseUtils();
 
 
         /* Insert ContentValues into database and get first row ID back */
-        long firstRowId = database.insert(
-                PlantContract.PlantEntry.TABLE_NAME,
-                null,
-                testValues);
+        long firstRowId = dbUtils.insertOneRecord(database, intro);
 
-        ContentValues testValues2 = new ContentValues();
-        testValues2.put(PlantContract.PlantEntry.COLUMN_DATE, "today+2");
-        testValues2.put(PlantContract.PlantEntry.COLUMN_HUMIDITY, 10.0);
-        testValues2.put(PlantContract.PlantEntry.COLUMN_PLANT, 1);
-        testValues2.put(PlantContract.PlantEntry.COLUMN_TEMP, 11.0);
-
+        PlantIntro intro2 = new PlantIntro(
+                "2",
+                "2",
+                "3",
+                "4",
+                "5"
+        );
         /* Insert ContentValues into database and get another row ID back */
-        long secondRowId = database.insert(
-                PlantContract.PlantEntry.TABLE_NAME,
-                null,
-                testValues2);
+        long secondRowId = dbUtils.insertOneRecord(database, intro2);
 
         assertEquals("ID Autoincrement test failed!",
                 firstRowId + 1, secondRowId);
-
 
     }
 

@@ -29,9 +29,7 @@ public class PlantDbHelper extends SQLiteOpenHelper {
             + PlantContract.PlantEntry.COLUMN_FULL_INTRO + " TEXT NOT NULL, "
             + PlantContract.PlantEntry.COLUMN_SHORT_INTRO + " TEXT NOT NULL, "
             + PlantContract.PlantEntry.COLUMN_TIP + " TEXT NOT NULL"
-            + " FOREIGN KEY (" + PlantContract.PlantEntry.COLUMN_SPECIES +") REFERENCES "
-            + PlantImageContract.ImageEntry.TABLE_NAME
-            + "(" + PlantImageContract.ImageEntry.COLUMN_SPECIES +"));";
+            + " )";
 
 
     private static final String CREATE_TABLE_IMAGE = "CREATE TABLE "
@@ -50,8 +48,8 @@ public class PlantDbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * create table sql
-     * @param sqLiteDatabase database
+     * Create two database for the application
+     * @param sqLiteDatabase
      */
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Log.d(TAG, "CREATE database!");

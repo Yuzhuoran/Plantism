@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
  */
 
 /**
- * Constructor for the weather contract
+ * The plant intro database schema
  */
 public class PlantContract {
 

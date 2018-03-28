@@ -6,6 +6,10 @@ import android.provider.BaseColumns;
  * Created by zhuoran on 3/26/18.
  */
 
+/**
+ * Plant image database schema
+ */
+
 public class PlantImageContract {
     public static final class ImageEntry implements BaseColumns {
         public static final String TABLE_NAME = "image";
