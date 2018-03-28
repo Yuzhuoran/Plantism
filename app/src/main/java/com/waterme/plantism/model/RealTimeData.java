@@ -12,13 +12,13 @@ public class RealTimeData {
     private String plantCategory;
     private String hUrl = null;
     private String tUrl = null;
-    private String imgaUrl = null;
+    private String imageUrl = null;
 
     public RealTimeData() {
 
     }
     public RealTimeData(String h, String t, String hUrl, String tUrl,
-                        String imgaUrl, String plantMyname,
+                        String imageUrl, String plantMyname,
                         String plantCategory, int order) {
 
         humidity = h;
@@ -26,7 +26,7 @@ public class RealTimeData {
         this.order = order;
         this.hUrl = hUrl;
         this.tUrl = tUrl;
-        this.imgaUrl = imgaUrl;
+        this.imageUrl = imageUrl;
         this.plantMyname = plantMyname;
         this.plantCategory = plantCategory;
     }
@@ -51,8 +51,8 @@ public class RealTimeData {
         return humidity;
     }
 
-    public String getImgaUrl() {
-        return imgaUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public String getPlantMyname() {
@@ -91,7 +91,7 @@ public class RealTimeData {
         this.tUrl = tUrl;
     }
 
-    public void setImgaUrl(String imgaUrl) {
-        this.imgaUrl = imgaUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The home activity for the app. The activity has a list of the plant for the user.
@@ -93,27 +94,8 @@ public class HomeActivity extends BaseActivity {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
-        addTest();
         showLoadingIndicator();
         // load the data from firebase
-
-
-        DatabaseReference ref = mFirebaseDatabase.getReference();
-        ref.child(USER_CHILD).child(uid).child(USER_REALTIME_CHILD).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                            Log.d(TAG, (String) dsp.getKey());
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                }
-        );
 
         FirebaseRecyclerOptions<RealTimeData> options = new FirebaseRecyclerOptions.Builder<RealTimeData>()
                 .setQuery(mFirebaseDatabase.getReference().child(USER_CHILD)
@@ -124,39 +106,46 @@ public class HomeActivity extends BaseActivity {
                 .build();
 
         Log.d(TAG, "before adapter");
+
+        /* create adpater */
         mAdapter = new FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull RealTimeViewHolder viewHolder, int position, @NonNull final RealTimeData model) {
-                // bind viewholder to view, set the view content
-                Log.d(TAG, "bind view holder!");
+                // get the view to bind by the order
                 if (getItemViewType(position) == REAL_TIME_DATA_TYPE) {
-                    String imgUrl = model.getImgaUrl();
+                    Log.d(TAG, "bind real time data");
+                    String imgUrl = model.getImageUrl();
                     String tUrl = model.gettUrl();
                     String hUrl = model.gethUrl();
 
                     // set image for ui
                     StorageReference storageReference = mFirebaseStorage.getReference();
-
                     // set text for ui
                     viewHolder.plantMyName.setText(model.getPlantMyname());
                     viewHolder.plantCategory.setText(model.getPlantCategory());
-                    viewHolder.hmText.setText(model.getHumidity().substring(0, Math.min(4, model.getHumidity().length()))+"%");
-                    viewHolder.tpText.setText(model.getTemperature().substring(0, Math.min(4, model.getTemperature().length()))+"°F");
+                    if (model.getHumidity() != null) {
+                        viewHolder.hmText.setText(model.getHumidity().substring(0, Math.min(4, model.getHumidity().length()))+"%");
+                    }
+                    if (model.getTemperature() != null) {
+                        viewHolder.tpText.setText(model.getTemperature().substring(0, Math.min(4, model.getTemperature().length()))+"°F");
+                    }
                 } else {
                     Log.d(TAG, "the order is " + model.getOrder());
-                    Log.d(TAG,"Create last view");
+                    Log.d(TAG, "bind add plant view!");
                 }
 
                 viewHolder.setmClickListener(new RealTimeViewHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         Log.d(TAG, "item click " + position);
-                        if (position != getItemCount() - 1) {
+                        //
+                        if (getItemViewType(position) == REAL_TIME_DATA_TYPE) {
                             Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
                             intent.putExtra(PLANTID, model.getPlantMyname());
                             intent.putExtra(CATEGORY, model.getPlantCategory());
                             startActivity(intent);
                         } else {
+                            // start activity to add a plant
                             Log.d(TAG, "add a plant!");
                         }
                     }
@@ -169,7 +158,7 @@ public class HomeActivity extends BaseActivity {
                 Log.d(TAG, "create view holder !");
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
                 if (viewType == REAL_TIME_DATA_TYPE) {
-                    return new RealTimeViewHolder(inflater.inflate(R.layout.item_plant, parent, false));
+                    return new RealTimePlantViewHolder(inflater.inflate(R.layout.item_plant, parent, false));
                 } else {
                     return new AddPlantViewHolder(inflater.inflate(R.layout.item_add_plant, parent, false));
                 }
@@ -184,33 +173,34 @@ public class HomeActivity extends BaseActivity {
                 Log.d(TAG, "firebase data change!");
             }
 
+            /**
+             * get the view type by the position and the order of the model;
+             * @param position
+             * @return
+             */
             @Override
             public int getItemViewType(int position) {
-                if (position == getItemCount() - 1) {
+                RealTimeData model = getItem(position);
+                if (model.getOrder() > 9999) {
                     return ADD_PLANT_TYPE;
                 } else {
                     return REAL_TIME_DATA_TYPE;
                 }
             }
         };
-
-        //addTest();
         Log.d(TAG, "create adapter finish");
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecycleView.setLayoutManager(layoutManager);
         mRecycleView.setAdapter(mAdapter);
         ((SimpleItemAnimator) mRecycleView.getItemAnimator()).setSupportsChangeAnimations(false);
+
         hideLoadingIndicator();
-        Log.d(TAG, "add plants");
-        //addPlants("绿萝","kkk","ttt");
-        addPlants("Bamboo", "plant1", "1");
-        addPlants("Banana", "plant2", "2");
-        addPlants("Cabbage", "plant3", "3");
-        addPlants("Beach Spider Lily ", "plant4", "4");
-        Log.d(TAG, "add sensors");
-        //addSensor("1546", "kkk");
+        addTest();
         changeTest();
+
+
+
 
 
     }
@@ -251,112 +241,75 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-    // add sensor
-    private void addSensor(final String sensorId, final String plantMyName) {
+    // add sensor to the sensor list to let arduino know the uid and plantid
+    // then add a sensor view in the Now child of user
+    private void addSensor(final String sensorId) {
+
         final DatabaseReference dbRef = mFirebaseDatabase.getReference()
                 .child(SENSOR_CHILD);
+        Log.d(TAG, "add sensor to db");
+        /* update the sensor child */
+        Map<String, Object> update = new HashMap<>();
+        update.put(sensorId, new Sensor(uid, "plantName"));
+        dbRef.updateChildren(update);
 
-        // <sid - <uid, plantMyName>
-        // check if sensor is in the
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Object> update = new HashMap<>();
-                update.put(sensorId, new Sensor(uid, plantMyName));
-                if (!dataSnapshot.exists()) {
-                    dbRef.updateChildren(update);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
-
-    //use update !
-    private void addPlants(String plantName, String plantMyName, String imgUrl){
-        final DatabaseReference dbRef = mFirebaseDatabase.getReference()
+        /* update the user now data */
+        final DatabaseReference dbNowRef = mFirebaseDatabase.getReference()
                 .child(USER_CHILD)
                 .child(uid)
-                .child(USER_PLANTS_CHILD);
+                .child(USER_REALTIME_CHILD);
+        update.clear();
+        update.put(sensorId, new RealTimeData(
+                "humidity",
+                "temperature",
+                "hUrl",
+                "tUrl",
+                "ImageUrl",
+                "PlantMyname",
+                "PlantCategory",
+                Integer.valueOf(sensorId) + 9999));
+        dbNowRef.updateChildren(update);
+        Log.d(TAG, "add sensor to now");
+    }
+
+    //use update
+    private void addPlants(String plantCategory, String plantMyName, String sensorId){
+        Log.d(TAG, "Add plant test");
+        final DatabaseReference dbRef = mFirebaseDatabase.getReference()
+                .child(USER_CHILD)
+                .child(uid).child(USER_PLANTS_CHILD);
+
+        /* update plant child */
         Map<String, Object> update = new HashMap<>();
-        update.put(plantMyName, new Plant(plantName, "history", imgUrl));
+        update.put(plantMyName, new Plant(plantCategory, "history", "*"));
         dbRef.updateChildren(update);
+
+        /* update the now child */
+        DatabaseReference dbNowRef = mFirebaseDatabase.getReference()
+                .child(USER_CHILD)
+                .child(uid)
+                .child(USER_REALTIME_CHILD);
+        update.clear();
+        update.put(sensorId + "/plantMyname", plantMyName);
+        update.put(sensorId + "/plantCategory", plantCategory);
+        update.put(sensorId + "/order", Integer.valueOf(sensorId));
+
+        dbNowRef.updateChildren(update);
+
+
+
     }
     private void addTest() {
         Random random = new Random();
-        DatabaseReference ref = mFirebaseDatabase.getReference()
-                .child(USER_CHILD).child(uid);
-        Map<String, Object> update = new HashMap<>();
-        update.put(USER_REALTIME_CHILD + "/1645", new RealTimeData(
-                String.valueOf(random.nextDouble()),
-                String.valueOf(random.nextDouble()),
-                "1",
-                "2",
-                "3",
-                "Panda",
-                "Bamboo",
-                1645));
-        update.put(USER_REALTIME_CHILD + "/1541", new RealTimeData(
-                String.valueOf(random.nextDouble()),
-                String.valueOf(random.nextDouble()),
-                "1",
-                "2",
-                "3",
-                "Little Donkey",
-                "Succulent",
-                1541));
-        update.put(USER_REALTIME_CHILD + "/1234", new RealTimeData(
-                String.valueOf(random.nextDouble()),
-                String.valueOf(random.nextDouble()),
-                "1",
-                "2",
-                "3",
-                "Penny",
-                "Narcissus",
-                1234));
-        update.put(USER_REALTIME_CHILD + "/2333", new RealTimeData(
-                String.valueOf(random.nextDouble()),
-                String.valueOf(random.nextDouble()),
-                "1",
-                "2",
-                "3",
-                "plant1",
-                "Bamboo",
-                2333+9999));
-/*
-        update.put(USER_REALTIME_CHILD + "/2334", new RealTimeData(
-                String.valueOf(random.nextDouble()),
-                String.valueOf(random.nextDouble()),
-                "1",
-                "2",
-                "3",
-                "plant1",
-                "Bamboo",
-                2333));
+        Log.d(TAG, "add sensor test!");
+        /* first add sensor */
+        addSensor("1234");
+        addSensor("1645");
+        addSensor("2333");
 
-        update.put(USER_REALTIME_CHILD + "/2335", new RealTimeData(
-                String.valueOf(random.nextDouble()),
-                String.valueOf(random.nextDouble()),
-                "1",
-                "2",
-                "3",
-                "plant1",
-                "Bamboo",
-                2333));
-
-        update.put(USER_REALTIME_CHILD + "/2336", new RealTimeData(
-                String.valueOf(random.nextDouble()),
-                String.valueOf(random.nextDouble()),
-                "1",
-                "2",
-                "3",
-                "plant1",
-                "Bamboo",
-                2333));*/
-
-        ref.updateChildren(update);
-
+        /* then add two plant */
+        addPlants("panda", "mika", "1234");
+        addPlants("Dog", "miba", "1645");
 
     }
     private void changeTest() {
@@ -379,6 +332,15 @@ public class HomeActivity extends BaseActivity {
             }
         };
         timer.schedule(timerTask, 2000, 2000);
+
+        TimerTask addPlantTask = new TimerTask() {
+            @Override
+            public void run() {
+                addPlants("panda", "plant1", "2333" );
+            }
+        };
+
+        timer.schedule(addPlantTask, 10000);
     }
 
 
