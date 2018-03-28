@@ -52,6 +52,8 @@ public class DatabaseUtils {
         contentValues.put(PlantContract.PlantEntry.COLUMN_SPECIES, plantIntro.getSpecies());
         contentValues.put(PlantContract.PlantEntry.COLUMN_GENUES, plantIntro.getGenus());
         contentValues.put(PlantContract.PlantEntry.COLUMN_TIP, plantIntro.getTips());
+        contentValues.put(PlantContract.PlantEntry.COLUMN_HUMIDITY_THREAD, plantIntro.getHumidityThread());
+        contentValues.put(PlantContract.PlantEntry.COLUMN_TEMPERATURE_THREAD, plantIntro.getTemperatureThread());
         /* for testing */
         return db.insert(PlantContract.PlantEntry.TABLE_NAME, null, contentValues);
     }
@@ -84,6 +86,8 @@ public class DatabaseUtils {
             plantIntro.setGenus(cursor.getString(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_GENUES)));
             plantIntro.setSpecies(cursor.getString(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_SPECIES)));
             plantIntro.setTips(cursor.getString(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_TIP)));
+            plantIntro.setHumidityThread(cursor.getInt(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_HUMIDITY_THREAD)));
+            plantIntro.setTemperatureThread(cursor.getInt(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_TEMPERATURE_THREAD)));
             return plantIntro;
         }
     }

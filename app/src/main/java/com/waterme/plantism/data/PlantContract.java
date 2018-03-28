@@ -21,6 +21,8 @@ public class PlantContract {
         public static final String COLUMN_SHORT_INTRO = "shortIntro";
         public static final String COLUMN_FULL_INTRO = "fullIntro";
         public static final String COLUMN_TIP = "tips";
+        public static final String COLUMN_HUMIDITY_THREAD = "humidity";
+        public static final String COLUMN_TEMPERATURE_THREAD = "temperature";
     }
 }
 
