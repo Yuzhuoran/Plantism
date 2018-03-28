@@ -23,6 +23,8 @@ public class PlantContract {
         public static final String COLUMN_TIP = "tips";
         public static final String COLUMN_HUMIDITY_THREAD = "humidity";
         public static final String COLUMN_TEMPERATURE_THREAD = "temperature";
+        public static final String COLUMN_IMAGE = "image";
+
     }
 }
 

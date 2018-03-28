@@ -45,6 +45,6 @@ public class RealTimeViewHolder extends RecyclerView.ViewHolder {
     }
 
     public interface ClickListener {
-        public void onItemClick(View view, int position);
+         void onItemClick(View view, int position);
     }
 }

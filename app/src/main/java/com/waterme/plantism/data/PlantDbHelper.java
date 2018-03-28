@@ -30,7 +30,8 @@ public class PlantDbHelper extends SQLiteOpenHelper {
             + PlantContract.PlantEntry.COLUMN_SHORT_INTRO + " TEXT NOT NULL, "
             + PlantContract.PlantEntry.COLUMN_TIP + " TEXT NOT NULL, "
             + PlantContract.PlantEntry.COLUMN_HUMIDITY_THREAD + " INTEGER DEFAULT 100, "
-            + PlantContract.PlantEntry.COLUMN_TEMPERATURE_THREAD + " INTEGER DEFAULT 100"
+            + PlantContract.PlantEntry.COLUMN_TEMPERATURE_THREAD + " INTEGER DEFAULT 100, "
+            + PlantContract.PlantEntry.COLUMN_IMAGE + " TEXT NOT NULL"
             + " )";
 
 

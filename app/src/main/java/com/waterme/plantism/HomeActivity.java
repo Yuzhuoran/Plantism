@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HomeActivity extends BaseActivity {
 
-
+    public static String PACKAGE_NAME;
     private static final String TAG = "Home activity";
 
     /** the recycleview to read the condition of plants
@@ -81,7 +81,7 @@ public class HomeActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
 
-
+        PACKAGE_NAME = getApplicationContext().getPackageName();
         FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.activity_home, contentFramLayout);
 
@@ -297,11 +297,11 @@ public class HomeActivity extends BaseActivity {
         dbNowRef.updateChildren(update);
 
 
-
     }
     private void addTest() {
         Random random = new Random();
         Log.d(TAG, "add sensor test!");
+
         /* first add sensor */
         addSensor("1234");
         addSensor("1645");
@@ -313,6 +313,7 @@ public class HomeActivity extends BaseActivity {
 
     }
     private void changeTest() {
+
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -333,6 +334,7 @@ public class HomeActivity extends BaseActivity {
         };
         timer.schedule(timerTask, 2000, 2000);
 
+        /* 10 seconds later add a new plant to a empty sensor */
         TimerTask addPlantTask = new TimerTask() {
             @Override
             public void run() {

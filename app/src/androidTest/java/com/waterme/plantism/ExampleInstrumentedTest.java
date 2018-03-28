@@ -104,6 +104,7 @@ public class ExampleInstrumentedTest {
                         "watering once a month should be plenty, as the leaves hold quite a bit of moisture\n" +
                         "\n" +
                         "this plant should ideally be a lovely blue-green.\n",
+                "pitcture",
                 100,
                 100
 
@@ -176,6 +177,7 @@ public class ExampleInstrumentedTest {
                 "3",
                 "4",
                 "5",
+                "p",
                 100,
                 100
         );
@@ -191,6 +193,7 @@ public class ExampleInstrumentedTest {
                 "3",
                 "4",
                 "5",
+                "p",
                 100,
                 100
         );

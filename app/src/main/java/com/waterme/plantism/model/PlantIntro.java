@@ -12,11 +12,13 @@ public class PlantIntro {
     private String fullIntro;
     private String shortIntro;
     private String tips;
+    private String image;
     private int humidityThread;
     private int temperatureThread;
 
     public PlantIntro(String species, String genus, String fullIntro,
-                      String shortIntro, String tips, int humidityThread,
+                      String shortIntro, String tips, String image,
+                      int humidityThread,
                       int temperatureThread) {
         this.shortIntro = shortIntro;
         this.species = species;
@@ -25,6 +27,7 @@ public class PlantIntro {
         this.tips = tips;
         this.humidityThread = humidityThread;
         this.temperatureThread = temperatureThread;
+        this.image = image;
     }
 
     public PlantIntro() {}
@@ -39,6 +42,10 @@ public class PlantIntro {
 
     public String getShortIntro() {
         return shortIntro;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public String getSpecies() {
@@ -83,6 +90,10 @@ public class PlantIntro {
 
     public void setTemperatureThread(int temperatureThread) {
         this.temperatureThread = temperatureThread;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
