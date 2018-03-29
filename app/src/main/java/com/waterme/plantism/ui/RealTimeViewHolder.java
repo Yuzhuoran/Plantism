@@ -1,4 +1,4 @@
-package com.waterme.plantism;
+package com.waterme.plantism.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,7 +9,7 @@ import android.widget.TextView;
  * Created by zhuoran on 3/22/18.
  */
 
-public class RealTimeViewHolder extends RecyclerView.ViewHolder {
+abstract class RealTimeViewHolder extends RecyclerView.ViewHolder {
 
     public TextView plantCategory;
     public TextView plantMyName;
@@ -19,17 +19,12 @@ public class RealTimeViewHolder extends RecyclerView.ViewHolder {
     public ImageView hmImg;
     public ImageView tpImg;
 
+    public TextView sensorText;
+
     private RealTimeViewHolder.ClickListener mClickListener;
 
     public RealTimeViewHolder(View view) {
         super(view);
-        plantCategory = (TextView) itemView.findViewById(R.id.tv_plant_category);
-        plantMyName = (TextView) itemView.findViewById(R.id.tv_plant_myName);
-        hmText = (TextView) itemView.findViewById(R.id.tv_plant_hm);
-        tpText = (TextView) itemView.findViewById(R.id.tv_plant_tp);
-        plantImg = (ImageView) itemView.findViewById(R.id.im_plant_home);
-        hmImg = (ImageView) itemView.findViewById(R.id.im_hm_indicator);
-        tpImg = (ImageView) itemView.findViewById(R.id.im_tp_indicator);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

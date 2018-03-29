@@ -1,27 +1,20 @@
-package com.waterme.plantism;
+package com.waterme.plantism.ui;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+import com.waterme.plantism.R;
 import com.waterme.plantism.data.PlantContract;
-import com.waterme.plantism.data.PlantImageContract;
-import com.waterme.plantism.model.Plant;
 import com.waterme.plantism.model.PlantIntro;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by zhuoran on 3/28/18.
@@ -36,6 +29,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
     private List<PlantIntro> originalItems;
 
 
+    /* assuming passing all attribute */
     public SearchAdapter(Context context, Cursor cursor) {
         super();
         mCursor = cursor;
@@ -53,7 +47,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
                         cursor.getString(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_IMAGE)),
                         cursor.getInt(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_HUMIDITY_THREAD)),
                         cursor.getInt(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_TEMPERATURE_THREAD))
-
                 ));
             }
         } finally {

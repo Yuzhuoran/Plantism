@@ -20,28 +20,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SignUpActivity" />
+            android:name=".ui.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.SignUpActivity" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.HomeActivity"
             android:label="My Garden" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".BaseActivity"/>
-        <activity
-            android:name=".SearchActivity">
+        <activity android:name=".ui.DetailActivity" />
+        <activity android:name=".ui.BaseActivity" />
+        <activity android:name=".ui.SearchActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.AddPlantActivity" />
+        <activity android:name=".ui.AddSensorActivity" />
+        <activity android:name=".ui.SensorHomeActivity" />
+        <activity android:name=".ui.SearchDetailActivity" />
     </application>
 
 </manifest>

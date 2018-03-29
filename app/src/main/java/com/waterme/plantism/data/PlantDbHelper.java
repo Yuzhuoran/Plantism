@@ -73,7 +73,6 @@ public class PlantDbHelper extends SQLiteOpenHelper {
         if (newVersion > oldVersion) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlantContract.PlantEntry.TABLE_NAME);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlantImageContract.ImageEntry.TABLE_NAME);
-            onCreate(sqLiteDatabase);
         }
 
     }

@@ -1,4 +1,4 @@
-package com.waterme.plantism;
+package com.waterme.plantism.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,16 +18,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.waterme.plantism.R;
 import com.waterme.plantism.model.Plant;
 import com.waterme.plantism.model.RealTimeData;
 import com.waterme.plantism.model.Sensor;
@@ -37,7 +35,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 /**
  * The home activity for the app. The activity has a list of the plant for the user.
@@ -107,12 +104,13 @@ public class HomeActivity extends BaseActivity {
 
         Log.d(TAG, "before adapter");
 
-        /* create adpater */
+        /* create adapter */
         mAdapter = new FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull RealTimeViewHolder viewHolder, int position, @NonNull final RealTimeData model) {
                 // get the view to bind by the order
                 if (getItemViewType(position) == REAL_TIME_DATA_TYPE) {
+
                     Log.d(TAG, "bind real time data");
                     String imgUrl = model.getImageUrl();
                     String tUrl = model.gettUrl();
@@ -130,7 +128,7 @@ public class HomeActivity extends BaseActivity {
                         viewHolder.tpText.setText(model.getTemperature().substring(0, Math.min(4, model.getTemperature().length()))+"°F");
                     }
                 } else {
-                    Log.d(TAG, "the order is " + model.getOrder());
+                    //TODO
                     Log.d(TAG, "bind add plant view!");
                 }
 
@@ -138,14 +136,14 @@ public class HomeActivity extends BaseActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Log.d(TAG, "item click " + position);
-                        //
                         if (getItemViewType(position) == REAL_TIME_DATA_TYPE) {
                             Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
                             intent.putExtra(PLANTID, model.getPlantMyname());
                             intent.putExtra(CATEGORY, model.getPlantCategory());
                             startActivity(intent);
                         } else {
-                            // start activity to add a plant
+                            /* start an intent to add a plant */
+                            //TODO
                             Log.d(TAG, "add a plant!");
                         }
                     }
@@ -164,9 +162,7 @@ public class HomeActivity extends BaseActivity {
                 }
 
             }
-            
 
-            // E
             @Override
             public void onDataChanged() {
                 super.onDataChanged();
@@ -198,8 +194,6 @@ public class HomeActivity extends BaseActivity {
         hideLoadingIndicator();
         addTest();
         changeTest();
-
-
     }
 
     @Override
@@ -240,6 +234,9 @@ public class HomeActivity extends BaseActivity {
 
     // add sensor to the sensor list to let arduino know the uid and plantid
     // then add a sensor view in the Now child of user
+
+    /* put in AddSensorActivity */
+    //TODO
     private void addSensor(final String sensorId) {
 
         final DatabaseReference dbRef = mFirebaseDatabase.getReference()
@@ -268,8 +265,9 @@ public class HomeActivity extends BaseActivity {
         dbNowRef.updateChildren(update);
         Log.d(TAG, "add sensor to now");
     }
-
     //use update
+    /* put in AddPlantActivity */
+    //TODO
     private void addPlants(String plantCategory, String plantMyName, String sensorId){
         Log.d(TAG, "Add plant test");
         final DatabaseReference dbRef = mFirebaseDatabase.getReference()

@@ -1,4 +1,4 @@
-package com.waterme.plantism;
+package com.waterme.plantism.ui;
 
 import android.view.View;
 

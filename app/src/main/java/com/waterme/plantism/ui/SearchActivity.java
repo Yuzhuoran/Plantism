@@ -1,13 +1,6 @@
-package com.waterme.plantism;
+package com.waterme.plantism.ui;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.content.Context;
-import android.support.v4.content.CursorLoader;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,14 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.arlib.floatingsearchview.FloatingSearchView;
+import com.waterme.plantism.R;
 import com.waterme.plantism.data.PlantContract;
 import com.waterme.plantism.data.PlantDbHelper;
-import com.waterme.plantism.data.PlantImageContract;
 import com.waterme.plantism.model.PlantIntro;
 import com.waterme.plantism.utils.DatabaseUtils;
-
-import java.lang.ref.WeakReference;
 
 
 // needs a dbhelper to search
@@ -97,8 +87,6 @@ public class SearchActivity extends BaseActivity implements
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setOnQueryTextListener(this);
         showPlantIntro();
-
-
     }
 
     @Override
@@ -120,23 +108,5 @@ public class SearchActivity extends BaseActivity implements
     private void hidePlantIntro() {
         mRecyclerView.setVisibility(View.INVISIBLE);
     }
-
-    /* loader for introduction */
-    static class IntroCursorLoader extends CursorLoader {
-        private WeakReference<Context> mContext;
-        IntroCursorLoader(Context context) {
-            super(context);
-            mContext = new WeakReference<Context>(context);
-        }
-
-        /* return the cursor of all plants */
-        @Override
-        public Cursor loadInBackground() {
-            return new PlantDbHelper(mContext.get()).getReadableDatabase().rawQuery(
-                    "SELECT * FROM " + PlantContract.PlantEntry.TABLE_NAME, null);
-
-        }
-    }
-
 
 }

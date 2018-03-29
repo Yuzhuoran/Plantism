@@ -1,6 +1,5 @@
-package com.waterme.plantism;
+package com.waterme.plantism.ui;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
@@ -12,4 +11,5 @@ public class AddPlantViewHolder extends RealTimeViewHolder {
     public AddPlantViewHolder(View view) {
         super(view);
     }
+    //TODO get the view done
 }

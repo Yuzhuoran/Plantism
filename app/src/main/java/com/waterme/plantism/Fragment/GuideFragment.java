@@ -18,6 +18,8 @@ import com.waterme.plantism.R;
 
 //needs a db helper
 
+//TODO finish guide text and image
+
 public class GuideFragment extends Fragment {
     private static final String TAG = "Guide Fragment";
 

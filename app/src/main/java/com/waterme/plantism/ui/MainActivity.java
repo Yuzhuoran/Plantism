@@ -1,4 +1,4 @@
-package com.waterme.plantism;
+package com.waterme.plantism.ui;
 
 import android.database.Cursor;
 import android.support.v4.app.LoaderManager;
@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.waterme.plantism.R;
 
 public class MainActivity extends AppCompatActivity {
 

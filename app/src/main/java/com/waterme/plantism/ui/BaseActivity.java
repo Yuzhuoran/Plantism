@@ -1,4 +1,4 @@
-package com.waterme.plantism;
+package com.waterme.plantism.ui;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.waterme.plantism.R;
 
 public class BaseActivity extends AppCompatActivity {
 
