@@ -1,4 +1,4 @@
-package com.waterme.plantism.ui;
+package com.waterme.plantism;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
-import com.waterme.plantism.R;
 import com.waterme.plantism.data.PlantContract;
 import com.waterme.plantism.model.PlantIntro;
 

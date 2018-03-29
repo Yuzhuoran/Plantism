@@ -1,4 +1,4 @@
-package com.waterme.plantism.ui;
+package com.waterme.plantism;
 
 import android.database.Cursor;
 import android.support.v4.app.LoaderManager;

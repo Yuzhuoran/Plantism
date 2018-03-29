@@ -1,4 +1,4 @@
-package com.waterme.plantism.ui;
+package com.waterme.plantism;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

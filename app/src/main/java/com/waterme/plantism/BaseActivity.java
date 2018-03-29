@@ -1,4 +1,4 @@
-package com.waterme.plantism.ui;
+package com.waterme.plantism;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

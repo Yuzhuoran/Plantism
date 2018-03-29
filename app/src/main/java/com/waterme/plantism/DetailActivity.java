@@ -1,4 +1,4 @@
-package com.waterme.plantism.ui;
+package com.waterme.plantism;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,8 +17,6 @@ import android.widget.FrameLayout;
 
 import com.waterme.plantism.Fragment.GuideFragment;
 import com.waterme.plantism.Fragment.StatusFragment;
-import com.waterme.plantism.R;
-import com.waterme.plantism.ui.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

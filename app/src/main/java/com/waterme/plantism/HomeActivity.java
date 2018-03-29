@@ -1,4 +1,4 @@
-package com.waterme.plantism.ui;
+package com.waterme.plantism;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +25,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.waterme.plantism.R;
 import com.waterme.plantism.model.Plant;
 import com.waterme.plantism.model.RealTimeData;
 import com.waterme.plantism.model.Sensor;

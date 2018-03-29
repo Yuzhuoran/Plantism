@@ -1,4 +1,4 @@
-package com.waterme.plantism.ui;
+package com.waterme.plantism;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.waterme.plantism.R;
 import com.waterme.plantism.data.PlantContract;
 import com.waterme.plantism.data.PlantDbHelper;
 import com.waterme.plantism.model.PlantIntro;

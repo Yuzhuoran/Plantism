@@ -1,11 +1,9 @@
-package com.waterme.plantism.ui;
+package com.waterme.plantism;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.waterme.plantism.R;
 
 /**
  * Created by zhuoran on 3/25/18.
