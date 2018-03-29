@@ -200,9 +200,6 @@ public class HomeActivity extends BaseActivity {
         changeTest();
 
 
-
-
-
     }
 
     @Override

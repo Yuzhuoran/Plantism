@@ -13,7 +13,7 @@ public class PlantDbHelper extends SQLiteOpenHelper {
 
     public static final String TAG = "DatabaseHelper";
     public static final String DATABASE_NAME = "plant.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     // two tables
     // 1 species name / genus / full intro / short intro / tips
@@ -70,7 +70,11 @@ public class PlantDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlantContract.PlantEntry.TABLE_NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlantImageContract.ImageEntry.TABLE_NAME);
+        if (newVersion > oldVersion) {
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlantContract.PlantEntry.TABLE_NAME);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PlantImageContract.ImageEntry.TABLE_NAME);
+            onCreate(sqLiteDatabase);
+        }
+
     }
 }

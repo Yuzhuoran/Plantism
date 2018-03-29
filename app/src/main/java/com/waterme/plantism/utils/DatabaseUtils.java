@@ -52,6 +52,7 @@ public class DatabaseUtils {
         contentValues.put(PlantContract.PlantEntry.COLUMN_SPECIES, plantIntro.getSpecies());
         contentValues.put(PlantContract.PlantEntry.COLUMN_GENUES, plantIntro.getGenus());
         contentValues.put(PlantContract.PlantEntry.COLUMN_TIP, plantIntro.getTips());
+        contentValues.put(PlantContract.PlantEntry.COLUMN_IMAGE, plantIntro.getImage());
         contentValues.put(PlantContract.PlantEntry.COLUMN_HUMIDITY_THREAD, plantIntro.getHumidityThread());
         contentValues.put(PlantContract.PlantEntry.COLUMN_TEMPERATURE_THREAD, plantIntro.getTemperatureThread());
         /* for testing */
