@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             startActivity(intent);
 
                             /**
-                            Intent intetn2 = new Intent(LoginActivity.this, SearchActivity.class);
+                            Intent intetn2 = new Intent(LoginActivity.this, SearchResultActivity.class);
                             startActivity(intetn2);
                              **/
 
