@@ -65,7 +65,6 @@ public class HomeActivity extends BaseActivity {
 
     private static final String IMAGE_URL = "image";
 
-
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseStorage mFirebaseStorage;
 
