@@ -23,7 +23,7 @@ public class MyEditText extends android.support.v7.widget.AppCompatEditText{
 
     private void init() {
         if (!isInEditMode()) {
-            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "avenir_black.ttf");
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "/fonts/avenir_black.ttf");
             setTypeface(tf);
         }
     }
