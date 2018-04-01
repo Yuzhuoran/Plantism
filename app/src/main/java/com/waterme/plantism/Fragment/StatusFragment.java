@@ -85,7 +85,6 @@ public class StatusFragment extends Fragment {
 
         //end fake
         ImageView imPlant = (ImageView) rootView.findViewById(R.id.im_status);
-        ImageView imWeather = (ImageView) rootView.findViewById(R.id.im_weather);
         ImageView imStatusSun = (ImageView) rootView.findViewById(R.id.im_status_sun);
         ImageView imStatusWater = (ImageView) rootView.findViewById(R.id.im_status_water);
         ImageView imStatusTemp = (ImageView) rootView.findViewById(R.id.im_status_temp);

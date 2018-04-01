@@ -7,9 +7,9 @@
     android:layout_width="@dimen/card_width"
     android:layout_height="@dimen/card_height"
     android:layout_gravity="center"
-    android:layout_marginBottom="@dimen/md_keylines"
     android:layout_marginLeft="@dimen/md_keylines"
-    android:layout_marginRight="@dimen/md_keylines">
+    android:layout_marginRight="@dimen/md_keylines"
+    android:layout_marginBottom="16dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,102 +17,95 @@
 
         <View
             android:id="@+id/v_plant_bg"
-            android:layout_width="124dp"
-            android:layout_height="match_parent"
-            android:background="@color/cardPlantBackground"/>
-        <ImageView
-            android:id="@+id/im_plant_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:src="@drawable/plant_home"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.959"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.526" />
+
+        <ImageView
+            android:id="@+id/im_plant_home"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/plant2"
             app:layout_constraintBottom_toBottomOf="@+id/v_plant_bg"
             app:layout_constraintEnd_toEndOf="@id/v_plant_bg"
+            app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toStartOf="@+id/v_plant_bg"
             app:layout_constraintTop_toTopOf="@+id/v_plant_bg" />
 
         <ImageView
             android:id="@+id/im_hm_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="6dp"
-            android:src="@drawable/humidity"
-            app:layout_constraintBottom_toBottomOf="@+id/v_plant_bg"
-            app:layout_constraintEnd_toStartOf="@+id/tv_plant_hm" />
+            android:layout_width="18dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/humidity1"
+            app:layout_constraintStart_toStartOf="@+id/tv_plant_category"
+            app:layout_constraintTop_toBottomOf="@+id/tv_plant_category" />
 
         <ImageView
             android:id="@+id/im_tp_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="6dp"
-            android:src="@drawable/temperature"
-            app:layout_constraintBottom_toBottomOf="@+id/v_plant_bg"
-            app:layout_constraintEnd_toStartOf="@+id/tv_plant_tp" />
+            android:layout_width="18dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/temperature1"
+            app:layout_constraintStart_toEndOf="@+id/tv_plant_hm"
+            app:layout_constraintTop_toTopOf="@+id/im_hm_indicator" />
 
-        <TextView
+        <com.waterme.plantism.model.MyTextView
             android:id="@+id/tv_plant_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="1dp"
             android:text="This is a plant"
-            app:layout_constraintStart_toEndOf="@+id/v_plant_bg"
-            app:layout_constraintTop_toTopOf="@+id/v_plant_bg" />
+            android:textSize="@dimen/smalltext"
+            app:layout_constraintStart_toStartOf="@+id/tv_plant_myName"
+            app:layout_constraintTop_toBottomOf="@+id/tv_plant_myName" />
 
-        <TextView
+        <com.waterme.plantism.model.MyTextView
             android:id="@+id/tv_plant_myName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="Stupid Mika"
-            app:layout_constraintStart_toEndOf="@+id/v_plant_bg"
-            app:layout_constraintTop_toBottomOf="@+id/tv_plant_category" />
+            android:textSize="@dimen/subtitletext"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.waterme.plantism.model.MyTextView
             android:id="@+id/tv_plant_hm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginStart="48dp"
-            android:textSize="22sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
             android:text="20%"
-            app:layout_constraintBottom_toBottomOf="@+id/v_plant_bg"
-            app:layout_constraintStart_toEndOf="@+id/v_plant_bg" />
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/im_hm_indicator"
+            app:layout_constraintTop_toTopOf="@+id/im_hm_indicator" />
 
-        <TextView
+        <com.waterme.plantism.model.MyTextView
             android:id="@+id/tv_plant_tp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
             android:text="55F"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/v_plant_bg"
-            app:layout_constraintStart_toEndOf="@+id/tv_plant_hm" />
-
-        <TextView
-            android:id="@+id/tv_hm_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HUMIDITY"
-            android:textSize="8sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_plant_hm"
-            app:layout_constraintTop_toBottomOf="@id/tv_plant_hm" />
-
-        <TextView
-            android:id="@+id/tv_tp_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TEMPERATURE"
-            android:textSize="8sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_plant_tp"
-            app:layout_constraintTop_toBottomOf="@id/tv_plant_tp" />
-
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/im_tp_indicator"
+            app:layout_constraintTop_toTopOf="@+id/im_tp_indicator" />
     </android.support.constraint.ConstraintLayout>
 
 
