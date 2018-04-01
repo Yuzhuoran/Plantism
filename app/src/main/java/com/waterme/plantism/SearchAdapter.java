@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
     private Cursor mCursor;
     private List<PlantIntro> items;
     private List<PlantIntro> originalItems;
+    private static final String TAG = "Search adapter";
 
 
     /* assuming passing all attribute */
@@ -76,11 +78,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
             @Override
             public void onItemClick(View view, int position) {
                 PlantIntro intro = items.get(position);
+                Log.d(TAG, intro.getSpecies());
+                /*
                 Intent intent = new Intent(view.getContext(), SearchDetailActivity.class);
                 intent.putExtra("species", intro.getSpecies());
                 intent.putExtra("genus", intro.getGenus());
                 intent.putExtra("fullIntro", intro.getFullIntro());
                 view.getContext().startActivity(intent);
+                */
             }
         });
     }
