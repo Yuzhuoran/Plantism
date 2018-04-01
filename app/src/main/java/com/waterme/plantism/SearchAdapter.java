@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -70,6 +71,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
         /* not test yet */
         int imageId = mContext.getResources().getIdentifier(intro.getImage(),"drawable",mContext.getPackageName());
         holder.searchImg.setImageResource(imageId);
+        holder.setmClickListener(new SearchViewHolder.ClickListener(){
+            @Override
+            public void onItemClick(View view, int position) {
+                
+            }
+        });
     }
 
     @NonNull

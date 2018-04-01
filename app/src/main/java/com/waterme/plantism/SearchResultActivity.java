@@ -109,8 +109,9 @@ public class SearchResultActivity extends BaseActivity implements
 
         /* Insert ContentValues into database and get first row ID back */
         super.onCreate(savedInstanceState);
+        //this.deleteDatabase(PlantDbHelper.DATABASE_NAME);
         dbHelper = new PlantDbHelper(this);
-        //initialize_database(dbHelper);
+        initialize_database(dbHelper);
         long id = 0;
         Log.d(TAG, "row id is " + id);
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
