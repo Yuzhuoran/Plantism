@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +40,7 @@ import java.util.TimerTask;
  * The home activity for the app. The activity has a list of the plant for the user.
  * there is an add method to bind a new sensor to a plant
  */
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     public static String PACKAGE_NAME;
     private static final String TAG = "Home activity";
@@ -64,7 +65,7 @@ public class HomeActivity extends BaseActivity {
     private static final String USER_REALTIME_CHILD = "now";
 
     private static final String IMAGE_URL = "image";
-
+    private ImageView btnAddSensor;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseStorage mFirebaseStorage;
 
@@ -78,8 +79,9 @@ public class HomeActivity extends BaseActivity {
 
         PACKAGE_NAME = getApplicationContext().getPackageName();
         FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
+        //btnAddSensor=(ImageView) findViewById(R.id.button_add_plant);
+        //btnAddSensor.setOnClickListener(this);
         getLayoutInflater().inflate(R.layout.activity_home, contentFramLayout);
-
         // get the current username
         SharedPreferences sharedPre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         uid = sharedPre.getString("uid","");
@@ -339,4 +341,12 @@ public class HomeActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.button_add_plant) {
+            Intent intent = new Intent(HomeActivity.this, AddSensorActivity.class);
+            startActivity(intent);
+        }
+    }
 }

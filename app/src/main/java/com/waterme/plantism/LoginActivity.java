@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.waterme.plantism.model.MyTextView;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -41,8 +42,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String USER_URL= "userInfo";
 
     private ImageView mGoogleSignIn,mFacebookSignIn, mTwitterSignIn, mLinkedinSignIn;
-    private Button mSignInButton;
-    private Button mSignUpButton;
+    private MyTextView mSignInButton;
+    private MyTextView mSignUpButton;
     private EditText mEmailField, mPasswordField;
     private ProgressBar mLoadingIndicator;
 
@@ -59,10 +60,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mGoogleSignIn = (ImageView) findViewById(R.id.im_google);
         mFacebookSignIn = (ImageView) findViewById(R.id.im_facebook);
         mTwitterSignIn = (ImageView) findViewById(R.id.im_twitter);
-        mLinkedinSignIn = (ImageView) findViewById(R.id.im_linkedin);
+        //mLinkedinSignIn = (ImageView) findViewById(R.id.im_linkedin);
 
-        mSignInButton = (Button) findViewById(R.id.btn_sign_in);
-        mSignUpButton = (Button) findViewById(R.id.btn_sign_up);
+        mSignInButton = (MyTextView) findViewById(R.id.btn_sign_in);
+        mSignUpButton = (MyTextView) findViewById(R.id.btn_sign_up);
 
         mEmailField = (EditText) findViewById(R.id.et_input_email);
         mPasswordField = (EditText) findViewById(R.id.et_input_password);
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mGoogleSignIn.setOnClickListener(this);
         mFacebookSignIn.setOnClickListener(this);
         mTwitterSignIn.setOnClickListener(this);
-        mLinkedinSignIn.setOnClickListener(this);
+        //mLinkedinSignIn.setOnClickListener(this);
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -219,8 +220,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else if(id == R.id.im_facebook) {
 
         } else if(id == R.id.im_twitter) {
-
-        } else if(id == R.id.im_linkedin) {
 
         }
     }

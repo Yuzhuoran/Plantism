@@ -1,197 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="550dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:layout_gravity="center"
+    android:background="@color/white">
 
-    <android.support.constraint.ConstraintLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/tv_welcome"
-            android:layout_width="200dp"
-            android:layout_height="140dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginLeft="44dp"
-            android:layout_marginTop="48dp"
-            android:gravity="center"
-            android:src="@drawable/plantism"
-            android:text="Welcome to Plantism"
-            android:textAlignment="gravity"
-            android:textColor="#4F4F4F"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:fontFamily="@font/nunito_light" />
-
-        <TextView
-
-            android:layout_width="105dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="165dp"
-            android:fontFamily="@font/nunito_light"
-            android:text="Username"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:gravity="right"
-            android:textAlignment="gravity"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/et_input_email"
-            android:layout_width="221dp"
-            android:layout_height="40dp"
-            android:text="User Name"
-            android:textColor="@color/light_gray"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="153dp"
-            android:layout_marginTop="162dp"
-            android:background="@drawable/border"/>
-
-        <TextView
-            android:layout_width="105dp"
-            android:layout_height="38dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="236dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="Password"
-            android:fontFamily="@font/nunito_light"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:gravity="right"
-            android:textAlignment="gravity"
-            android:layout_marginLeft="32dp" />
-        
-        <EditText
-            android:id="@+id/et_input_password"
-            android:layout_width="221dp"
-            android:layout_height="40dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="153dp"
-            android:layout_marginTop="233dp"
-            android:background="@drawable/border"
-            android:layout_marginLeft="153dp" />
-
-        <Button
-            android:id="@+id/btn_sign_up"
-            android:layout_width="128dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="304dp"
-            android:background="@color/buttonBackground"
-            android:fontFamily="@font/nunito_light"
-            android:text="Register"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="48dp" />
+    <ImageView
+        android:id="@+id/tv_welcome"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="92dp"
+        android:src="@drawable/plantism"
+        android:textAlignment="gravity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
+    <com.waterme.plantism.model.MyTextView
+        android:id="@+id/btn_sign_up"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="380dp"
+        android:fontFamily="@font/nunito_light"
+        android:text="Sign up"
+        android:textColor="@color/buttonColor"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+
+        <com.waterme.plantism.model.MyTextView
             android:id="@+id/btn_sign_in"
-            android:layout_width="128dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="244dp"
-            android:layout_marginTop="304dp"
-            android:background="@color/buttonBackground"
-            android:fontFamily="@font/nunito_light"
+            android:layout_width="370dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/buttonColor"
+            android:gravity="center"
             android:text="Login"
-            android:textSize="20sp"
             android:textColor="@color/white"
+            android:textSize="@dimen/buttontext"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.568"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="244dp">
-        </Button>
+            app:layout_constraintVertical_bias="1.0" />
 
 
-        <View
-            android:layout_width="327dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="52dp"
-            android:layout_marginTop="372dp"
-            android:background="@color/divider"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="52dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
-            android:layout_marginTop="372dp"
-            android:text="Login with social media account"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="52dp" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="149dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="12dp"
+        android:text="Login with social media account"
+        android:textColor="@color/gray_active_icon"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_facebook" />
 
         <ImageView
             android:id="@+id/im_google"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="380dp"
             android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="424dp"
             android:src="@drawable/google"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="56dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/im_facebook"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
             android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="136dp"
-            android:layout_marginTop="424dp"
             android:src="@drawable/facebook"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="136dp" />
+            app:layout_constraintStart_toEndOf="@+id/im_google"
+            app:layout_constraintTop_toTopOf="@+id/im_google" />
 
-        <ImageView
-            android:id="@+id/im_twitter"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="204dp"
-            android:layout_marginTop="420dp"
-            android:src="@drawable/twitter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="204dp" />
-
-        <ImageView
-            android:id="@+id/im_linkedin"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="288dp"
-            android:layout_marginTop="424dp"
-            android:src="@drawable/linkedin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="288dp" />
+    <ImageView
+        android:id="@+id/im_twitter"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="20dp"
+        android:clickable="true"
+        android:src="@drawable/twitter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/im_facebook"
+        app:layout_constraintTop_toTopOf="@+id/im_facebook" />
 
         <ProgressBar
             android:id="@+id/pb_login"
-            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            android:visibility="invisible" />
 
-    </android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_welcome"
+        app:srcCompat="@drawable/username" />
 
-</ScrollView>
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/password" />
+
+    <EditText
+        android:id="@+id/et_input_email"
+        android:layout_width="195dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="2.3dp"
+        android:background="@null"
+        android:text="   User Name"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/smalltext"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/et_input_password"
+        android:layout_width="195dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="2.3dp"
+        android:background="@null"
+        android:text="   Password"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/smalltext"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+</android.support.constraint.ConstraintLayout>
+
