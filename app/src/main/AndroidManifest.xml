@@ -42,19 +42,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SearchActivity"/>
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".AddPlantActivity" />
         <activity android:name=".AddSensorActivity">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".SensorHomeActivity" />
         <activity android:name=".SearchDetailActivity" />
-
         <activity android:name=".SearchActivity" >
             
             <meta-data
@@ -63,7 +61,7 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
+             </intent-filter>
         </activity>
 
     </application>

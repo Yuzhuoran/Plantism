@@ -2,6 +2,7 @@ package com.waterme.plantism;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -61,14 +62,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
         final PlantIntro intro = items.get(position);
         holder.genusText.setText(intro.getGenus());
         holder.speciesText.setText(intro.getSpecies());
-        String imageId = intro.getImage();
-        int id = mContext.getResources().getIdentifier("@drawable/" + imageId,
-                null,
-                HomeActivity.PACKAGE_NAME);
+        //String imageId = intro.getImage();
+
+        //int id = mContext.getResources().getIdentifier("@drawable/" + imageId,null, HomeActivity.PACKAGE_NAME);
         //Drawable drawable = mContext.getResources().getDrawable(id);
         //ResourcesCompat.getDrawable(mContext.getResources(), id, null);
         /* not test yet */
-        //holder.searchImg.setImageResource(id);
+        int imageId = mContext.getResources().getIdentifier(intro.getImage(),"drawable",mContext.getPackageName());
+        holder.searchImg.setImageResource(imageId);
     }
 
     @NonNull

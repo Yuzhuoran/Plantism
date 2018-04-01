@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.waterme.plantism.model.MyTextView;
+
 /**
  * Created by zhuoran on 3/25/18.
  */
@@ -12,17 +14,17 @@ import android.widget.TextView;
 public class SearchViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView searchImg;
-    public TextView genusText;
-    public TextView speciesText;
+    public MyTextView genusText;
+    public MyTextView speciesText;
 
     private SearchViewHolder.ClickListener mClickListener;
 
     public SearchViewHolder(View view) {
         super(view);
         searchImg = (ImageView) itemView.findViewById(R.id.im_plant_search);
-        genusText = (TextView) itemView.findViewById(R.id.tv_genus);
-        speciesText = (TextView) itemView.findViewById(R.id.tv_species);
-
+        genusText = (MyTextView) itemView.findViewById(R.id.tv_genus);
+        speciesText = (MyTextView) itemView.findViewById(R.id.tv_species);
+        genusText.setStyle("light");
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

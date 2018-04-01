@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cw_search_plant"
-    android:layout_width="@dimen/card_width"
-    android:layout_height="@dimen/card_height"
+    android:layout_width="300dp"
+    android:layout_height="120dp"
     android:layout_gravity="center"
     app:cardBackgroundColor="@color/white"
     android:layout_marginBottom="@dimen/md_keylines"
@@ -16,15 +16,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
+        <ImageView
             android:id="@+id/v_search_plant_bg"
-            android:layout_width="124dp"
-            android:layout_height="match_parent"
-            android:background="@color/cardPlantBackground"/>
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.919"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.526" />
+
         <ImageView
             android:id="@+id/im_plant_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -35,33 +46,39 @@
             app:layout_constraintStart_toStartOf="@+id/v_search_plant_bg"
             app:layout_constraintTop_toTopOf="@+id/v_search_plant_bg" />
 
-        <TextView
+        <com.waterme.plantism.model.MyTextView
             android:id="@+id/tv_genus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="44dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="仙人掌"
+            android:gravity="left"
+            android:textSize="@dimen/smalltext"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/v_search_plant_bg"
+            app:layout_constraintEnd_toStartOf="@+id/v_search_plant_bg"
+            app:layout_constraintHorizontal_bias="0.057"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.071" />
+            app:layout_constraintVertical_bias="0.09" />
 
-        <TextView
+        <com.waterme.plantism.model.MyTextView
             android:id="@+id/tv_species"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="52dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:text="仙人掌1号"
-            android:textSize="22sp"
+            android:textSize="@dimen/subtitletext"
+            android:singleLine="false"
+            android:gravity="left"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/v_search_plant_bg"
-            app:layout_constraintTop_toTopOf="@+id/tv_genus"
-            app:layout_constraintVertical_bias="0.505" />
-
+            app:layout_constraintEnd_toStartOf="@+id/v_search_plant_bg"
+            app:layout_constraintHorizontal_bias="0.133"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </android.support.constraint.ConstraintLayout>

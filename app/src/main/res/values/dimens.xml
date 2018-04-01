@@ -5,12 +5,13 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="navheader_height">222dp</dimen>
     <dimen name="md_keylines">16dp</dimen>
-    <dimen name="card_height">147dp</dimen>
-    <dimen name="card_width">358dp</dimen>
+    <dimen name="card_height">80dp</dimen>
+    <dimen name="card_width">274dp</dimen>
     <dimen name="titletext">30sp</dimen>
     <dimen name="buttontext">22sp</dimen>
-    <dimen name="plaintext">20sp</dimen>
-    <dimen name="subtitletext">25sp</dimen>
+    <dimen name="plaintext">15sp</dimen>
+    <dimen name="smalltext">12sp</dimen>
+    <dimen name="subtitletext">20sp</dimen>
     <dimen name="pv_pin_view_item_size">48dp</dimen>
     <dimen name="pv_pin_view_item_radius">5dp</dimen>
     <dimen name="pv_pin_view_item_spacing">5dp</dimen>
