@@ -22,6 +22,7 @@ allprojects {
         jcenter()
         maven {
             url "https://maven.google.com" // Google's Maven repository
+            jcenter()
             //url "https://jitpack.io" // charts
         }
     }
