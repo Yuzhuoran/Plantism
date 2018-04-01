@@ -33,7 +33,7 @@ public class SearchResultActivity extends BaseActivity implements
     private int mPosition = RecyclerView.NO_POSITION;
 
     void initialize_database(PlantDbHelper dbHelper){
-        SQLiteDatabase database=dbHelper.getWritableDatabase();
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         DatabaseUtils utils = new DatabaseUtils();
         PlantIntro intro1 = new PlantIntro(
                 "Donkey Burros Tails",
@@ -111,7 +111,7 @@ public class SearchResultActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         //this.deleteDatabase(PlantDbHelper.DATABASE_NAME);
         dbHelper = new PlantDbHelper(this);
-        initialize_database(dbHelper);
+        //initialize_database(dbHelper);
         long id = 0;
         Log.d(TAG, "row id is " + id);
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);

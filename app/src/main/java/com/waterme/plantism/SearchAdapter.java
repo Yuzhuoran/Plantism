@@ -1,6 +1,7 @@
 package com.waterme.plantism;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -74,7 +75,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
         holder.setmClickListener(new SearchViewHolder.ClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-                
+                PlantIntro intro = items.get(position);
+                Intent intent = new Intent(view.getContext(), SearchDetailActivity.class);
+                intent.putExtra("species", intro.getSpecies());
+                intent.putExtra("genus", intro.getGenus());
+                intent.putExtra("fullIntro", intro.getFullIntro());
+                view.getContext().startActivity(intent);
             }
         });
     }
