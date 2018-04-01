@@ -8,4 +8,6 @@
     <color name="buttonBackground">#A8BBBF</color>
     <color name="white">#FFFFFF</color>
     <color name="cardPlantBackground">#DAE1E3</color>
+    <color name="buttonColor">#78DDDD</color>
+    <color name="textBlack">#333333</color>
 </resources>
