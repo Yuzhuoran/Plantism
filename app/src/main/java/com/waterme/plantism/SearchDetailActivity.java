@@ -40,3 +40,5 @@ public class SearchDetailActivity extends AppCompatActivity {
         /* set view content */
     }
 }
+
+

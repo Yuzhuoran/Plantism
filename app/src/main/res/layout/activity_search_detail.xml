@@ -1,9 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.waterme.plantism.SearchDetailActivity">
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="300dp"
+            android:layout_height="428dp"
+            app:cardBackgroundColor="@color/white"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="100dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <com.waterme.plantism.model.MyTextView
+                    android:id="@+id/tv_guide_genus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Succulent"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_guide_species"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <com.waterme.plantism.model.MyTextView
+                    android:id="@+id/tv_guide_species"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="92dp"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="textPersonName"
+                    android:text="Donkey 'Burros' Tail"
+                    android:textSize="@dimen/subtitletext"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.waterme.plantism.model.MyTextView
+                    android:id="@+id/tv_guide_intro"
+                    android:layout_width="265dp"
+                    android:layout_height="37dp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="left"
+                    android:singleLine="false"
+                    android:text="Sedum morganiarum, or Burro's tail, is a succulent perennial plan tnative to Mexico."
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.52"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_guide_species" />
+
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/smallcircle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_guide1" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/smallcircle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_guide2" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/smallcircle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_guide3" />
+
+                <HorizontalScrollView
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="200dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="#AA444444"
+                    android:scrollbars="none" >
+
+                    <LinearLayout
+                        android:id="@+id/id_gallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal" >
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+            </android.support.constraint.ConstraintLayout>
+
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="90dp">
+
+            <ImageView
+                android:id="@+id/im_guide_bg"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="36dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="-16dp"
+                android:elevation="8dp"
+                android:src="@drawable/donkey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.077" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v4.widget.NestedScrollView>

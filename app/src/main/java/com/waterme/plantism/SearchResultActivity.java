@@ -33,6 +33,7 @@ public class SearchResultActivity extends BaseActivity implements
     private int mPosition = RecyclerView.NO_POSITION;
 
     void initialize_database(PlantDbHelper dbHelper){
+        //Todo update the database according to the googledoc https://docs.google.com/spreadsheets/d/11kN9Iur8yV2485e3hzg0VzqGO_HUI9m1yf4mOg8JcoE/edit?usp=sharing
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         DatabaseUtils utils = new DatabaseUtils();
         PlantIntro intro1 = new PlantIntro(
@@ -109,8 +110,9 @@ public class SearchResultActivity extends BaseActivity implements
 
         /* Insert ContentValues into database and get first row ID back */
         super.onCreate(savedInstanceState);
-        //this.deleteDatabase(PlantDbHelper.DATABASE_NAME);
         dbHelper = new PlantDbHelper(this);
+        //TODO check if database already exists and initiallizes it
+        //this.deleteDatabase(PlantDbHelper.DATABASE_NAME);
         //initialize_database(dbHelper);
         long id = 0;
         Log.d(TAG, "row id is " + id);

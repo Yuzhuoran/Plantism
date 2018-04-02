@@ -40,7 +40,7 @@ import java.util.TimerTask;
  * The home activity for the app. The activity has a list of the plant for the user.
  * there is an add method to bind a new sensor to a plant
  */
-public class HomeActivity extends BaseActivity implements View.OnClickListener{
+public class HomeActivity extends BaseActivity{
 
     public static String PACKAGE_NAME;
     private static final String TAG = "Home activity";
@@ -81,13 +81,29 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
         //btnAddSensor=(ImageView) findViewById(R.id.button_add_plant);
         //btnAddSensor.setOnClickListener(this);
+
         getLayoutInflater().inflate(R.layout.activity_home, contentFramLayout);
+
         // get the current username
         SharedPreferences sharedPre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         uid = sharedPre.getString("uid","");
         // find the views
+
         mRecycleView = (RecyclerView) findViewById(R.id.ry_plants);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb);
+        btnAddSensor = (ImageView) contentFramLayout.findViewById(R.id.button_add_sensor);
+
+        if (btnAddSensor != null) {
+            Log.d(TAG, "this is not a null object");
+        }
+        btnAddSensor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "on click!");
+                Intent intent=new Intent(HomeActivity.this,AddSensorActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
@@ -96,9 +112,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
         FirebaseRecyclerOptions<RealTimeData> options = new FirebaseRecyclerOptions.Builder<RealTimeData>()
                 .setQuery(mFirebaseDatabase.getReference().child(USER_CHILD)
-                        .child(uid)
-                        .child(USER_REALTIME_CHILD)
-                        .orderByChild("order")
+                                .child(uid)
+                                .child(USER_REALTIME_CHILD)
+                                .orderByChild("order")
                         , RealTimeData.class)
                 .build();
 
@@ -340,13 +356,4 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         timer.schedule(addPlantTask, 10000);
     }
 
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.button_add_plant) {
-            Intent intent = new Intent(HomeActivity.this, AddSensorActivity.class);
-            startActivity(intent);
-        }
-    }
 }

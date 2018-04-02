@@ -105,7 +105,8 @@
         app:viewType="rectangle" />
 
     <com.waterme.plantism.model.MyTextView
-        android:id="@+id/button"
+        android:id="@+id/button_connect"
+        android:clickable="true"
         android:layout_width="370dp"
         android:layout_height="60dp"
         android:layout_marginBottom="0dp"
@@ -178,23 +179,21 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="0.224" />
 
-<ImageView
-    android:id="@+id/imageView_2"
-    android:layout_width="243dp"
-    android:layout_height="203dp"
-    android:layout_marginBottom="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.508"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.555"
-    app:srcCompat="@drawable/connect_p2" />
+    <ImageView
+        android:id="@+id/imageView_2"
+        android:layout_width="243dp"
+        android:layout_height="203dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.702"
+        app:srcCompat="@drawable/connect_p2" />
 </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.FitWindowsFrameLayout>
