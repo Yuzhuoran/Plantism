@@ -4,31 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.waterme.plantism.SearchActivity">
+    android:background="@color/white"
+    tools:context="com.waterme.plantism.SearchActivity"
+    android:layout_gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.waterme.plantism.model.MyTextView
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="196dp"
-        android:textSize="40sp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="80dp"
+        android:text="What is your plant?"
+        android:textSize="@dimen/titletext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <android.support.v7.widget.SearchView
         android:id="@+id/sv_home"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
+        android:background="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.468">
+        app:layout_constraintVertical_bias="0.395">
 
     </android.support.v7.widget.SearchView>
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>

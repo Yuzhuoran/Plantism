@@ -46,7 +46,7 @@ public class SearchResultActivity extends BaseActivity implements
                         "watering once a month should be plenty, as the leaves hold quite a bit of moisture\n" +
                         "\n" +
                         "this plant should ideally be a lovely blue-green.\n",
-                "donkey1",
+                "donkey",
                 100,
                 100
 
@@ -112,8 +112,8 @@ public class SearchResultActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         dbHelper = new PlantDbHelper(this);
         //TODO check if database already exists and initiallizes it
-        //this.deleteDatabase(PlantDbHelper.DATABASE_NAME);
-        //initialize_database(dbHelper);
+        this.deleteDatabase(PlantDbHelper.DATABASE_NAME);
+        initialize_database(dbHelper);
         long id = 0;
         Log.d(TAG, "row id is " + id);
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);

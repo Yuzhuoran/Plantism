@@ -63,56 +63,52 @@
 
                 <com.waterme.plantism.model.MyTextView
                     android:id="@+id/tv_guide_intro"
-                    android:layout_width="265dp"
-                    android:layout_height="37dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:gravity="left"
                     android:singleLine="false"
                     android:text="Sedum morganiarum, or Burro's tail, is a succulent perennial plan tnative to Mexico."
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.52"
+                    app:layout_constraintHorizontal_bias="0.514"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_guide_species" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/left"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.054"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_guide_intro"
+                    app:layout_constraintVertical_bias="0.222" />
 
                 <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/smallcircle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/right"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.945"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_guide1" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/smallcircle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_guide2" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/smallcircle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_guide3" />
-
+                    app:layout_constraintTop_toBottomOf="@+id/tv_guide_intro"
+                    app:layout_constraintVertical_bias="0.222" />
                 <HorizontalScrollView
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="200dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="250dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center_vertical"
-                    android:background="#AA444444"
-                    android:scrollbars="none" >
+                    android:background="@color/white"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <LinearLayout
                         android:id="@+id/id_gallery"
@@ -140,7 +136,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="36dp"
+                android:layout_marginEnd="4dp"
                 android:layout_marginLeft="120dp"
                 android:layout_marginTop="-16dp"
                 android:elevation="8dp"

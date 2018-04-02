@@ -79,13 +79,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
             public void onItemClick(View view, int position) {
                 PlantIntro intro = items.get(position);
                 Log.d(TAG, intro.getSpecies());
-                /*
+
                 Intent intent = new Intent(view.getContext(), SearchDetailActivity.class);
                 intent.putExtra("species", intro.getSpecies());
                 intent.putExtra("genus", intro.getGenus());
                 intent.putExtra("fullIntro", intro.getFullIntro());
+                intent.putExtra("image",intro.getImage());
+                Log.d("passed image",intro.getImage());
                 view.getContext().startActivity(intent);
-                */
             }
         });
     }

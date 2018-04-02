@@ -1,6 +1,7 @@
 package com.waterme.plantism;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +17,6 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
     public ImageView searchImg;
     public MyTextView genusText;
     public MyTextView speciesText;
-
     private SearchViewHolder.ClickListener mClickListener;
 
     public SearchViewHolder(View view) {
