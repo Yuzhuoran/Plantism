@@ -1,11 +1,8 @@
 package com.waterme.plantism.Fragment;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Half;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +18,6 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,13 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.os.Bundle;
-import android.view.WindowManager;
-
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -46,7 +34,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.waterme.plantism.R;
 import com.waterme.plantism.data.PlantDbHelper;
-import com.waterme.plantism.data.HistoryData;
+import com.waterme.plantism.model.HistoryData;
 
 /**
  * Created by zhuoran on 3/22/18.

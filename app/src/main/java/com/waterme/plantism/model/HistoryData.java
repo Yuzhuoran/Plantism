@@ -1,4 +1,4 @@
-package com.waterme.plantism.data;
+package com.waterme.plantism.model;
 
 /**
  * Created by zhuoran on 4/2/18.
