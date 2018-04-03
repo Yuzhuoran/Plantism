@@ -22,7 +22,7 @@ public class AddPlantActivity extends AppCompatActivity {
         text2.setStyle("light");
         button = findViewById(R.id.button_add_plant);
         Bundle bundle = getIntent().getExtras();
-       sensor_id = "";
+        sensor_id = "";
         if (bundle != null) {
             sensor_id = bundle.getString("sensor_id");
             /* set the search result and clear the focus */

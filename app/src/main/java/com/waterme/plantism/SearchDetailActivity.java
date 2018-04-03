@@ -25,6 +25,7 @@ public class SearchDetailActivity extends AppCompatActivity {
     private LayoutInflater mInflater;
     private String species,genus,fullIntro,image;
     private PlantDbHelper dbHelper;
+    private ImageView btnAddit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,7 @@ public class SearchDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_detail);
         mInflater = LayoutInflater.from(this);
         dbHelper = new PlantDbHelper(this);
+        btnAddit = findViewById(R.id.button_add_it);
         /* get data from last intent */
         species = "";
         genus = "";
@@ -48,6 +50,14 @@ public class SearchDetailActivity extends AppCompatActivity {
         }
         initData();
         initView();
+        btnAddit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO add the tuple<sensorid, plantid> to firebase
+                Intent intent=new Intent(SearchDetailActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
         /* get image name from database */
         Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
                 String.format("SELECT %s FROM %s WHERE %s =? ",

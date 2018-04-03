@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Half;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,15 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -36,8 +42,11 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.waterme.plantism.R;
 import com.waterme.plantism.data.PlantDbHelper;
+import com.waterme.plantism.data.HistoryData;
 
 /**
  * Created by zhuoran on 3/22/18.
@@ -54,6 +63,7 @@ public class StatusFragment extends Fragment {
     private static final String USER_SENSORS_CHILD = "sensors";
     private static final String USER_PLANTS_CHILD = "plants";
     private static final String USER_REALTIME_CHILD = "now";
+    private static final String PLANT_HISTORY = "history";
 
     private String plantid;
     private String uid;
@@ -122,6 +132,54 @@ public class StatusFragment extends Fragment {
         ctHumidity.animateY(2000);
         initlineChart(ctTemperature);
         ctTemperature.setDescription("Temperature History");
+
+        /* init history */
+
+        initHistoryTest();
+
+        /* get history from firebase 7 day*/
+
+        Query historyQuery = FirebaseDatabase.getInstance()
+                .getReference().child(USER_CHILD)
+                .child(uid)
+                .child(USER_PLANTS_CHILD)
+                .child(plantid)
+                .child(PLANT_HISTORY)
+                .limitToLast(7);
+
+
+        /* add listener */
+
+        historyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            /* fetch all last 7 children */
+            /* this is a final method */
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<HistoryData> historyDataList = new ArrayList<>();
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    /* get the data model from firebase */
+
+                    historyDataList.add(dsp.getValue(HistoryData.class));
+                    Log.d(TAG, "timestamp is "
+                            + historyDataList
+                            .get(historyDataList.size() - 1)
+                            .getTimestamp());
+                }
+
+                /* handle charts here */
+                setHumidityCharts(historyDataList);
+                setTemperatureCharts(historyDataList);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         return rootView;
     }
 
@@ -197,5 +255,35 @@ public class StatusFragment extends Fragment {
 
         // set data
         mChart.setData(data);
+    }
+
+    /* set temperature data */
+    private void setTemperatureCharts(List<HistoryData> dataList) {
+        Log.d(TAG, "set temperature!");
+    }
+
+    /* set humidity charts */
+    private void setHumidityCharts(List<HistoryData> dataList) {
+        Log.d(TAG, "set humidity!");
+    }
+
+    private void initHistoryTest() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                .child(USER_CHILD)
+                .child(uid)
+                .child(USER_PLANTS_CHILD)
+                .child(plantid)
+                .child(PLANT_HISTORY);
+        Log.d(TAG, "init history");
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            DatabaseReference newRef = ref.push();
+            newRef.setValue(new HistoryData(
+                    String.valueOf(random.nextDouble()),
+                    String.valueOf(random.nextDouble()),
+                    String.valueOf(random.nextDouble()),
+                    String.valueOf(random.nextInt(10000))
+            ));
+        }
     }
 }

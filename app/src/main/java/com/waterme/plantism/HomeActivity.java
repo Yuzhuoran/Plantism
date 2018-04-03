@@ -78,7 +78,7 @@ public class HomeActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
 
         PACKAGE_NAME = getApplicationContext().getPackageName();
-        FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
+        final FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
         //btnAddSensor=(ImageView) findViewById(R.id.button_add_plant);
         //btnAddSensor.setOnClickListener(this);
 
@@ -160,6 +160,9 @@ public class HomeActivity extends BaseActivity{
                         } else {
                             /* start an intent to add a plant */
                             //TODO
+                            Intent intent = new Intent(HomeActivity.this, AddPlantActivity.class);
+                            intent.putExtra("sensor_id", String.valueOf(model.getOrder()-9999));
+                            startActivity(intent);
                             Log.d(TAG, "add a plant!");
                         }
                     }
@@ -193,7 +196,7 @@ public class HomeActivity extends BaseActivity{
             @Override
             public int getItemViewType(int position) {
                 RealTimeData model = getItem(position);
-                if (model.getOrder() > 9999) {
+                if (model.getOrder()> 9999) {
                     return ADD_PLANT_TYPE;
                 } else {
                     return REAL_TIME_DATA_TYPE;
@@ -208,7 +211,7 @@ public class HomeActivity extends BaseActivity{
         ((SimpleItemAnimator) mRecycleView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         hideLoadingIndicator();
-        addTest();
+        //addTest();
         changeTest();
     }
 
@@ -345,7 +348,7 @@ public class HomeActivity extends BaseActivity{
         };
         timer.schedule(timerTask, 2000, 2000);
 
-        /* 10 seconds later add a new plant to a empty sensor */
+        /* 10 seconds later add a new plant to a empty sensor
         TimerTask addPlantTask = new TimerTask() {
             @Override
             public void run() {
@@ -353,7 +356,7 @@ public class HomeActivity extends BaseActivity{
             }
         };
 
-        timer.schedule(addPlantTask, 10000);
+        timer.schedule(addPlantTask, 10000);*/
     }
 
 }
