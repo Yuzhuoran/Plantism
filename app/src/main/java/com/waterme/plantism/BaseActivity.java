@@ -1,6 +1,7 @@
 package com.waterme.plantism;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -11,16 +12,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.waterme.plantism.R;
+import com.waterme.plantism.model.MyTextView;
 
 public class BaseActivity extends AppCompatActivity {
 
     protected Toolbar mToolbar;
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
+    protected LinearLayout mNavigationHeader;
     protected Context mContext;
 
 
@@ -30,6 +35,7 @@ public class BaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_base);
         initToolbar();
         initNav();
+        initHead();
         // for subclass, super.onCreate// set content
 
         // override content frames!
@@ -48,10 +54,15 @@ public class BaseActivity extends AppCompatActivity {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+    private void initHead(){
+        //Todo get the header and set the username
 
+    }
     private void initNav() {
         mDrawerLayout = findViewById(R.id.drawer);
         mNavigationView = (NavigationView) findViewById(R.id.nav);
+        mNavigationView.setItemIconTintList(null);
+        mNavigationView.setForegroundGravity(Gravity.CENTER);
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

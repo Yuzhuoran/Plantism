@@ -10,4 +10,5 @@
     <color name="cardPlantBackground">#DAE1E3</color>
     <color name="buttonColor">#78DDDD</color>
     <color name="textBlack">#333333</color>
+    <color name="chartbackgroud">#F0FCFC</color>
 </resources>

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-
         <item
-            android:icon="@drawable/ic_home_black_24dp"
+            android:id="@+id/menu_item_garden"
+            android:icon="@drawable/rectangle_small"
             android:title="Garden" />
         <item
-            android:icon="@drawable/ic_favorite_black_24dp"
+            android:id="@+id/menu_item_sensor"
+            android:icon="@drawable/rectangle_small"
             android:title="Sensor" />
         <item
-            android:icon="@drawable/ic_bookmark_border_black_24dp"
+            android:id="@+id/menu_item_history"
+            android:icon="@drawable/rectangle_small"
             android:title="History" />
         <item
+            android:id="@+id/menu_item_setting"
+            android:icon="@drawable/rectangle_small"
             android:title="Setting"/>
     </group>
 

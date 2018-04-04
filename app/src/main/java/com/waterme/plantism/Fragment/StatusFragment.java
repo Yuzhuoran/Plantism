@@ -16,9 +16,12 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 //import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -95,8 +99,8 @@ public class StatusFragment extends Fragment {
         ImageView imStatusWater = (ImageView) rootView.findViewById(R.id.im_status_water);
         ImageView imStatusTemp = (ImageView) rootView.findViewById(R.id.im_status_temp);
 
-        BarChart ctHumidity = (BarChart) rootView.findViewById(R.id.ct_humidity);
-        LineChart ctTemperature = (LineChart) rootView.findViewById(R.id.ct_temperature);
+        ctHumidity = (BarChart) rootView.findViewById(R.id.ct_humidity);
+        ctTemperature = (LineChart) rootView.findViewById(R.id.ct_temperature);
 
         // get data base reference
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
@@ -104,6 +108,7 @@ public class StatusFragment extends Fragment {
         // set plant condition indicator
         // set humidity barchart
         // set temperature linechart
+        /*
         ArrayList<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(74.3f, 0));
         entries.add(new BarEntry(70.6f, 1));
@@ -126,8 +131,8 @@ public class StatusFragment extends Fragment {
         ctHumidity.setData(data);
         ctHumidity.setDescription("Humidity History");
         ctHumidity.animateY(2000);
-        initlineChart(ctTemperature);
-        ctTemperature.setDescription("Temperature History");
+        //initlineChart(ctTemperature);
+        //ctTemperature.setDescription("");*/
 
         /* init history */
 
@@ -179,7 +184,7 @@ public class StatusFragment extends Fragment {
         return rootView;
     }
 
-    protected void initlineChart(LineChart mChart){
+    protected void initlineChart(LineChart mChart,String[] temperature_list){
         //设置透明度
         mChart.setAlpha(0.8f);
         //设置网格底下的那条线的颜色
@@ -193,12 +198,13 @@ public class StatusFragment extends Fragment {
         //设置是否能扩大扩小
         mChart.setPinchZoom(true);
         // 设置背景颜色
+        mChart.setBackgroundColor(Color.rgb(240, 252, 252));
         // mChart.setBackgroundColor(Color.GRAY);
         //设置点击chart图对应的数据弹出标注
 //      xl.setAvoidFirstLastClipping(true);
 //      xl.setAdjustXLabels(true);
         // 加载数据
-        setData(mChart);
+        setData(mChart,temperature_list);
         //从X轴进入的动画
         mChart.animateX(4000);
         mChart.animateY(3000);   //从Y轴进入的动画
@@ -215,13 +221,51 @@ public class StatusFragment extends Fragment {
         l.setTextSize(15);
         l.setTextColor(Color.rgb(104, 241, 175));
         l.setFormSize(30f); // set the size of the legend forms/shapes
+        XAxis xAxis=mChart.getXAxis();
+        xAxis.setDrawAxisLine(false);
+        xAxis.setEnabled(true);//设置轴启用或禁用 如果禁用以下的设置全部不生效
+        xAxis.setDrawAxisLine(false);//是否绘制轴线
+        xAxis.setDrawGridLines(false);//设置x轴上每个点对应的线
+        xAxis.setDrawLabels(true);//绘制标签  指x轴上的对应数值
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
+        xAxis.setTextSize(9f);//设置字体
+        xAxis.setTextColor(Color.rgb(120, 221, 221));//设置字体颜色
+        //xAxis.setLabelsToSkip(7);
+        //设置竖线的显示样式为虚线
+        //lineLength控制虚线段的长度
+        //spaceLength控制线之间的空间
+        //xAxis.enableGridDashedLine(10f, 10f, 0f);
+//        xAxis.setAxisMinimum(0f);//设置x轴的最小值
+//        xAxis.setAxisMaximum(10f);//设置最大值
+        xAxis.setAvoidFirstLastClipping(true);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
+        //xAxis.setLabelRotationAngle(10f);//设置x轴标签的旋转角度
+//        设置x轴显示标签数量  还有一个重载方法第二个参数为布尔值强制设置数量 如果启用会导致绘制点出现偏差
+         // xAxis.setLabelCount(7);
+//        xAxis.setTextColor(Color.BLUE);//设置轴标签的颜色
+//        xAxis.setTextSize(24f);//设置轴标签的大小
+//        xAxis.setGridLineWidth(10f);//设置竖线大小
+//        xAxis.setGridColor(Color.RED);//设置竖线颜色
+//        xAxis.setAxisLineColor(Color.GREEN);//设置x轴线颜色
+//        xAxis.setAxisLineWidth(5f);//设置x轴线宽度
+        //xAxis.setValueFormatter();//格式化x轴标签显示字符
 
+        YAxis yAxis=mChart.getAxisLeft();
+        yAxis.setLabelCount(5,false);
+        yAxis.setValueFormatter(new TemperatureYAxisValueFormatter());
+        yAxis.setTextSize(9f);
+        yAxis.setTextColor(Color.rgb(133,133,133));
+        yAxis.setGridLineWidth(0.7f);
+        yAxis.setGridColor(Color.rgb(194,194,194));
+        YAxis yAxisright=mChart.getAxisRight();
+        yAxisright.setEnabled(false);
+        mChart.getLegend().setEnabled(false);
         // 刷新图表
         mChart.invalidate();
     }
-    private void setData(LineChart mChart) {
+
+    private void setData(LineChart mChart,String[] bb) {
         String[] aa = {"SUN","MON","TUE","WED","THU","FRI","SAT"};
-        String[] bb = {"76.00","74.34","76.67","77.90","72.33","73.33","70.78"};
+        //String[] bb = {"76.00","74.34","76.67","77.90","72.33","73.33","70.78"};
 
         ArrayList<String> xVals = new ArrayList<String>();
         for (int i = 0; i < aa.length; i++) {
@@ -239,12 +283,15 @@ public class StatusFragment extends Fragment {
 
         set1.setDrawCubic(true);  //设置曲线为圆滑的线
         set1.setCubicIntensity(0.2f);
-        set1.setDrawFilled(false);  //设置包括的范围区域填充颜色
+        set1.setDrawFilled(true);  //设置包括的范围区域填充颜色
+        set1.setFillColor(Color.rgb(184, 242, 242));
+        set1.setCircleColor(Color.rgb(120, 221, 221));
+        set1.setCircleColorHole(Color.rgb(120, 221, 221));
         set1.setDrawCircles(true);  //设置有圆点
-        set1.setLineWidth(2f);    //设置线的宽度
-        set1.setCircleSize(5f);   //设置小圆的大小
-        set1.setHighLightColor(Color.rgb(244, 117, 117));
-        set1.setColor(Color.rgb(104, 241, 175));    //设置曲线的颜色
+        set1.setLineWidth(1f);    //设置线的宽度
+        set1.setCircleSize(4f);   //设置小圆的大小
+        //set1.setHighLightColor(Color.rgb(244, 0, 0));
+        set1.setColor(Color.rgb(120, 221, 221));    //设置曲线的颜色
 
         // create a data object with the datasets
         LineData data = new LineData(xVals, set1);
@@ -255,7 +302,14 @@ public class StatusFragment extends Fragment {
 
     /* set temperature data */
     private void setTemperatureCharts(List<HistoryData> dataList) {
+        String[] temperature_array=new String[7];
+        int size=dataList.size();
+        for(int i=0;i<7;i++){
+            temperature_array[i]=dataList.get(size-1-i).getAir_t();
+        }
+        initlineChart(ctTemperature,temperature_array);
         Log.d(TAG, "set temperature!");
+        ctTemperature.setDescription("");
     }
 
     /* set humidity charts */
@@ -298,18 +352,16 @@ public class StatusFragment extends Fragment {
                 .child(PLANT_HISTORY);
         Log.d(TAG, "init history");
         Random random = new Random();
-        long offset = Timestamp.valueOf("2018-5-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2013-01-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
+        long epoch1 = Timestamp.valueOf("2018-3-01 00:00:00").getTime()/1000L;
+        long epoch2 = Timestamp.valueOf("2018-05-01 00:00:00").getTime()/1000L;
+        long randomEpoch = epoch1 + Math.abs(new Random().nextLong()) % (epoch2-epoch1);
         for (int i = 0; i < 10; i++) {
             DatabaseReference newRef = ref.push();
             newRef.setValue(new HistoryData(
                     String.valueOf(random.nextDouble()),
                     String.valueOf(random.nextDouble()),
                     String.valueOf(random.nextDouble()),
-
-                    String.valueOf(random.nextInt(10000))
+                    String.valueOf(randomEpoch)
             ));
         }
     }
