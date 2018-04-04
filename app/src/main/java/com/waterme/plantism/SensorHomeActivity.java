@@ -30,12 +30,6 @@ import com.waterme.plantism.model.Plant;
 import com.waterme.plantism.model.RealTimeData;
 import com.waterme.plantism.model.Sensor;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  * The home activity for the app. The activity has a list of the plant for the user.
  * there is an add method to bind a new sensor to a plant
@@ -43,7 +37,7 @@ import java.util.TimerTask;
 public class SensorHomeActivity extends BaseActivity{
 
     public static String PACKAGE_NAME;
-    private static final String TAG = "Home activity";
+    private static final String TAG = "Sensor home activity";
 
     /** the recycleview to read the condition of plants
      * it includes the real time temperature, humidity and growing condition
@@ -65,12 +59,14 @@ public class SensorHomeActivity extends BaseActivity{
     private static final String USER_REALTIME_CHILD = "now";
 
     private static final String IMAGE_URL = "image";
+
     private ImageView btnAddSensor;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseStorage mFirebaseStorage;
 
     private static final int REAL_TIME_DATA_TYPE = 1;
     private static final int ADD_PLANT_TYPE = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,17 +75,15 @@ public class SensorHomeActivity extends BaseActivity{
 
         PACKAGE_NAME = getApplicationContext().getPackageName();
         final FrameLayout contentFramLayout = (FrameLayout) findViewById(R.id.content_frame);
-        //btnAddSensor=(ImageView) findViewById(R.id.button_add_plant);
-        //btnAddSensor.setOnClickListener(this);
 
-        getLayoutInflater().inflate(R.layout.activity_home, contentFramLayout);
+        getLayoutInflater().inflate(R.layout.activity_sensor_home, contentFramLayout);
 
         // get the current username
         SharedPreferences sharedPre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         uid = sharedPre.getString("uid","");
         // find the views
 
-        mRecycleView = (RecyclerView) findViewById(R.id.ry_plants);
+        mRecycleView = (RecyclerView) findViewById(R.id.ry_sensors);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb);
         btnAddSensor = (ImageView) contentFramLayout.findViewById(R.id.button_add_sensor);
 
@@ -104,6 +98,7 @@ public class SensorHomeActivity extends BaseActivity{
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
+
         showLoadingIndicator();
         // load the data from firebase
 
@@ -121,29 +116,42 @@ public class SensorHomeActivity extends BaseActivity{
         mAdapter = new FirebaseRecyclerAdapter<RealTimeData, RealTimeViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull RealTimeViewHolder viewHolder, int position, @NonNull final RealTimeData model) {
-                // get the view to bind by the order
                 if (getItemViewType(position) == REAL_TIME_DATA_TYPE) {
 
-                    Log.d(TAG, "bind real time data");
+                    Log.d(TAG, "has plant");
+                    /*
                     String imgUrl = model.getImageUrl();
                     String tUrl = model.gettUrl();
                     String hUrl = model.gethUrl();
-
-                    // set image for ui
-                    StorageReference storageReference = mFirebaseStorage.getReference();
+                    */
                     // set text for ui
-                    viewHolder.plantMyName.setText(model.getPlantMyname());
-                    viewHolder.plantCategory.setText(model.getPlantCategory());
-                    if (model.getHumidity() != null) {
-                        viewHolder.hmText.setText(model.getHumidity().substring(0, Math.min(4, model.getHumidity().length()))+"%");
-                    }
-                    if (model.getTemperature() != null) {
-                        viewHolder.tpText.setText(model.getTemperature().substring(0, Math.min(4, model.getTemperature().length()))+"°F");
-                    }
+                    //TODO finish the UI
+                    viewHolder.sensorPlantName.setText(model.getPlantMyname());
+                    viewHolder.sensorId.setText(String.valueOf(model.getOrder()));
+                    viewHolder.sensorPlantSpecies.setText(model.getPlantCategory());
                 } else {
-                    //TODO
-                    Log.d(TAG, "bind add sensor view!");
+                    //TODO finish the UI
+                    viewHolder.sensorId.setText(String.valueOf(model.getOrder() - 9999));
+                    viewHolder.sensorPlantName.setText("");
+                    viewHolder.sensorPlantSpecies.setText("No plant connected");
                 }
+
+                viewHolder.setmClickListener(new RealTimeViewHolder.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Log.d(TAG, "item click " + position);
+                        if (getItemViewType(position) == REAL_TIME_DATA_TYPE) {
+                            //do nothing
+                        } else {
+                            /* start an intent to add a plant */
+                            //TODO
+                            Intent intent = new Intent(SensorHomeActivity.this, AddPlantActivity.class);
+                            intent.putExtra("sensor_id", String.valueOf(model.getOrder()-9999));
+                            startActivity(intent);
+                            Log.d(TAG, "add a plant!");
+                        }
+                    }
+                });
 
             }
 
@@ -152,7 +160,7 @@ public class SensorHomeActivity extends BaseActivity{
             public RealTimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                return new RealTimePlantViewHolder(inflater.inflate(R.layout.item_sensor, parent, false));
+                return new RealTimeSensorViewHolder(inflater.inflate(R.layout.item_sensor, parent, false));
 
             }
 
@@ -183,10 +191,7 @@ public class SensorHomeActivity extends BaseActivity{
         mRecycleView.setLayoutManager(layoutManager);
         mRecycleView.setAdapter(mAdapter);
         ((SimpleItemAnimator) mRecycleView.getItemAnimator()).setSupportsChangeAnimations(false);
-
         hideLoadingIndicator();
-        //addTest();
-        changeTest();
     }
 
     @Override
@@ -223,115 +228,7 @@ public class SensorHomeActivity extends BaseActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-    // add sensor to the sensor list to let arduino know the uid and plantid
-    // then add a sensor view in the Now child of user
-
-    /* put in AddSensorActivity */
-    //TODO
-    private void addSensor(final String sensorId) {
-
-        final DatabaseReference dbRef = mFirebaseDatabase.getReference()
-                .child(SENSOR_CHILD);
-        Log.d(TAG, "add sensor to db");
-        /* update the sensor child */
-        Map<String, Object> update = new HashMap<>();
-        update.put(sensorId, new Sensor(uid, "plantName"));
-        dbRef.updateChildren(update);
-
-        /* update the user now data */
-        final DatabaseReference dbNowRef = mFirebaseDatabase.getReference()
-                .child(USER_CHILD)
-                .child(uid)
-                .child(USER_REALTIME_CHILD);
-        update.clear();
-        update.put(sensorId, new RealTimeData(
-                "humidity",
-                "temperature",
-                "hUrl",
-                "tUrl",
-                "ImageUrl",
-                "PlantMyname",
-                "PlantCategory",
-                Integer.valueOf(sensorId) + 9999));
-        dbNowRef.updateChildren(update);
-        Log.d(TAG, "add sensor to now");
-    }
-    //use update
-    /* put in AddPlantActivity */
-    //TODO
-    private void addPlants(String plantCategory, String plantMyName, String sensorId){
-        Log.d(TAG, "Add plant test");
-        final DatabaseReference dbRef = mFirebaseDatabase.getReference()
-                .child(USER_CHILD)
-                .child(uid).child(USER_PLANTS_CHILD);
-
-        /* update plant child */
-        Map<String, Object> update = new HashMap<>();
-        update.put(plantMyName, new Plant(plantCategory, "history", "*"));
-        dbRef.updateChildren(update);
-
-        /* update the now child */
-        DatabaseReference dbNowRef = mFirebaseDatabase.getReference()
-                .child(USER_CHILD)
-                .child(uid)
-                .child(USER_REALTIME_CHILD);
-        update.clear();
-        update.put(sensorId + "/plantMyname", plantMyName);
-        update.put(sensorId + "/plantCategory", plantCategory);
-        update.put(sensorId + "/order", Integer.valueOf(sensorId));
-
-        dbNowRef.updateChildren(update);
-
-
-    }
-    private void addTest() {
-        Random random = new Random();
-        Log.d(TAG, "add sensor test!");
-
-        /* first add sensor */
-        addSensor("1234");
-        addSensor("1645");
-        addSensor("2333");
-
-        /* then add two plant */
-        addPlants("panda", "mika", "1234");
-        addPlants("Dog", "miba", "1645");
-
-    }
-    private void changeTest() {
-
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Random random = new Random();
-                Map<String, Object> update = new HashMap<>();
-                update.put("1645/humidity", String.valueOf(65.0+random.nextDouble()));
-                update.put("1645/temperature", String.valueOf(72.0+random.nextDouble()));
-                update.put("1234/humidity", String.valueOf(82.0+random.nextDouble()));
-                update.put("1234/temperature", String.valueOf(77.0+random.nextDouble()));
-                //update.put("1541/humidity", String.valueOf(random.nextDouble()));
-                //update.put("1541/temperature", String.valueOf(random.nextDouble()));
-                DatabaseReference ref = mFirebaseDatabase.getReference();
-                ref.child(USER_CHILD).child(uid)
-                        .child(USER_REALTIME_CHILD)
-                        .updateChildren(update);
-            }
-        };
-        timer.schedule(timerTask, 2000, 2000);
-
-        /* 10 seconds later add a new plant to a empty sensor
-        TimerTask addPlantTask = new TimerTask() {
-            @Override
-            public void run() {
-                addPlants("panda", "plant1", "2333" );
-            }
-        };
-
-        timer.schedule(addPlantTask, 10000);*/
-    }
-
 }
+
+
 

@@ -30,7 +30,7 @@ public class AddPlantActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sensor_id.length()>0) {
+                if(sensor_id!=null) {
                     Intent intent = new Intent(AddPlantActivity.this, SearchActivity.class);
                     intent.putExtra("sensor_id", sensor_id);
                     startActivity(intent);

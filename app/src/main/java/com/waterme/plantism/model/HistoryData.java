@@ -1,5 +1,7 @@
 package com.waterme.plantism.model;
 
+import java.util.Date;
+
 /**
  * Created by zhuoran on 4/2/18.
  */

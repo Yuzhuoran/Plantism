@@ -5,12 +5,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by zhuoran on 3/22/18.
  */
 
 abstract class RealTimeViewHolder extends RecyclerView.ViewHolder {
 
+    // TODO check the view item
     public TextView plantCategory;
     public TextView plantMyName;
     public TextView hmText;
@@ -19,7 +22,13 @@ abstract class RealTimeViewHolder extends RecyclerView.ViewHolder {
     public ImageView hmImg;
     public ImageView tpImg;
 
-    public TextView sensorText;
+    /* add plant item view */
+    public TextView sensorAddId;
+
+    /* sensor list */
+    public TextView sensorId;
+    public TextView sensorPlantName;
+    public TextView sensorPlantSpecies;
 
     private RealTimeViewHolder.ClickListener mClickListener;
 
@@ -40,6 +49,6 @@ abstract class RealTimeViewHolder extends RecyclerView.ViewHolder {
     }
 
     public interface ClickListener {
-         void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 }

@@ -3,6 +3,7 @@ package com.waterme.plantism.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import com.github.mikephil.charting.data.Entry;
@@ -55,7 +60,8 @@ public class StatusFragment extends Fragment {
 
     private String plantid;
     private String uid;
-
+    private BarChart ctHumidity;
+    private LineChart ctTemperature;
     // get database reference
     private PlantDbHelper dbHelper = new PlantDbHelper(getContext());
 
@@ -69,7 +75,9 @@ public class StatusFragment extends Fragment {
             Log.d(TAG, "uid is :" + uid);
         }
     }
-
+    public static Date TimeStamp2Date(String timeStampString) {
+        return new java.util.Date(Long.parseLong(timeStampString)*1000);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -148,12 +156,12 @@ public class StatusFragment extends Fragment {
                 List<HistoryData> historyDataList = new ArrayList<>();
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                     /* get the data model from firebase */
-
                     historyDataList.add(dsp.getValue(HistoryData.class));
-                    Log.d(TAG, "timestamp is "
-                            + historyDataList
+                    String tmp_stamp=historyDataList
                             .get(historyDataList.size() - 1)
-                            .getTimestamp());
+                            .getTimestamp();
+                    Log.d(TAG, "timestamp is "
+                            + TimeStamp2Date(tmp_stamp).toString());
                 }
 
                 /* handle charts here */
@@ -253,6 +261,32 @@ public class StatusFragment extends Fragment {
     /* set humidity charts */
     private void setHumidityCharts(List<HistoryData> dataList) {
         Log.d(TAG, "set humidity!");
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        for(int i=0;i<dataList.size();i++){
+            entries.add(new BarEntry(Float.parseFloat(dataList.get(i).getAir_h()),i));
+        }
+        /*
+        entries.add(new BarEntry(74.3f, 0));
+        entries.add(new BarEntry(70.6f, 1));
+        entries.add(new BarEntry(68.1f, 2));
+        entries.add(new BarEntry(92.1f, 3));
+        entries.add(new BarEntry(85.0f, 4));
+        entries.add(new BarEntry(80.1f, 5));
+        entries.add(new BarEntry(76.6f, 6));*/
+        BarDataSet dataset = new BarDataSet(entries, "% humidity");
+        //dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        ArrayList<String> labels = new ArrayList<String>();
+        labels.add("SUN");
+        labels.add("MON");
+        labels.add("TUE");
+        labels.add("WED");
+        labels.add("THU");
+        labels.add("FRI");
+        labels.add("SAT");
+        BarData data = new BarData(labels, dataset);
+        ctHumidity.setData(data);
+        ctHumidity.setDescription("Humidity History");
+        ctHumidity.animateY(2000);
     }
 
     private void initHistoryTest() {
@@ -264,12 +298,17 @@ public class StatusFragment extends Fragment {
                 .child(PLANT_HISTORY);
         Log.d(TAG, "init history");
         Random random = new Random();
+        long offset = Timestamp.valueOf("2018-5-01 00:00:00").getTime();
+        long end = Timestamp.valueOf("2013-01-01 00:00:00").getTime();
+        long diff = end - offset + 1;
+        Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
         for (int i = 0; i < 10; i++) {
             DatabaseReference newRef = ref.push();
             newRef.setValue(new HistoryData(
                     String.valueOf(random.nextDouble()),
                     String.valueOf(random.nextDouble()),
                     String.valueOf(random.nextDouble()),
+
                     String.valueOf(random.nextInt(10000))
             ));
         }
