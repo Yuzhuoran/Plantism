@@ -23,7 +23,8 @@ import android.widget.LinearLayout;
 import com.waterme.plantism.R;
 import com.waterme.plantism.model.MyTextView;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener{
 
     protected Toolbar mToolbar;
     protected DrawerLayout mDrawerLayout;
@@ -59,7 +60,7 @@ public class BaseActivity extends AppCompatActivity {
     }
     private void initHead(){
         //Todo get the header and set the username
-        View headerLayout=mNavigationView.getHeaderView(0);
+        View headerLayout= mNavigationView.getHeaderView(0);
         MyTextView user_name = headerLayout.findViewById(R.id.tv_user_name);
         SharedPreferences sharedPre = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         user_name.setText(sharedPre.getString("uname","").split(" ")[0]);
@@ -70,20 +71,11 @@ public class BaseActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer);
         mDrawerLayout.setForegroundGravity(Gravity.CENTER);
         mNavigationView = (NavigationView) findViewById(R.id.nav);
+        // this is important
+        mNavigationView.bringToFront();
         mNavigationView.setItemIconTintList(null);
         mNavigationView.setForegroundGravity(Gravity.CENTER);
-        mNavigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        item.setChecked(true);
-                        // handle
-                        mDrawerLayout.closeDrawers();
-                        // Handle Intent for drawer
-                        return true;
-                    }
-                }
-        );
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     protected void setToolbarTitle(String title) {
@@ -92,7 +84,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.memu_navigation, menu);
+        //getMenuInflater().inflate(R.menu.memu_navigation, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -100,20 +92,40 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch(id){
-            /*case R.id.home:
+            case R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
-                break;*/
-            case R.id.menu_item_garden:
-                Log.d("ITEM CLICKED", "clicked garden");
-                Intent intent1 = new Intent(this, HomeActivity.class);
-                this.startActivity(intent1);
-                return true;
-            case R.id.menu_item_sensor:
-                Intent intent2 = new Intent(this, SensorHomeActivity.class);
-                this.startActivity(intent2);
-                return true;
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // handle
+        if (item.isChecked()){
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return false;
+        }
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_item_garden:
+                Log.d("ITEM CLICKED", "clicked garden");
+                Intent intent1 = new Intent(this, HomeActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.menu_item_sensor:
+                Intent intent2 = new Intent(this, SensorHomeActivity.class);
+                startActivity(intent2);
+                return true;
+            default:
+                Log.d("base", "nothing");
+                // Handle Intent for drawer
+        }
+        //item.setChecked(true);
+        mDrawerLayout.closeDrawers();
+        return true;
+    }
+
 }

@@ -127,7 +127,7 @@ public class HomeActivity extends BaseActivity{
                 // get the view to bind by the order
                 if (getItemViewType(position) == REAL_TIME_DATA_TYPE) {
 
-                    Log.d(TAG, "bind real time data");
+                    //Log.d(TAG, "bind real time data");
                     String imgUrl = model.getImageUrl();
                     String tUrl = model.gettUrl();
                     String hUrl = model.gethUrl();
@@ -145,7 +145,7 @@ public class HomeActivity extends BaseActivity{
                     }
                 } else {
                     //TODO
-                    Log.d(TAG, "bind add plant view!");
+                    //Log.d(TAG, "bind add plant view!");
                 }
 
                 viewHolder.setmClickListener(new RealTimeViewHolder.ClickListener() {
@@ -172,7 +172,7 @@ public class HomeActivity extends BaseActivity{
             @NonNull
             @Override
             public RealTimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                Log.d(TAG, "create view holder !");
+                //Log.d(TAG, "create view holder !");
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
                 if (viewType == REAL_TIME_DATA_TYPE) {
                     return new RealTimePlantViewHolder(inflater.inflate(R.layout.item_plant, parent, false));
