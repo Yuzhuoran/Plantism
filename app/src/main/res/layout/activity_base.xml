@@ -4,7 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/drawer"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -46,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:theme="@style/NavigationViewPadding"
         app:menu="@menu/memu_navigation"
         app:headerLayout="@layout/navheader">
     </android.support.design.widget.NavigationView>

@@ -135,6 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
                             editor.putString("uid", user.getUid());
+                            Log.d("user",user.getDisplayName());
                             editor.putString("uname",user.getDisplayName());
                             editor.apply();
                             // start home intent;
@@ -169,10 +170,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
                             checkExist(user);
                             Log.d(TAG, "uid is " + user.getUid());
+                            Log.d("something","user name is"+user.getDisplayName());
 
                             // pass username to share preference data
                             SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("uname",user.getDisplayName());
                             editor.putString("uid", user.getUid());
                             editor.apply();
 

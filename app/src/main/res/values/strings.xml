@@ -21,4 +21,6 @@
         2.DO NOT WATER ME AGAIN.2.DO NOT WATER ME AGAIN.2.DO NOT WATER ME AGAIN.
         2.DO NOT WATER ME AGAIN.2.DO NOT WATER ME AGAIN</string>
     <string name="guide_intro">This is a plant</string>
+    <string name="open_drawer">opened drawer</string>
+    <string name="close_drawer">closed drawer</string>
 </resources>

@@ -236,7 +236,7 @@ public class HomeActivity extends BaseActivity{
         mLoadingIndicator.setVisibility(View.INVISIBLE);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
     }
@@ -248,7 +248,7 @@ public class HomeActivity extends BaseActivity{
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
     // add sensor to the sensor list to let arduino know the uid and plantid
