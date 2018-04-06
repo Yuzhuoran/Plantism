@@ -3,6 +3,7 @@ package com.waterme.plantism;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mSignInButton = (MyTextView) findViewById(R.id.btn_sign_in);
         mSignUpButton = (MyTextView) findViewById(R.id.btn_sign_up);
+        mSignUpButton.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         mEmailField = (EditText) findViewById(R.id.et_input_email);
         mPasswordField = (EditText) findViewById(R.id.et_input_password);

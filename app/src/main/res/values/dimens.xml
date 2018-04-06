@@ -7,9 +7,9 @@
     <dimen name="md_keylines">16dp</dimen>
     <dimen name="card_height">120dp</dimen>
     <dimen name="card_width">300dp</dimen>
-    <dimen name="titletext">30sp</dimen>
+    <dimen name="titletext">27sp</dimen>
     <dimen name="buttontext">22sp</dimen>
-    <dimen name="plaintext">15sp</dimen>
+    <dimen name="plaintext">13.32sp</dimen>
     <dimen name="smalltext">12sp</dimen>
     <dimen name="subtitletext">20sp</dimen>
     <dimen name="pv_pin_view_item_size">48dp</dimen>
