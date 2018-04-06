@@ -44,6 +44,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.waterme.plantism.R;
 import com.waterme.plantism.data.PlantDbHelper;
 import com.waterme.plantism.model.HistoryData;
+import com.waterme.plantism.model.MyTextView;
 
 /**
  * Created by zhuoran on 3/22/18.
@@ -66,6 +67,7 @@ public class StatusFragment extends Fragment {
     private String uid;
     private BarChart ctHumidity;
     private LineChart ctTemperature;
+    private MyTextView tvSpecies;
     // get database reference
     private PlantDbHelper dbHelper = new PlantDbHelper(getContext());
 
@@ -91,6 +93,12 @@ public class StatusFragment extends Fragment {
         TextView tvWeather = (TextView) rootView.findViewById(R.id.tv_weather);
         TextView tvMyPlantName = (TextView) rootView.findViewById(R.id.tv_status_myname);
         TextView tvPlantName = (TextView) rootView.findViewById(R.id.tv_status_name);
+        tvSpecies= rootView.findViewById(R.id.tv_status_name);
+        ((MyTextView)rootView.findViewById(R.id.textView_water)).setStyle("light");
+        ((MyTextView)rootView.findViewById(R.id.tv_dialog)).setStyle("light");
+        ((MyTextView)rootView.findViewById(R.id.textView_sun)).setStyle("light");
+        ((MyTextView)rootView.findViewById(R.id.textView_temp)).setStyle("light");
+        tvSpecies.setStyle("light");
         //fake textvies
 
         //end fake

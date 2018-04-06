@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.waterme.plantism.R;
+import com.waterme.plantism.model.MyTextView;
 
 /**
  * Created by zhuoran on 3/22/18.
@@ -49,6 +50,16 @@ public class GuideFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.content_guide, container, false);
         //TextView tv = (TextView) rootView.findViewById(R.id.tv_plant_name);
         //tv.setBackgroundColor(Color.argb(255, 255, 255, 255));
+        ((MyTextView)rootView.findViewById(R.id.tv_guide_genus)).setStyle("light");
+        ((MyTextView)rootView.findViewById(R.id.tv_guide_intro)).setStyle("light");
+
+        ((MyTextView)rootView.findViewById(R.id.tv_guide1)).setStyle("light");
+
+        ((MyTextView)rootView.findViewById(R.id.tv_guide2)).setStyle("light");
+
+        ((MyTextView)rootView.findViewById(R.id.tv_guide3)).setStyle("light");
+
+
         return rootView;
     }
 }
