@@ -1,6 +1,8 @@
 package com.waterme.plantism;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,10 +11,28 @@ import com.mindorks.placeholderview.annotations.Click;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.LinearLayout;
 import com.waterme.plantism.R;
 
 @Layout(R.layout.drawer_item)
-public class DrawerMenuItem {
+public class DrawerMenuItem{
 
     public static final int DRAWER_MENU_ITEM_PROFILE = 1;
     public static final int DRAWER_MENU_ITEM_REQUESTS = 2;
@@ -42,11 +62,11 @@ public class DrawerMenuItem {
     private void onResolved() {
         switch (mMenuPosition){
             case DRAWER_MENU_ITEM_PROFILE:
-                itemNameTxt.setText("Profile");
+                itemNameTxt.setText("Garden");
                 itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.rectangle_small));
                 break;
             case DRAWER_MENU_ITEM_REQUESTS:
-                itemNameTxt.setText("Requests");
+                itemNameTxt.setText("Sensors");
                 itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.rectangle_small));
                 break;
             case DRAWER_MENU_ITEM_GROUPS:
@@ -80,7 +100,11 @@ public class DrawerMenuItem {
     private void onMenuItemClick(){
         switch (mMenuPosition){
             case DRAWER_MENU_ITEM_PROFILE:
-                Toast.makeText(mContext, "Profile", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "garden", Toast.LENGTH_SHORT).show();
+                Log.d("what","start intent!");
+
+                Intent intent1 = new Intent(mContext,HomeActivity.class);
+                mContext.startActivity(intent1);
                 if(mCallBack != null)mCallBack.onProfileMenuSelected();
                 break;
             case DRAWER_MENU_ITEM_REQUESTS:
@@ -128,4 +152,5 @@ public class DrawerMenuItem {
         void onTermsMenuSelected();
         void onLogoutMenuSelected();
     }
+
 }

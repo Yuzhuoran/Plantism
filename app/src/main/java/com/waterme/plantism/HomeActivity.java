@@ -107,7 +107,7 @@ public class HomeActivity extends BaseActivity{
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
-        showLoadingIndicator();
+        //showLoadingIndicator();
         // load the data from firebase
 
         FirebaseRecyclerOptions<RealTimeData> options = new FirebaseRecyclerOptions.Builder<RealTimeData>()
@@ -160,7 +160,7 @@ public class HomeActivity extends BaseActivity{
                         } else {
                             /* start an intent to add a plant */
                             //TODO
-                            Intent intent = new Intent(HomeActivity.this, AddPlantActivity.class);
+                            Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                             intent.putExtra("sensor_id", String.valueOf(model.getOrder()-9999));
                             startActivity(intent);
                             Log.d(TAG, "add a plant!");
@@ -210,7 +210,7 @@ public class HomeActivity extends BaseActivity{
         mRecycleView.setAdapter(mAdapter);
         ((SimpleItemAnimator) mRecycleView.getItemAnimator()).setSupportsChangeAnimations(false);
 
-        hideLoadingIndicator();
+       //hideLoadingIndicator();
         //addTest();
         changeTest();
     }

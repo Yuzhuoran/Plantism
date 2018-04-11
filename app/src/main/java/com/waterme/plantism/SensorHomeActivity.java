@@ -145,7 +145,7 @@ public class SensorHomeActivity extends BaseActivity{
                         } else {
                             /* start an intent to add a plant */
                             //TODO
-                            Intent intent = new Intent(SensorHomeActivity.this, AddPlantActivity.class);
+                            Intent intent = new Intent(SensorHomeActivity.this,SearchActivity.class);
                             intent.putExtra("sensor_id", String.valueOf(model.getOrder()-9999));
                             startActivity(intent);
                             Log.d(TAG, "add a plant!");

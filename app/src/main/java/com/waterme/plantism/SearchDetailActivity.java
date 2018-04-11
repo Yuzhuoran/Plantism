@@ -19,7 +19,7 @@ import com.waterme.plantism.data.PlantImageContract;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchDetailActivity extends AppCompatActivity {
+public class SearchDetailActivity extends BaseActivity {
     private LinearLayout mGallery;
     private List<Integer> mImgIds = new ArrayList<Integer>();
     private LayoutInflater mInflater;
@@ -30,7 +30,7 @@ public class SearchDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_search_detail);
         mInflater = LayoutInflater.from(this);
         dbHelper = new PlantDbHelper(this);

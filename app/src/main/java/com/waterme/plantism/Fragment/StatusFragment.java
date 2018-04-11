@@ -366,9 +366,9 @@ public class StatusFragment extends Fragment {
         for (int i = 0; i < 10; i++) {
             DatabaseReference newRef = ref.push();
             newRef.setValue(new HistoryData(
-                    String.valueOf(random.nextDouble()),
-                    String.valueOf(random.nextDouble()),
-                    String.valueOf(random.nextDouble()),
+                    String.valueOf(60.0+40*random.nextDouble()),
+                    String.valueOf(50.0+20*random.nextDouble()),
+                    String.valueOf(30.0+65*random.nextDouble()),
                     String.valueOf(randomEpoch)
             ));
         }

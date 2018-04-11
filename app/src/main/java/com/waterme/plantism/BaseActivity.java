@@ -10,6 +10,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,8 @@ import android.widget.LinearLayout;
 
 import com.waterme.plantism.R;
 import com.waterme.plantism.model.MyTextView;
+
+import static com.waterme.plantism.R.style.ToolbarTheme;
 
 public class BaseActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener{
@@ -42,6 +45,16 @@ public class BaseActivity extends AppCompatActivity implements
         initHead();
         // for subclass, super.onCreate// set content
 
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open_drawer, R.string.close_drawer){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
         // override content frames!
 
     }
@@ -53,7 +66,7 @@ public class BaseActivity extends AppCompatActivity implements
         if (supportActionBar != null) {
             VectorDrawableCompat indicator =
                     VectorDrawableCompat.create(getResources(), R.drawable.ic_menu, getTheme());
-            indicator.setTint(ResourcesCompat.getColor(getResources(),R.color.white,getTheme()));
+            indicator.setTint(ResourcesCompat.getColor(getResources(),R.color.black,getTheme()));
             supportActionBar.setHomeAsUpIndicator(indicator);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -127,5 +140,6 @@ public class BaseActivity extends AppCompatActivity implements
         mDrawerLayout.closeDrawers();
         return true;
     }
+
 
 }

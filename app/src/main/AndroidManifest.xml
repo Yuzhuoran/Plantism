@@ -31,28 +31,35 @@
         <activity android:name=".SignUpActivity" />
         <activity
             android:name=".HomeActivity"
-            android:label="My Garden" >
+            android:label="Garden" >
         </activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".DetailActivity"
+            android:label="Plant">
+        </activity>
         <activity android:name=".BaseActivity" />
 
-        <activity android:name=".SearchResultActivity">
+        <activity android:name=".SearchResultActivity"
+            android:label="Plant Gallery">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SearchActivity"/>
+                android:value=".SearchActivity"
+                android:label="Plant Gallery"/>
         </activity>
 
         <activity android:name=".AddPlantActivity" />
         <activity android:name=".AddSensorActivity">
         </activity>
-        <activity android:name=".SensorHomeActivity">
+        <activity android:name=".SensorHomeActivity"
+            android:label="Sensor">
         </activity>
-        <activity android:name=".SearchDetailActivity" />
+        <activity android:name=".SearchDetailActivity"
+            android:label="Plant Detail">
+        </activity>
         <activity android:name=".SearchActivity" >
             
             <meta-data
@@ -63,6 +70,11 @@
                 <action android:name="android.intent.action.SEARCH" />
              </intent-filter>
         </activity>
+
+        <activity android:name=".DrawerActivity">
+        </activity>
+
+
 
     </application>
 
