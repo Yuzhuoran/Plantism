@@ -15,10 +15,12 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -113,13 +115,6 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
     /**
      * 延迟线程，看是否还有下一个字符输入
      */
-    private Runnable delayRun = new Runnable() {
-
-        @Override
-        public void run() {
-            updateName(editString);
-        }
-    };
     public StatusFragment() {
     }
 
@@ -161,7 +156,7 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
         tvLocation.setStyle("light");
 
         tvPlantname = (MyEditText) rootView.findViewById(R.id.tv_status_myname);
-        MyTextView tvPlantName = (MyTextView) rootView.findViewById(R.id.tv_status_name);
+        final MyTextView tvPlantName = (MyTextView) rootView.findViewById(R.id.tv_status_name);
         tvSpecies= rootView.findViewById(R.id.tv_status_name);
         ((MyTextView)rootView.findViewById(R.id.textView_water)).setStyle("light");
         ((MyTextView)rootView.findViewById(R.id.tv_dialog)).setStyle("light");
@@ -263,6 +258,7 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
         //updateName("mmmmika");
         //todo set the plant name according to firebase data instead of somethin
         tvPlantname.setText("somethin");
+        /*
         tvPlantname.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -286,6 +282,28 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
 
                 //延迟800ms，如果不再输入字符，则执行该线程的run方法
                 handler.postDelayed(delayRun, 2000);
+            }
+        });
+        */
+
+        tvPlantname.setOnEditorActionListener(new MyEditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        actionId == EditorInfo.IME_ACTION_DONE ||
+                        event != null &&
+                                event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    if (event == null || !event.isShiftPressed()) {
+                        // the user is done typing.
+                        Log.d(TAG, "now the name is : " + tvPlantName.getText().toString());
+                        updateName(tvPlantname.getText().toString());
+
+                        return true; // consume.
+                    }
+                }
+                return false; // pass on to other listeners.
             }
         });
         return rootView;
