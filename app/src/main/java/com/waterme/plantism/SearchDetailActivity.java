@@ -137,7 +137,9 @@ public class SearchDetailActivity extends BaseActivity {
 
         /* update plant child */
         Map<String, Object> update = new HashMap<>();
-        update.put(plantMyName, new Plant(plantCategory, "history", "*"));
+        Map<String, Object> history = new HashMap<>();
+        history.put("history", null);
+        update.put(plantMyName, new Plant(plantCategory, history, "*"));
         dbRef.updateChildren(update);
 
         /* update the now child */

@@ -38,8 +38,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import com.github.mikephil.charting.data.Entry;
@@ -57,6 +59,7 @@ import com.waterme.plantism.listener.GeocodingServiceListener;
 import com.waterme.plantism.listener.WeatherServiceListener;
 import com.waterme.plantism.model.HistoryData;
 import com.waterme.plantism.model.MyTextView;
+import com.waterme.plantism.model.Plant;
 import com.waterme.plantism.service.GoogleMapsGeocodingService;
 import com.waterme.plantism.service.WeatherCacheService;
 import com.waterme.plantism.service.YahooWeatherService;
@@ -80,6 +83,7 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
 
     private String plantid;
     private String uid;
+    private String sensorId;
     private BarChart ctHumidity;
     private LineChart ctTemperature;
     private MyTextView tvSpecies;
@@ -108,8 +112,10 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
         if (getArguments() != null) {
             plantid = getArguments().getString(PLANTID);
             uid = getArguments().getString(UID);
+            sensorId = getArguments().getString("sensor_id");
             Log.d(TAG, "plantid is : "+ plantid);
             Log.d(TAG, "uid is :" + uid);
+            Log.d(TAG, "sensor id is " + sensorId);
         }
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
@@ -232,6 +238,9 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
 
             }
         });
+
+        //todo test
+        //updateName("mmmmika");
 
         return rootView;
     }
@@ -470,6 +479,56 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
 
     @Override
     public void serviceFailure(Exception exception) {
+
+    }
+
+    private void updateName(final String newName) {
+
+        /* update now root name*/
+        /* update plant root */
+        final DatabaseReference plantRef = FirebaseDatabase.getInstance().getReference()
+                .child(USER_CHILD)
+                .child(uid)
+                .child(USER_PLANTS_CHILD)
+                .child(plantid);
+
+        plantRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, Object> oldPlant = (Map<String, Object>) dataSnapshot.getValue();
+                Plant newPlant = new Plant();
+
+                newPlant.setCategory((String)oldPlant.get("category"));
+                newPlant.setHistory((Map<String, HistoryData>) oldPlant.get("history"));
+                newPlant.setImgUrl((String) oldPlant.get("imgUrl"));
+
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                        .child(USER_CHILD)
+                        .child(uid)
+                        .child(USER_PLANTS_CHILD);
+
+                DatabaseReference nowRef = FirebaseDatabase.getInstance().getReference()
+                        .child(USER_CHILD)
+                        .child(uid)
+                        .child(USER_REALTIME_CHILD)
+                        .child(sensorId);
+
+                Map<String, Object> updatePlant= new HashMap<>();
+                Map<String, Object> update = new HashMap<>();
+                update.put("plantMyname", newName);
+                nowRef.updateChildren(update);
+
+                updatePlant.put(newName, newPlant);
+                ref.updateChildren(updatePlant);
+                plantRef.removeValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 }

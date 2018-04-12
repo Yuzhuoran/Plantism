@@ -156,6 +156,7 @@ public class HomeActivity extends BaseActivity{
                             Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
                             intent.putExtra(PLANTID, model.getPlantMyname());
                             intent.putExtra(CATEGORY, model.getPlantCategory());
+                            intent.putExtra("sensor_id", String.valueOf(model.getOrder()));
                             startActivity(intent);
                         } else {
                             /* start an intent to add a plant */
@@ -295,7 +296,9 @@ public class HomeActivity extends BaseActivity{
 
         /* update plant child */
         Map<String, Object> update = new HashMap<>();
-        update.put(plantMyName, new Plant(plantCategory, "history", "*"));
+        Map<String, Object> history = new HashMap<>();
+        history.put("history", null);
+        update.put(plantMyName, new Plant(plantCategory, history, "*"));
         dbRef.updateChildren(update);
 
         /* update the now child */

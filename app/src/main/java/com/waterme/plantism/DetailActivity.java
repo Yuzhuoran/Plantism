@@ -34,6 +34,7 @@ public class DetailActivity extends BaseActivity {
     private String uid;
     private String plantId;
     private String plantCategory;
+    private String sensorId;
 
 
     @Override
@@ -69,13 +70,14 @@ public class DetailActivity extends BaseActivity {
         if (bundle != null) {
             plantId = bundle.getString(PLANTID);
             plantCategory = bundle.getString(CATEGORY);
+            sensorId = bundle.getString("sensor_id");
         } else {
             Log.d(TAG, "new plant id pass in!");
         }
         bundle.putString(UID, uid);
         bundle.putString(PLANTID, plantId);
         bundle.putString(CATEGORY, plantCategory);
-
+        bundle.putString("sensor_id", sensorId);
         //
         Adapter adapter = new Adapter(getSupportFragmentManager());
 

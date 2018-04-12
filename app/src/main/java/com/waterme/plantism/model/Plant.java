@@ -1,6 +1,7 @@
 package com.waterme.plantism.model;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhuoran on 3/10/18.
@@ -9,16 +10,18 @@ import java.util.List;
 
 public class Plant {
     private String category;
-    private String history;
+    private Map<String, Map<String, HistoryData>> history;
     private String imgUrl;
 
-    public Plant(String category, String history, String imgUrl) {
+    public Plant(String category, Map history, String imgUrl) {
         this.category = category;
         this.history = history;
         this.imgUrl = imgUrl;
     }
 
-    public String getHistory() {
+    public Plant(){}
+
+    public Map<String, Map<String, HistoryData>> getHistory() {
         return history;
     }
 
@@ -30,7 +33,7 @@ public class Plant {
         return category;
     }
 
-    public void setHistory(String history) {
+    public void setHistory(Map history) {
         this.history = history;
     }
 
