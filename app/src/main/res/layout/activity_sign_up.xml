@@ -17,7 +17,7 @@
             android:layout_height="72dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:src="@drawable/login_logo" />
+            android:src="@drawable/plantism" />
 
         <!-- Email Label -->
         <android.support.design.widget.TextInputLayout
@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:layout_marginTop="24dp"
+                android:background="@color/buttonColor"
                 android:text="Sign Up" />
 
             <Button
