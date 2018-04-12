@@ -540,32 +540,57 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
         plantRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Object> oldPlant = (Map<String, Object>) dataSnapshot.getValue();
-                Plant newPlant = new Plant();
+                if (dataSnapshot.exists()) {
+                    Map<String, Object> oldPlant = (Map<String, Object>) dataSnapshot.getValue();
+                    Plant newPlant = new Plant();
 
-                newPlant.setCategory((String)oldPlant.get("category"));
-                newPlant.setHistory((Map<String, HistoryData>) oldPlant.get("history"));
-                newPlant.setImgUrl((String) oldPlant.get("imgUrl"));
+                    if (oldPlant.containsKey("category")) {
+                        newPlant.setCategory((String)oldPlant.get("category"));
+                    }
 
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
-                        .child(USER_CHILD)
-                        .child(uid)
-                        .child(USER_PLANTS_CHILD);
+                    if (oldPlant.containsKey("history")) {
+                        newPlant.setHistory((Map<String, HistoryData>) oldPlant.get("history"));
+                    }
 
-                DatabaseReference nowRef = FirebaseDatabase.getInstance().getReference()
-                        .child(USER_CHILD)
-                        .child(uid)
-                        .child(USER_REALTIME_CHILD)
-                        .child(sensorId);
+                    if (oldPlant.containsKey("imgUrl")) {
+                        newPlant.setImgUrl((String) oldPlant.get("imgUrl"));
+                    }
 
-                Map<String, Object> updatePlant= new HashMap<>();
-                Map<String, Object> update = new HashMap<>();
-                update.put("plantMyname", newName);
-                nowRef.updateChildren(update);
 
-                updatePlant.put(newName, newPlant);
-                ref.updateChildren(updatePlant);
-                plantRef.removeValue();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                            .child(USER_CHILD)
+                            .child(uid)
+                            .child(USER_PLANTS_CHILD);
+
+                    DatabaseReference nowRef = FirebaseDatabase.getInstance().getReference()
+                            .child(USER_CHILD)
+                            .child(uid)
+                            .child(USER_REALTIME_CHILD)
+                            .child(sensorId);
+
+                    DatabaseReference sensorRef = FirebaseDatabase.getInstance().getReference()
+                            .child(SENSOR_CHILD)
+                            .child(sensorId);
+
+                    Map<String, Object> updatePlant= new HashMap<>();
+                    Map<String, Object> update = new HashMap<>();
+
+                    /* update now node */
+                    update.put("plantMyname", newName);
+                    nowRef.updateChildren(update);
+
+                    /* update plant node */
+                    updatePlant.put(newName, newPlant);
+                    ref.updateChildren(updatePlant);
+
+                    /* update sensor map */
+                    update.clear();
+                    update.put("plantId", newName);
+                    sensorRef.updateChildren(update);
+                    plantRef.removeValue();
+
+                }
+
             }
 
             @Override
