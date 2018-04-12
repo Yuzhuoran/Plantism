@@ -257,7 +257,7 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
         //todo test
         //updateName("mmmmika");
         //todo set the plant name according to firebase data instead of somethin
-        tvPlantname.setText("somethin");
+        //tvPlantname.setText("somethin");
         /*
         tvPlantname.addTextChangedListener(new TextWatcher() {
 
