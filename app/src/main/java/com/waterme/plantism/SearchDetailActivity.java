@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.waterme.plantism.R;
 import com.waterme.plantism.data.PlantDbHelper;
 import com.waterme.plantism.data.PlantImageContract;
+import com.waterme.plantism.model.MyTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,10 @@ public class SearchDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//      requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ((MyTextView) findViewById(R.id.tv_guide_genus)).setStyle("light");
+        ((MyTextView) findViewById(R.id.tv_guide_intro)).setStyle("light");
+
         setContentView(R.layout.activity_search_detail);
         mInflater = LayoutInflater.from(this);
         dbHelper = new PlantDbHelper(this);
@@ -66,6 +70,7 @@ public class SearchDetailActivity extends BaseActivity {
                         PlantImageContract.ImageEntry.COLUMN_SPECIES),
                 new String[]{species});
         cursor.close();
+
     }
 
     private void initData()

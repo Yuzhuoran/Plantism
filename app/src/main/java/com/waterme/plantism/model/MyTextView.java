@@ -2,8 +2,15 @@ package com.waterme.plantism.model;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.waterme.plantism.R;
 
 public class MyTextView extends android.support.v7.widget.AppCompatTextView {
     public MyTextView(Context context, AttributeSet attrs, int defStyle) {

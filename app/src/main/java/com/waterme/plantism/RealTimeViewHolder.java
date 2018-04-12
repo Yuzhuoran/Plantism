@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.waterme.plantism.model.MyTextView;
+
 import org.w3c.dom.Text;
 
 /**
@@ -14,10 +16,10 @@ import org.w3c.dom.Text;
 abstract class RealTimeViewHolder extends RecyclerView.ViewHolder {
 
     // TODO check the view item
-    public TextView plantCategory;
+    public MyTextView plantCategory;
     public TextView plantMyName;
-    public TextView hmText;
-    public TextView tpText;
+    public MyTextView hmText;
+    public MyTextView tpText;
     public ImageView plantImg;
     public ImageView hmImg;
     public ImageView tpImg;
@@ -28,7 +30,7 @@ abstract class RealTimeViewHolder extends RecyclerView.ViewHolder {
     /* sensor list */
     public TextView sensorId;
     public TextView sensorPlantName;
-    public TextView sensorPlantSpecies;
+    public MyTextView sensorPlantSpecies;
 
     private RealTimeViewHolder.ClickListener mClickListener;
 
