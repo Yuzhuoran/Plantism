@@ -6,10 +6,13 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +61,7 @@ import com.waterme.plantism.data.Units;
 import com.waterme.plantism.listener.GeocodingServiceListener;
 import com.waterme.plantism.listener.WeatherServiceListener;
 import com.waterme.plantism.model.HistoryData;
+import com.waterme.plantism.model.MyEditText;
 import com.waterme.plantism.model.MyTextView;
 import com.waterme.plantism.model.Plant;
 import com.waterme.plantism.service.GoogleMapsGeocodingService;
@@ -90,6 +94,7 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
     private MyTextView tvCondition;
     private MyTextView tvLocation;
     private MyTextView tvTemperature;
+    private MyEditText tvPlantname;
     // get database reference
     private PlantDbHelper dbHelper = new PlantDbHelper(getContext());
 
@@ -102,7 +107,18 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
     //weather service fail log
     private boolean weatherServicesHasFailed = false;
     private SharedPreferences preferences = null;
+    private Handler handler = new Handler();
+    private String editString;
+    /**
+     * 延迟线程，看是否还有下一个字符输入
+     */
+    private Runnable delayRun = new Runnable() {
 
+        @Override
+        public void run() {
+            updateName(editString);
+        }
+    };
     public StatusFragment() {
     }
 
@@ -128,6 +144,7 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
         if (preferences.getBoolean(getString(R.string.pref_needs_setup), true)) {
             //startSettingsActivity();
         }
+
     }
     public static Date TimeStamp2Date(String timeStampString) {
         return new java.util.Date(Long.parseLong(timeStampString)*1000);
@@ -141,7 +158,8 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
         tvTemperature = (MyTextView) rootView.findViewById(R.id.tv_condition);
         tvLocation = (MyTextView) rootView.findViewById(R.id.tv_location);
         tvLocation.setStyle("light");
-        MyTextView tvMyPlantName = (MyTextView) rootView.findViewById(R.id.tv_status_myname);
+
+        tvPlantname = (MyEditText) rootView.findViewById(R.id.tv_status_myname);
         MyTextView tvPlantName = (MyTextView) rootView.findViewById(R.id.tv_status_name);
         tvSpecies= rootView.findViewById(R.id.tv_status_name);
         ((MyTextView)rootView.findViewById(R.id.textView_water)).setStyle("light");
@@ -237,11 +255,38 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
 
         //todo test
         //updateName("mmmmika");
+        //todo set the plant name according to firebase data instead of somethin
+        tvPlantname.setText("somethin");
+        tvPlantname.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(delayRun!=null){
+                    //每次editText有变化的时候，则移除上次发出的延迟线程
+                    handler.removeCallbacks(delayRun);
+                }
+                editString = s.toString();
+
+                //延迟800ms，如果不再输入字符，则执行该线程的run方法
+                handler.postDelayed(delayRun, 2000);
+            }
+        });
         return rootView;
     }
 

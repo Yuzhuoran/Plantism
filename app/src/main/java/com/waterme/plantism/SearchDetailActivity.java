@@ -78,6 +78,9 @@ public class SearchDetailActivity extends BaseActivity {
             Log.d("receved image",image);
         }
         //setting intro according to db
+        ((MyTextView) findViewById(R.id.tv_guide_genus)).setText(genus);
+        ((MyTextView) findViewById(R.id.tv_guide_species)).setText(species);
+        ((MyTextView) findViewById(R.id.tv_guide_intro)).setText(fullIntro);
         initData();
         initView();
         btnAddit.setOnClickListener(new View.OnClickListener() {

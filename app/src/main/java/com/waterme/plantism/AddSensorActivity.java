@@ -111,7 +111,7 @@ public class AddSensorActivity extends AppCompatActivity {
                             intent.putExtra("sensor_id", tmp_id);
                             startActivity(intent);
                         }
-                    }, 100);
+                    }, 1000);
                     /* add sensor api */
                     addSensor(tmp_id);
                 }
