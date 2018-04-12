@@ -16,7 +16,7 @@ public class RealTimePlantViewHolder extends RealTimeViewHolder {
         super(view);
         plantCategory = (MyTextView) itemView.findViewById(R.id.tv_plant_category);
         plantCategory.setStyle("light");
-        plantMyName = (TextView) itemView.findViewById(R.id.tv_plant_myName);
+        plantMyName = (MyTextView) itemView.findViewById(R.id.tv_plant_myName);
         hmText = (MyTextView) itemView.findViewById(R.id.tv_plant_hm);
         hmText.setStyle("light");
         tpText = (MyTextView) itemView.findViewById(R.id.tv_plant_tp);

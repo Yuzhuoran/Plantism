@@ -17,7 +17,7 @@ abstract class RealTimeViewHolder extends RecyclerView.ViewHolder {
 
     // TODO check the view item
     public MyTextView plantCategory;
-    public TextView plantMyName;
+    public MyTextView plantMyName;
     public MyTextView hmText;
     public MyTextView tpText;
     public ImageView plantImg;
@@ -28,8 +28,8 @@ abstract class RealTimeViewHolder extends RecyclerView.ViewHolder {
     public TextView sensorAddId;
 
     /* sensor list */
-    public TextView sensorId;
-    public TextView sensorPlantName;
+    public MyTextView sensorId;
+    public MyTextView sensorPlantName;
     public MyTextView sensorPlantSpecies;
 
     private RealTimeViewHolder.ClickListener mClickListener;

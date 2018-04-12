@@ -32,13 +32,14 @@ public class SearchDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
 //      requestWindowFeature(Window.FEATURE_NO_TITLE);
-        ((MyTextView) findViewById(R.id.tv_guide_genus)).setStyle("light");
-        ((MyTextView) findViewById(R.id.tv_guide_intro)).setStyle("light");
 
         setContentView(R.layout.activity_search_detail);
         mInflater = LayoutInflater.from(this);
         dbHelper = new PlantDbHelper(this);
         btnAddit = findViewById(R.id.button_add_it);
+        ((MyTextView) findViewById(R.id.tv_guide_genus)).setStyle("light");
+        ((MyTextView) findViewById(R.id.tv_guide_intro)).setStyle("light");
+
         /* get data from last intent */
         species = "";
         genus = "";
@@ -52,6 +53,7 @@ public class SearchDetailActivity extends BaseActivity {
             image = bundle.getString("image");
             Log.d("receved image",image);
         }
+        //setting intro according to db
         initData();
         initView();
         btnAddit.setOnClickListener(new View.OnClickListener() {

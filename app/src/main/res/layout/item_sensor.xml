@@ -30,7 +30,7 @@
             android:id="@+id/tv_plant_name"
             android:layout_width="100dp"
             android:layout_height="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:text=""
             android:textSize="@dimen/smalltext"
             app:layout_constraintStart_toStartOf="@+id/tv_sensor_id"
@@ -40,7 +40,7 @@
         <com.waterme.plantism.model.MyTextView
             android:id="@+id/tv_plant_species"
             android:layout_width="wrap_content"
-            android:layout_height="12dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="No plant connected"
             android:textSize="@dimen/smalltext"

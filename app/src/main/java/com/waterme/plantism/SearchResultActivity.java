@@ -56,13 +56,10 @@ public class SearchResultActivity extends BaseActivity implements
         PlantIntro intro2 = new PlantIntro(
                 "Afra",
                 "Succulents",
-                "Tree is not something you can grow at home ",
-                "Tree is tall ",
-                "prefers bright, indirect sunlight. It will not burn in strong, hot sun.\n" +
-                        "\n" +
-                        "Don't ever water it\n" +
-                        "\n" +
-                        "This plant should be planted in the yard\n",
+                "It is a soft-wooded, semi-evergreen upright shrub or small tree, usually 8–15 ft tall. afra has smaller and rounder pads and more compact growth It is much hardier, faster growing, more loosely branched, and has more limber tapering branches than Crassula once established.",
+                "Portulacaria afra (known as elephant bush, dwarf jade plant, porkbush and spekboom in Afrikaans) is a small-leaved succulent plant found in South Africa.",
+                "do not water too often, as Afra grows from desert. * put the plant into Sunshine.*" +
+                        "prefer warm place rather than cold place",
                 "afra",
                 100,
                 100
@@ -72,14 +69,10 @@ public class SearchResultActivity extends BaseActivity implements
         PlantIntro intro3 = new PlantIntro(
                 "Desert Rose",
                 "Succulents",
-                "Tree is not something you can grow at home ",
-                "Tree is tall ",
-                "prefers bright, indirect sunlight. It will not burn in strong, hot sun.\n" +
-                        "\n" +
-                        "Don't ever water it\n" +
-                        "\n" +
-                        "This plant should be planted in the yard\n",
-                "desert",
+                "Adeniums are arid land plants native to sub-Saharan Africa and although there are several species, Adenium obesum is the one that's frequently grown as an ornamental. The common name is Desert Rose and when plants are in bloom, they create a spectacular floral display. ",
+                "Adeniums are well-loved for their gorgeous flowers and their bulbous, caudiciform trunks. They are highly sought after plants and can remain a manageable size for years making them valuable container plants. ",
+                "native to regions with poor, gritty soil and hot, sunny climates. *Desert rose succulents like bright light, so a southern window exposure provides enough sun for the plants to flourish and bloom. *Soil is very important and should have a mixture of cactus soil with gritty sand or lava rocks for good drainage.",
+                "desertrose",
                 100,
                 100
 
@@ -88,14 +81,55 @@ public class SearchResultActivity extends BaseActivity implements
         PlantIntro intro4 = new PlantIntro(
                 "Lety's Sevederia",
                 "Succulents",
-                "Tree is not something you can grow at home ",
+                "Sedeveria ‘Letizia’ is a beautiful small succulent plant, branching at the base with a cluster of stems that grow up to 8 inches tall, with up to 2.5 inches wide rosettes, bearing many tightly arranged up to 1 inch long, green, deltoid shaped leaves with fine hairs along the margins.  ",
                 "Tree is tall ",
-                "prefers bright, indirect sunlight. It will not burn in strong, hot sun.\n" +
-                        "\n" +
-                        "Don't ever water it\n" +
-                        "\n" +
-                        "This plant should be planted in the yard\n",
+                "They will thrive in conditions that many other plants thrive in. *They are ideal for that part of your yard that gets too much sun or too little water to grow anything else. ",
                 "lety",
+                100,
+                100
+
+        );
+
+        PlantIntro intro5 = new PlantIntro(
+                "Banksianae",
+                "rose",
+                "It is a scrambling shrubby vine growing vigorously to 20 ft tall. Unlike most roses, it is practically thornless, though it may bear some prickles up to 5 mm long, particularly on stout, strong shoots. It is amongst the earliest flowering of all roses, usually appearing during May in the northern hemisphere, though cold weather can delay flowering.  ",
+                "Lady banksiae rose, a climbing plant commonly referred to as \"Lady Banks’ Rose,\" are characterized by their limited amount of thorns and their small, pale yellow or off-white flowers and groups of multi-petal blooms. ",
+                "Water the \"Lady Banksia\" every seven to 10 days after planting it. *After vigorous growth begins, decrease the frequency of watering, allowing enough time for the soil to dry before watering again. *Remove all dead branches and stems from the \"Lady Banksia\" with pruning shears while wearing gardening gloves.",
+                "banksianae",
+                100,
+                100
+
+        );
+        PlantIntro intro6 = new PlantIntro(
+                "Caninae",
+                "rose",
+                "It is a deciduous shrub normally ranging in height from 3.3–16.4 ft, though sometimes it can scramble higher into the crowns of taller trees. Its stems are covered with small, sharp, hooked prickles, which aid it in climbing. The leaves are pinnate, with 5–7 leaflets. The flowers are usually pale pink, but can vary between a deep pink and white. ",
+                "Rosa canina, commonly known as the dog rose, is a variable climbing, wild rose species native to Europe, northwest Africa, and western Asia. ",
+                "Grow dog rose plants in well-drained potting mix, or soil mixed with equal parts sand or compost. *Roses prefer a soil pH of 5.5 to 6.5. Water dog rose plants deeply about twice a week.* Fertilize dog rose plants with 1/2 cup of 10-10-10 granulated slow-release fertilizer once in March. ",
+                "caninae",
+                100,
+                100
+
+        );
+        PlantIntro intro7 = new PlantIntro(
+                "Carolina",
+                "rose",
+                "Carolina Rose is a member of the Rosaceae  family. The rose family includes well-known species as diverse as garden roses, strawberries, apples, peaches, and blackberries. Flowers have a base petal number of five, with many cultivated roses showing a hundred or more petals. ",
+                "Rosa carolina, commonly known as the Carolina rose, pasture rose, or low rose, is a shrub in the rose family native to eastern North America, where it can be found in nearly all US states and Canadian provinces east of the Great Plains. ",
+                "Best grown in average, medium to wet, well-drained soil in full sun. Best flowering and disease resistance occur in full sun. *Water deeply and regularly (mornings are best). Avoid overhead watering. *Good air circulation promotes vigorous and healthy growth and helps control foliar diseases. ",
+                "carolina",
+                100,
+                100
+
+        );
+        PlantIntro intro8 = new PlantIntro(
+                "Chinensis",
+                "rose",
+                "Rosa chinensis, known commonly as the Chinese rose, is a member of the genus Rosa native to Southwest China in Guizhou, Hubei, and Sichuan Provinces. The species is extensively cultivated as an ornamental plant, originally in China, and numerous cultivars have been selected which are known as the China roses. ",
+                "Tree is tall ",
+                "Succeeds in most soils, preferring a circumneutral soil and a sunny position. Grows well in heavy clay soils. *Dislikes water-logged soils. Grows well with alliums, parsley, mignonette and lupins. *Garlic planted nearby can help protect the plant from disease and insect predation. ",
+                "chinensis",
                 100,
                 100
 
@@ -106,6 +140,10 @@ public class SearchResultActivity extends BaseActivity implements
         long firstRowId2 = utils.insertOneRecord(database, intro2);
         long firstRowId3 = utils.insertOneRecord(database, intro3);
         long firstRowId4 = utils.insertOneRecord(database, intro4);
+        long firstRowId5 = utils.insertOneRecord(database, intro5);
+        long firstRowId6 = utils.insertOneRecord(database, intro6);
+        long firstRowId8 = utils.insertOneRecord(database, intro8);
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,13 @@
 package com.waterme.plantism.Fragment;
 
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -42,15 +48,24 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.waterme.plantism.R;
+import com.waterme.plantism.data.Channel;
+import com.waterme.plantism.data.Condition;
+import com.waterme.plantism.data.LocationResult;
 import com.waterme.plantism.data.PlantDbHelper;
+import com.waterme.plantism.data.Units;
+import com.waterme.plantism.listener.GeocodingServiceListener;
+import com.waterme.plantism.listener.WeatherServiceListener;
 import com.waterme.plantism.model.HistoryData;
 import com.waterme.plantism.model.MyTextView;
+import com.waterme.plantism.service.GoogleMapsGeocodingService;
+import com.waterme.plantism.service.WeatherCacheService;
+import com.waterme.plantism.service.YahooWeatherService;
 
 /**
  * Created by zhuoran on 3/22/18.
  */
 
-public class StatusFragment extends Fragment {
+public class StatusFragment extends Fragment implements WeatherServiceListener, GeocodingServiceListener, LocationListener {
     private static final String TAG = "StatusFragment";
 
 
@@ -68,8 +83,24 @@ public class StatusFragment extends Fragment {
     private BarChart ctHumidity;
     private LineChart ctTemperature;
     private MyTextView tvSpecies;
+    private MyTextView tvCondition;
+    private MyTextView tvLocation;
+    private MyTextView tvTemperature;
     // get database reference
     private PlantDbHelper dbHelper = new PlantDbHelper(getContext());
+
+    //yahoo weather
+    public static int GET_WEATHER_FROM_CURRENT_LOCATION = 0x00001;
+    private ProgressDialog loadingDialog;
+    private YahooWeatherService weatherService;
+    private GoogleMapsGeocodingService geocodingService;
+    private WeatherCacheService cacheService;
+    //weather service fail log
+    private boolean weatherServicesHasFailed = false;
+    private SharedPreferences preferences = null;
+
+    public StatusFragment() {
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +111,17 @@ public class StatusFragment extends Fragment {
             Log.d(TAG, "plantid is : "+ plantid);
             Log.d(TAG, "uid is :" + uid);
         }
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        weatherService = new YahooWeatherService(this);
+        weatherService.setTemperatureUnit(preferences.getString(getString(R.string.pref_temperature_unit), null));
+
+        geocodingService = new GoogleMapsGeocodingService(this);
+        cacheService = new WeatherCacheService(getContext());
+
+        if (preferences.getBoolean(getString(R.string.pref_needs_setup), true)) {
+            //startSettingsActivity();
+        }
     }
     public static Date TimeStamp2Date(String timeStampString) {
         return new java.util.Date(Long.parseLong(timeStampString)*1000);
@@ -89,10 +131,12 @@ public class StatusFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.content_status, container, false);
 
-        TextView tvOutdoor = (TextView) rootView.findViewById(R.id.tv_outdoor);
-        TextView tvWeather = (TextView) rootView.findViewById(R.id.tv_weather);
-        TextView tvMyPlantName = (TextView) rootView.findViewById(R.id.tv_status_myname);
-        TextView tvPlantName = (TextView) rootView.findViewById(R.id.tv_status_name);
+        tvCondition = (MyTextView) rootView.findViewById(R.id.tv_condition);
+        tvTemperature = (MyTextView) rootView.findViewById(R.id.tv_condition);
+        tvLocation = (MyTextView) rootView.findViewById(R.id.tv_location);
+        tvLocation.setStyle("light");
+        MyTextView tvMyPlantName = (MyTextView) rootView.findViewById(R.id.tv_status_myname);
+        MyTextView tvPlantName = (MyTextView) rootView.findViewById(R.id.tv_status_name);
         tvSpecies= rootView.findViewById(R.id.tv_status_name);
         ((MyTextView)rootView.findViewById(R.id.textView_water)).setStyle("light");
         ((MyTextView)rootView.findViewById(R.id.tv_dialog)).setStyle("light");
@@ -109,7 +153,7 @@ public class StatusFragment extends Fragment {
 
         ctHumidity = (BarChart) rootView.findViewById(R.id.ct_humidity);
         ctTemperature = (LineChart) rootView.findViewById(R.id.ct_temperature);
-
+        //set weather from yahoo weather api
         // get data base reference
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
@@ -372,5 +416,60 @@ public class StatusFragment extends Fragment {
                     String.valueOf(randomEpoch)
             ));
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void geocodeSuccess(LocationResult location) {
+
+    }
+
+    @Override
+    public void geocodeFailure(Exception exception) {
+
+    }
+
+    @Override
+    public void serviceSuccess(Channel channel) {
+        //loadingDialog.hide();
+
+        Condition condition = channel.getItem().getCondition();
+        Units units = channel.getUnits();
+        Condition[] forecast = channel.getItem().getForecast();
+
+        //int weatherIconImageResource = getResources().getIdentifier("icon_" + condition.getCode(), "drawable", getPackageName());
+
+        //weatherIconImageView.setImageResource(weatherIconImageResource);
+        tvTemperature.setText(getString(R.string.temperature_output, condition.getTemperature(), units.getTemperature()));
+        tvCondition.setText(condition.getDescription());
+        tvLocation.setText(channel.getLocation());
+
+
+
+        //cacheService.save(channel);
+    }
+
+    @Override
+    public void serviceFailure(Exception exception) {
+
     }
 }

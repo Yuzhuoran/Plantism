@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.waterme.plantism.model.MyTextView
-            android:id="@+id/tv_outdoor"
+            android:id="@+id/tv_condition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -36,15 +36,28 @@
             tools:ignore="RtlCompat" />
 
         <com.waterme.plantism.model.MyTextView
-            android:id="@+id/tv_weather"
+            android:id="@+id/tv_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
             android:text="66°F"
             android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintTop_toBottomOf="@+id/tv_outdoor"
-            android:layout_marginRight="20dp" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_condition" />
+
+        <com.waterme.plantism.model.MyTextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
+            android:text="Atlanta"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temperature" />
+
+
 
         <ImageView
             android:id="@+id/im_status"

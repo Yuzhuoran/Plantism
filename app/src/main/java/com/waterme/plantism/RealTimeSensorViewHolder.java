@@ -13,8 +13,9 @@ public class RealTimeSensorViewHolder extends RealTimeViewHolder {
     public RealTimeSensorViewHolder(View view) {
         super(view);
         sensorId = itemView.findViewById(R.id.tv_sensor_id);
-        sensorPlantName = itemView.findViewById(R.id.tv_plant_name);
+        sensorPlantName = (MyTextView)itemView.findViewById(R.id.tv_plant_name);
         sensorPlantSpecies = (MyTextView) itemView.findViewById(R.id.tv_plant_species);
         sensorPlantSpecies.setStyle("light");
+        sensorPlantName.setStyle("light");
     }
 }

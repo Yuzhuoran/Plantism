@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.waterme.plantism.R;
@@ -89,6 +90,7 @@ public class AddSensorActivity extends AppCompatActivity {
                     }, 100);
                 }
                 else{
+                    Toast.makeText(getApplicationContext(), "Invalid Sensor ID", Toast.LENGTH_SHORT).show();
                     //TODO remind that the sensor id is invalid
                 }
             }
