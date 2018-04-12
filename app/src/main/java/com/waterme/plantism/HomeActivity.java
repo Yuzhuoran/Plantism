@@ -358,5 +358,14 @@ public class HomeActivity extends BaseActivity{
 
         timer.schedule(addPlantTask, 10000);*/
     }
+    private Timer timer = new Timer();
+    private TimerTask timerTask;
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        timerTask.cancel();
+        timer.cancel();
+    }
 
 }
