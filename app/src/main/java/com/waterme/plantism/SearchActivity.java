@@ -10,6 +10,7 @@ public class SearchActivity extends AppCompatActivity implements
         SearchView.OnQueryTextListener{
 
     private SearchView mSearchView;
+    private String sensorId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +21,21 @@ public class SearchActivity extends AppCompatActivity implements
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setIconifiedByDefault(false);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            sensorId = bundle.getString("sensor_id");
+        }
+
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
         Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
         intent.putExtra("QUERY", query);
+        if (sensorId == null) {
+            throw new IllegalArgumentException("no sensor id!");
+        }
+        intent.putExtra("sensor_id", sensorId);
         startActivity(intent);
         return true;
     }

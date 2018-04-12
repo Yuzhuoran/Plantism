@@ -30,15 +30,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
     private Cursor mCursor;
     private List<PlantIntro> items;
     private List<PlantIntro> originalItems;
+    private String sensorId;
     private static final String TAG = "Search adapter";
 
 
     /* assuming passing all attribute */
-    public SearchAdapter(Context context, Cursor cursor) {
+    public SearchAdapter(Context context, Cursor cursor, String sId) {
         super();
         mCursor = cursor;
         mContext = context;
         items = new ArrayList<>();
+        sensorId = sId;
         originalItems = new ArrayList<>();
         try {
             while (cursor.moveToNext()) {
@@ -66,6 +68,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
         final PlantIntro intro = items.get(position);
         holder.genusText.setText(intro.getGenus());
         holder.speciesText.setText(intro.getSpecies());
+        //final String sensorIdDummy = sensorId;
         //String imageId = intro.getImage();
 
         //int id = mContext.getResources().getIdentifier("@drawable/" + imageId,null, HomeActivity.PACKAGE_NAME);
@@ -85,6 +88,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
                 intent.putExtra("genus", intro.getGenus());
                 intent.putExtra("fullIntro", intro.getFullIntro());
                 intent.putExtra("image",intro.getImage());
+                intent.putExtra("sensor", sensorId);
                 Log.d("passed image",intro.getImage());
                 view.getContext().startActivity(intent);
             }

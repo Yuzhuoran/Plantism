@@ -34,6 +34,8 @@ public class SearchResultActivity extends BaseActivity implements
     private SearchView mSearchView;
     private int mPosition = RecyclerView.NO_POSITION;
 
+    private String sensorId = null;
+
     void initialize_database(PlantDbHelper dbHelper){
         //Todo update the database according to the googledoc https://docs.google.com/spreadsheets/d/11kN9Iur8yV2485e3hzg0VzqGO_HUI9m1yf4mOg8JcoE/edit?usp=sharing
         SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -161,26 +163,28 @@ public class SearchResultActivity extends BaseActivity implements
         mRecyclerView = (RecyclerView) findViewById(R.id.ry_search_plant);
         mSearchView = (SearchView) findViewById(R.id.sv_plant);
 
+        /* get the search query from last search activity */
+        /* pass sensor id into here */
+        Bundle bundle = getIntent().getExtras();
+        String query = "";
+        if (bundle != null) {
+            query = bundle.getString("QUERY");
+            sensorId = bundle.getString("sensor_id");
+            /* set the search result and clear the focus */
+            mSearchView.setQuery(query, true);
+            mSearchView.clearFocus();
+        }
+
         hidePlantIntro();
         Log.d(TAG, "query");
         Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + PlantContract.PlantEntry.TABLE_NAME, null);
-        mAdapter = new SearchAdapter(this, cursor);
+        mAdapter = new SearchAdapter(this, cursor, sensorId);
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setOnQueryTextListener(this);
-
-        /* get the search query from last search activity */
-        Bundle bundle = getIntent().getExtras();
-        String query = "";
-        if (bundle != null) {
-            query = bundle.getString("QUERY");
-            /* set the search result and clear the focus */
-            mSearchView.setQuery(query, true);
-            mSearchView.clearFocus();
-        }
 
         /* show the search results with query */
         showPlantIntro();
