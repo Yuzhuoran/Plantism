@@ -91,7 +91,7 @@ public class SearchDetailActivity extends BaseActivity {
                     throw new IllegalArgumentException("no sensor id!");
                 }
                 /* add a plant */
-                addPlants(bundle.getString("species"), "new plant", bundle.getString("sensor"));
+                addPlants(bundle.getString("species"), bundle.getString("sensor"), bundle.getString("sensor"));
                 Log.d(TAG, "add plant successful");
                 Intent intent = new Intent(SearchDetailActivity.this, HomeActivity.class);
                 startActivity(intent);
