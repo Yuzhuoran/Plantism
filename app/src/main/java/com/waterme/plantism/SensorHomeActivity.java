@@ -127,11 +127,11 @@ public class SensorHomeActivity extends BaseActivity{
                     // set text for ui
                     //TODO finish the UI
                     viewHolder.sensorPlantName.setText(model.getPlantMyname());
-                    viewHolder.sensorId.setText(String.valueOf(model.getOrder()));
+                    viewHolder.sensorId.setText("Sensor - "+String.valueOf(model.getOrder()));
                     viewHolder.sensorPlantSpecies.setText(model.getPlantCategory());
                 } else {
                     //TODO finish the UI
-                    viewHolder.sensorId.setText(String.valueOf(model.getOrder() - 9999));
+                    viewHolder.sensorId.setText("Sensor - "+String.valueOf(model.getOrder() - 9999));
                     viewHolder.sensorPlantName.setText("");
                     viewHolder.sensorPlantSpecies.setText("No plant connected");
                 }
