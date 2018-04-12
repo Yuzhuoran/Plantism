@@ -328,8 +328,7 @@ public class HomeActivity extends BaseActivity{
     }
     private void changeTest() {
 
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 Random random = new Random();
