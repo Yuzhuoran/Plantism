@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.LongDef;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -541,18 +542,22 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    Log.d(TAG, "plant id " + plantid);
                     Map<String, Object> oldPlant = (Map<String, Object>) dataSnapshot.getValue();
                     Plant newPlant = new Plant();
 
                     if (oldPlant.containsKey("category")) {
+                        Log.d(TAG, "has category!");
                         newPlant.setCategory((String)oldPlant.get("category"));
                     }
 
                     if (oldPlant.containsKey("history")) {
+                        Log.d(TAG, "has history");
                         newPlant.setHistory((Map<String, HistoryData>) oldPlant.get("history"));
                     }
 
                     if (oldPlant.containsKey("imgUrl")) {
+                        Log.d(TAG, "has imageurl!");
                         newPlant.setImgUrl((String) oldPlant.get("imgUrl"));
                     }
 
@@ -587,10 +592,9 @@ public class StatusFragment extends Fragment implements WeatherServiceListener, 
                     update.clear();
                     update.put("plantId", newName);
                     sensorRef.updateChildren(update);
+                    plantid = newName;
                     plantRef.removeValue();
-
                 }
-
             }
 
             @Override
