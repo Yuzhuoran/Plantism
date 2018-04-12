@@ -10,9 +10,9 @@
             android:icon="@drawable/rectangle_small"
             android:title="Sensor" />
         <item
-            android:id="@+id/menu_item_history"
+            android:id="@+id/menu_item_intro"
             android:icon="@drawable/rectangle_small"
-            android:title="History" />
+            android:title="Introduction" />
         <item
             android:id="@+id/menu_item_setting"
             android:icon="@drawable/rectangle_small"

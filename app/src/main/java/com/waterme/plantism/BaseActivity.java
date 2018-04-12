@@ -3,6 +3,7 @@ package com.waterme.plantism;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -132,6 +133,12 @@ public class BaseActivity extends AppCompatActivity implements
                 Intent intent2 = new Intent(this, SensorHomeActivity.class);
                 startActivity(intent2);
                 return true;
+            case R.id.menu_item_intro:
+                Uri uri = Uri.parse("https://plantism.herokuapp.com");
+                Intent intent3 = new Intent();
+                intent3.setAction("android.intent.action.VIEW");
+                intent3.setData(uri);
+                startActivity(intent3);
             default:
                 Log.d("base", "nothing");
                 // Handle Intent for drawer
